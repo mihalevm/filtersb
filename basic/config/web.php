@@ -5,7 +5,7 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
-    'name' => 'FilterSB',
+    'name' => 'Фильтр СБ',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [
@@ -13,11 +13,11 @@ $config = [
         '@npm'   => '@vendor/npm-asset',
     ],
     'language' => 'ru-RU',
-//    'defaultRoute' => 'user-init',
+    //'defaultRoute' => 'signin',
     'components' => [
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'UNzaGO6aY-Dhj_0UeiRTh4YS45QEPiRK',
+            'cookieValidationKey' => 'UNzaGO6aY-Dhj_0UeiRTh4YS45QEPiRKIUe2',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',

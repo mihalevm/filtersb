@@ -82,6 +82,14 @@ a.desc:after {
     color: #999;
 }
 
+.site-login {
+    margin-left: 30%;
+}
+
+.form-group {
+    height: 45px;
+}
+
 .error-summary {
     color: #a94442;
     background: #fdf7f7;

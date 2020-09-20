@@ -41,6 +41,8 @@ AppAsset::register($this);
             Yii::$app->user->isGuest ? (
             ['label' => 'Регистрация', 'url' => ['/register']]):(''),
             Yii::$app->user->isGuest ? (
+                ['label' => 'Профиль водителя тест', 'url' => ['/driver-profile']]):(''),
+            Yii::$app->user->isGuest ? (
                     ['label' => 'Вход', 'url' => ['/signin']]
             ) : (
                 '<li>'

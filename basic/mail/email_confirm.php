@@ -1,0 +1,2 @@
+<p style="text-align: center;">Спасибо за регистрацию на сайте <strong>Фильтр СБ</strong></p>
+<p style="text-align: center;">&nbsp;Для подтверждения регистрации пройдите по <span style="text-decoration: underline;"><a href="http://filtersb.loc/register/confirm?h=<?=$hash?>">ссылке</a>.</span></p>

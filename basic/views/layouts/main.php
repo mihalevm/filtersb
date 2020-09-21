@@ -43,6 +43,7 @@ AppAsset::register($this);
             Yii::$app->user->isGuest ? (
                     ['label' => 'Вход', 'url' => ['/signin']]
             ) : (
+                '<li><a href="'.(Yii::$app->user->identity->utype =='D'?'/driver-profile':'/company-profile').'">Профиль</a></li>'.
                 '<li>'
                 . Html::beginForm(['/signin/logout'], 'post')
                 . Html::submitButton(

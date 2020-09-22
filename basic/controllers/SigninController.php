@@ -49,12 +49,12 @@ class SigninController extends Controller
     public function actionIndex()
     {
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+            return $this->redirect(Yii::$app->user->identity->utype =='D' ? '/driver-dashboard' : '/company-dashboard' );
         }
 
         $model = new SigninForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->redirect(Yii::$app->user->identity->utype =='D' ? '/driver-dashboard' : '/company-dashboard' );
         }
 
         $model->password = '';

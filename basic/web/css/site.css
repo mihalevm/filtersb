@@ -121,3 +121,43 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+
+.modal {
+    text-align: center;
+}
+
+@media screen and (min-width: 768px) {
+    .modal:before {
+        display: inline-block;
+        vertical-align: middle;
+        content: " ";
+        height: 100%;
+    }
+}
+
+.modal-dialog {
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+}
+
+#add-driver-form > .form-group {
+    height: 30px;
+}
+
+.mb-30 {
+    margin-bottom: 30px !important;
+}
+
+.mr-10 {
+    margin-right: 10px !important;
+}
+.driver-item {
+    text-align: center;
+    cursor: pointer;
+}
+
+.driver-item:hover {
+    background-color: #ecf9ff !important;
+}

@@ -141,7 +141,26 @@ $this->title = 'Профиль водителя';
                 <tr>
                     <th scope="row">Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:</th>
                     <td>
-                        <input type="text" class="form-control" placeholder="текст">
+                        <?php
+                            $form = ActiveForm::begin();
+
+                            echo $form->field($model, 'attribute')
+                                ->dropDownList(
+                                    $items,           // Flat array ('id'=>'label')
+                                    ['prompt'=>'']    // options
+                                );
+
+                            ActiveForm::end();
+                        ?>
+                        <div class="form-group">
+                            <select class="form-control" id="tachograph">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
                     </td>
                 </tr>
                 <tr>

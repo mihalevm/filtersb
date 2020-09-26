@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+use kartik\date\DatePicker;
 
 $this->title = 'Профиль водителя';
 ?>
@@ -22,7 +23,6 @@ $this->title = 'Профиль водителя';
                 <tr>
                     <th scope="row">Фамилия*:</th>
                     <td>
-                    <!-- <input type="text" class="form-control" placeholder=""> -->
                         <input type="text" class="form-control" placeholder="Иванов">
                     </td>
                 </tr>
@@ -41,7 +41,17 @@ $this->title = 'Профиль водителя';
                 <tr>
                     <th scope="row">Дата рождения*:</th>
                     <td>                        
-                        <input type="text" class="form-control" placeholder="1.01.2000">                 
+                        <?php                            
+                            echo DatePicker::widget([
+                                'name' => 'driver-birth-date-picker',
+                                'type' => DatePicker::TYPE_INPUT,
+                                'value' => '23-02-1982',
+                                'pluginOptions' => [
+                                    'autoclose'=>true,
+                                    'format' => 'dd-mm-yyyy'
+                                ]
+                            ]);
+                        ?>                   
                     </td>
                 </tr>
                 <tr>
@@ -71,12 +81,17 @@ $this->title = 'Профиль водителя';
                 <tr>
                     <th scope="row">Дата выдачи водительского удостоверения*:</th>
                     <td id="driver-license-release">
-                        <div class="input-group date">
-                            <input type="text" class="form-control" value="01-01-2010">
-                            <div class="input-group-addon">
-                                <span class="glyphicon glyphicon-th"></span>
-                            </div>
-                        </div>
+                        <?php                            
+                            echo DatePicker::widget([
+                                'name' => 'driver-license-release-date-picker',
+                                'type' => DatePicker::TYPE_INPUT,
+                                'value' => '23-02-1982',
+                                'pluginOptions' => [
+                                    'autoclose'=>true,
+                                    'format' => 'dd-mm-yyyy'
+                                ]
+                            ]);
+                        ?>                        
                     </td>
                 </tr>
             </tbody>        
@@ -89,63 +104,93 @@ $this->title = 'Профиль водителя';
             <tbody>
                 <tr>
                     <th scope="table-danger row">Контактный телефон*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="+79998884411">
+                    </td>
                 </tr>                
                 <tr>
                     <th scope="row">Телефоны родственников (2 человека)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="+79998884411">         
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Семейное положение*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="холост">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Дети, пол и возраст*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Стаж вождения именно по категории “С” (лет)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Стаж вождения именно по категории “Е” (лет)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Марки транспортных средств, которыми управляли на последних местах работы*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>                
                 <tr>
                     <th scope="row">Имеется ли у вас загран.паспорт*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Сведения о судимости, арестах (да/нет, если есть год и статья)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Наличие долгов, неоплаченных счетов, выплаты алиментов*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Наличие медицинской книжки (да/нет)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Когда вы готовы приступить к работе*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Опыт работы (укажите три последних места фактической работы, начиная с последнего в обратном хронологическом порядке)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Выберите из списка организации, в которой хотели бы работать (перечислить ТК и дать возможность указать свой, если нет в списке)*:</th>
-                    <td></td>
+                    <td>
+                        <input type="text" class="form-control" placeholder="текст">
+                    </td>
                 </tr>
             </tbody>
         </table>

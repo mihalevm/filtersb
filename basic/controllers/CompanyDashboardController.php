@@ -17,6 +17,11 @@ class CompanyDashboardController extends Controller {
     }
 
     public function actionIndex() {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
+
         $model = new CompanyDashboardForm();
 
         $allCompanyDrivers = new ArrayDataProvider([
@@ -48,6 +53,10 @@ class CompanyDashboardController extends Controller {
     }
 
     public function actionAdddriver() {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
         $model = new CompanyDashboardForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()){
@@ -57,6 +66,10 @@ class CompanyDashboardController extends Controller {
     }
 
     public function actionDeletedriver() {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
         $model = new CompanyDashboardForm();
 
         if (null != Yii::$app->request->post('id')) {
@@ -66,4 +79,91 @@ class CompanyDashboardController extends Controller {
         return $this->_sendJSONAnswer(1);
     }
 
+    public function actionGetdriverinfo($id) {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
+        $model = new CompanyDashboardForm();
+
+        return $this->renderPartial('driver-info', [
+            'model'   => $model,
+            'dinfo'   => $model->getDriverInfo($id),
+        ]);
+    }
+
+    public function actionGetdriverreport($id) {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
+        $model = new CompanyDashboardForm();
+
+        $allReports = new ArrayDataProvider([
+            'allModels' => $model->getCompanyReports(),
+            'sort' => [
+                'attributes' => ['cdate'],
+            ],
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+
+
+        return $this->renderPartial('driver-reports', [
+            'model'   => $model,
+            'dinfo'   => $model->getDriverInfo($id),
+            'reports' => $allReports,
+        ]);
+    }
+
+    public function actionGetdrivercoments($id) {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
+        $model = new CompanyDashboardForm();
+
+        $driverComents = new ArrayDataProvider([
+            'allModels' => $model->getDriverComents($id),
+            'sort' => [
+                'attributes' => ['cdate'],
+            ],
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+
+        return $this->renderPartial('driver-comments', [
+            'model'   => $model,
+            'coments' => $driverComents,
+            'dinfo'   => $model->getDriverInfo($id)
+        ]);
+    }
+
+    public function actionSavecoment(){
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/signin');
+        }
+        $r = Yii::$app->request;
+        $model = new CompanyDashboardForm();
+
+        if (null != $r->post('did') && null != $r->post('r') && null != $r->post('t')) {
+           $model->saveComment($r->post('did'), $r->post('r'), $r->post('t'));
+        }
+
+        return $this->_sendJSONAnswer(1);
+    }
+
+    public function actionDemployment($id){
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/signin');
+        }
+
+        $model = new CompanyDashboardForm();
+
+        $model->driver_employment($id);
+
+        return $this->_sendJSONAnswer(1);
+    }
 }

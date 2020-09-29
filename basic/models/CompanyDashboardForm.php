@@ -120,4 +120,67 @@ class CompanyDashboardForm extends Model {
 
         return 1;
     }
+
+    public function getDriverInfo($id) {
+        $arr = ($this->db_conn->createCommand("SELECT u.username,u.active,t.reqby,i.* FROM tcdrivers t, userinfo i, users u WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND u.id=t.did", [
+            ':id' => null,
+            ':tid'   => null,
+        ])
+            ->bindValue(':id',  $id )
+            ->bindValue(':tid', Yii::$app->user->identity->id )
+            ->queryAll())[0];
+
+        return $arr;
+    }
+
+    public function getCompanyReports () {
+        $arr = $this->db_conn->createCommand("SELECT cdate, id FROM reports WHERE tid=:tid and did>0 order by cdate desc", [
+            ':tid'   => null,
+        ])
+            ->bindValue(':tid',   Yii::$app->user->identity->id )
+            ->queryAll();
+
+        return $arr;
+    }
+
+    public function getDriverComents($id) {
+        $arr = $this->db_conn->createCommand("SELECT cast(c.cdate as date) as cdate, cdate as coment_date, c.rait, c.coment, i.agreecomment FROM tcdrivers t, userinfo i, dcoments c WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND c.did=t.did order by coment_date desc", [
+            ':id' => null,
+            ':tid'   => null,
+        ])
+            ->bindValue(':id',  $id )
+            ->bindValue(':tid', Yii::$app->user->identity->id )
+            ->queryAll();
+
+        return $arr;
+    }
+
+    public function saveComment($did, $rait, $coment){
+        $this->db_conn->createCommand("insert into dcoments (did, rait, coment) values (:did, :rait, :coment)",
+            [
+                ':did'    => null,
+                ':rait'   => null,
+                ':coment' => null,
+            ])
+            ->bindValue(':did',    $did    )
+            ->bindValue(':rait',   $rait   )
+            ->bindValue(':coment', $coment )
+            ->execute();
+
+        return Yii::$app->db->getLastInsertID();
+    }
+
+    public function driver_employment ($id) {
+        $this->db_conn->createCommand("update tcdrivers set reqby='T' where id=:id and tid=:tid",
+            [
+                ':id'  => null,
+                ':tid'   => null,
+            ])
+            ->bindValue(':id', $id                            )
+            ->bindValue(':tid', Yii::$app->user->identity->id )
+            ->execute();
+
+        return 1;
+    }
+
 }

@@ -8,6 +8,10 @@ use app\models\DriverDashboardForm;
 class DriverDashboardController extends Controller
 {
     public function actionIndex() {
+        if ( Yii::$app->user->isGuest ) {
+            return $this->redirect('/signin');
+        }
+
         $model = new DriverDashboardForm();
 
         return $this->render('index', [

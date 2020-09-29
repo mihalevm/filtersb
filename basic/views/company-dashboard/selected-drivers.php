@@ -11,16 +11,10 @@ use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\date\DatePicker;
 use yii\widgets\Pjax;
+use yii\bootstrap\Tabs;
 
 ?>
-<!--<div class="col-lg-12">-->
-<!--    <div class="col-lg-13">-->
-    <br>
-
-        <button type="button" class="btn btn-primary pull-right mb-30" data-toggle="modal" data-target="#edit-driver">Добавить водителя</button>
-<!--    </div>-->
-
-<!--    <div class="col-lg-13">-->
+<br><button type="button" class="btn btn-primary pull-right mb-30" data-toggle="modal" data-target="#edit-driver">Добавить водителя</button>
 <?php
 Pjax::begin(['id' => 'drivers_list', 'timeout' => false, 'enablePushState' => false, 'clientOptions' => ['method' => 'POST']]);
 
@@ -42,7 +36,7 @@ echo \yii\grid\GridView::widget([
             'data-pnumber'    => $model['pnumber'],
             'data-dserial'    => $model['dserial'],
             'data-dnumber'    => $model['dnumber'],
-            'onclick'         => 'showDialogPropertyDriver();',
+            'onclick'         => 'showDialogPropertyDriver(this);',
         ];
     },
     'columns' => [
@@ -157,23 +151,65 @@ Modal::begin([
 
 <?php Modal::end();?>
 
-<?php
-Modal::begin([
-    'header' => '<b>Подробно о водителе</b>',
-    'id' => 'property-driver',
-    'size' => 'modal-lg',
-]);
-?>
-
-<div class='modalContent'>
-</div>
-
-<?php Modal::end();?>
-
 <script language="JavaScript">
+    document.addEventListener('DOMContentLoaded', function() {
+        $("[href*='property-driver-modal-tab']").on('shown.bs.tab', function (e) {
+            var t = $(e.target).attr("href")
+            if (t === '#property-driver-modal-tab0') {
+                getDriverReports();
+            }
+            if (t === '#property-driver-modal-tab1') {
+                getDriverInfo();
+            }
+            if (t === '#property-driver-modal-tab2') {
+                getDriverComents();
+            }
+        });
 
-    function showDialogPropertyDriver() {
+        $("[href='#my-drivers']").click(function () {
+            $.pjax.reload({container: "#drivers_list", timeout: 2e3});
+        });
+    });
+
+    function getDriverReports() {
+        $('#property-driver-modal-tab0').html('');
+        $.get(
+            window.location.href+'/getdriverreport',
+            { id : $('#property-driver').data('did') },
+            function (data) {
+                $('#property-driver-modal-tab0').html(data);
+            }
+        )
+    }
+
+    function getDriverInfo() {
+        $('#property-driver-modal-tab1').html('');
+        $.get(
+            window.location.href+'/getdriverinfo',
+            { id : $('#property-driver').data('did') },
+            function (data) {
+                $('#property-driver-modal-tab1').html(data);
+            }
+        )
+    }
+
+    function getDriverComents() {
+        $('#property-driver-modal-tab2').html('');
+        $.get(
+            window.location.href+'/getdrivercoments',
+            { id : $('#property-driver').data('did') },
+            function (data) {
+                $('#property-driver-modal-tab2').html(data);
+            }
+        )
+    }
+
+    function showDialogPropertyDriver(o) {
+        $('#property-driver').data('did', $(o).data('id'));
+        getDriverReports();
+        $('.modal-content').css('height',600);
         $('#property-driver').modal('show');
+
     }
 
     function showDialogDeleteDriver(i) {

@@ -1,5 +1,5 @@
 <?php
-    use yii\helpers\Html;    
+    use yii\helpers\Html;
     use kartik\date\DatePicker;
 ?>
 
@@ -9,14 +9,14 @@
             <tr>
                 <th scope="table-danger row">Контактный телефон*:</th>
                 <td>
-                    <input type="text" class="form-control" placeholder="+79998884411">
+                    <?= Html::tag('input', Html::encode($model->mainNumber), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?>
                 </td>
             </tr>                
             <tr>
                 <th scope="row">Телефоны родственников (2 человека)*:</th>
                 <td>
-                    <label>тел №1: </label><input type="text" class="form-control" placeholder="+79998884411"><br>
-                    <label>тел №2: </label><input type="text" class="form-control" placeholder="+79998884411">
+                    <label>тел №1: </label><?= Html::tag('input', Html::encode($model->relativesNumber1), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?><br>
+                    <label>тел №2: </label><?= Html::tag('input', Html::encode($model->relativesNumber2), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?>
                 </td>                
             </tr>
             <tr>
@@ -54,23 +54,6 @@
                 <td id="trailers-pick">
                     <?= Html::dropDownList('tachograph', $dic_trailertype[1], $dic_trailertype) ?><br><br>
                     <label>Свой вариант:</label><input type="text" class="form-control">
-                    <!-- <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="tent-13-6">
-                        <label class="form-check-label" for="tent-13-6">Тент 13,6м</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="tent-16-5">
-                        <label class="form-check-label" for="tent-16-5">Тент 16,5м</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="ref">
-                        <label class="form-check-label" for="ref">РЕФ</label>
-                    </div>
-                    <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="your-trailer">
-                        <label class="form-check-label" for="your-trailer">Дополнительно:</label>
-                        <textarea class="form-control" rows="5"></textarea>
-                    </div>                     -->
                 </td>
             </tr>
             <tr>
@@ -116,15 +99,15 @@
                         echo '<label class="control-label">Дата приёма и увольнения</label>';
                         echo DatePicker::widget([
                             'language' => 'ru',
-                            'name' => 'employment-date',
+                            'name' => 'work-1-employment-date',
                             'value' => '23.02.1982',
                             'type' => DatePicker::TYPE_RANGE,
-                            'name2' => 'quit-date',
+                            'name2' => 'work-1-quit-date',
                             'value2' => '26.02.1982',
                             'separator'=>' до ', 
                             'pluginOptions' => [
                                 'autoclose' => true,
-                                'format' => 'dd-mm-yyyy',                                    
+                                'format' => 'dd.mm.yyyy',                                    
                             ]
                         ]);                        
                     ?><br>
@@ -135,25 +118,25 @@
                     <label>Кто может дать рекомендации с даннного места работы (ФИО, контакт для связи)</label><textarea class="form-control" rows="10"></textarea>
                     <br>
                     <p>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Добавить место работы
                         </a>
                     </p>
-                    <div class="collapse" id="collapseExample">
+                    <div class="collapse" id="collapseExample2">
                         <div class="card card-body">
                             <?php
                                 echo '<label class="control-label">Дата приёма и увольнения</label>';
                                 echo DatePicker::widget([
                                     'language' => 'ru',
-                                    'name' => 'employment-date',
+                                    'name' => 'work-2-employment-date',
                                     'value' => '23.02.1982',
                                     'type' => DatePicker::TYPE_RANGE,
-                                    'name2' => 'quit-date',
+                                    'name2' => 'work-2-quit-date',
                                     'value2' => '26.02.1982',
                                     'separator'=>' до ', 
                                     'pluginOptions' => [
                                         'autoclose' => true,
-                                        'format' => 'dd-mm-yyyy',                                    
+                                        'format' => 'dd.mm.yyyy',                                    
                                     ]
                                 ]);                        
                             ?><br>
@@ -165,25 +148,25 @@
                         </div>                       
                     </div><br>
                     <p>
-                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample1" role="button" aria-expanded="false" aria-controls="collapseExample">
+                        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample3" role="button" aria-expanded="false" aria-controls="collapseExample">
                             Добавить место работы
                         </a>
                     </p>
-                    <div class="collapse" id="collapseExample1">
+                    <div class="collapse" id="collapseExample3">
                         <div class="card card-body">
                             <?php
                                 echo '<label class="control-label">Дата приёма и увольнения</label>';
                                 echo DatePicker::widget([
                                     'language' => 'ru',
-                                    'name' => 'employment-date',
+                                    'name' => 'work-3-employment-date',
                                     'value' => '23.02.1982',
                                     'type' => DatePicker::TYPE_RANGE,
-                                    'name2' => 'quit-date',
+                                    'name2' => 'work-3-quit-date',
                                     'value2' => '26.02.1982',
                                     'separator'=>' до ', 
                                     'pluginOptions' => [
                                         'autoclose' => true,
-                                        'format' => 'dd-mm-yyyy',                                    
+                                        'format' => 'dd.mm.yyyy',                                    
                                     ]
                                 ]);                        
                             ?><br>
@@ -205,16 +188,16 @@
         </tbody>
     </table>
     <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Cогласие на обработку персональных данных.</label>
+        <input type="checkbox" class="form-check-input" id="agreement-personal-data">
+        <label class="form-check-label" for="agreement-personal-data">Cогласие на обработку персональных данных.</label>
     </div>
     <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами.</label>
+        <input type="checkbox" class="form-check-input" id="agreement-third-party">
+        <label class="form-check-label" for="agreement-third-party">Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами.</label>
     </div>
     <div class="form-check">
-        <input type="checkbox" class="form-check-input" id="exampleCheck1">
-        <label class="form-check-label" for="exampleCheck1">Cогласие на комментирование со стороны транспортных компаний.</label>
+        <input type="checkbox" class="form-check-input" id="agreement-comments">
+        <label class="form-check-label" for="agreement-comments">Cогласие на комментирование со стороны транспортных компаний.</label>
     </div><br>
-    <button type="button" class="btn btn-primary">Сохранить</button>
+    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>    
 </div> 

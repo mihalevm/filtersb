@@ -8,13 +8,27 @@ use yii\helpers\ArrayHelper;
 
 class DriverProfile extends Model
 {
-
   public $email;
+  public $secondName;
+  public $firstName;
+  public $thirdName;
+  public $birthDate;
+  public $passportSeries;
+  public $passportNumber;
+  public $inn;
+  public $licenseSeriesNumber;
+  public $licenseRealeaseDate;
+  public $mainNumber;
+  public $relativesNumber1;
+  public $relativesNumber2;
 
   public function rules() 
   {
     return [
-      [['email'], 'required'],
+      [
+        ['email', 'secondName', 'firstName', 'thirdName', 'birthDate', 'passportSeries',
+          'passportNumber', 'inn', 'licenseSeriesNumber', 'licenseRealeaseDate', 'mainNumber', 'relativesNumber1', 'relativesNumber2'], 
+        'required'],
       ['email', 'email']
     ];
   }

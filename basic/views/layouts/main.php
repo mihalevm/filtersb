@@ -39,9 +39,9 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             Yii::$app->user->isGuest ? (
-            ['label' => 'Регистрация', 'url' => ['/register']]):(''),
+                ['label' => 'Профиль водителя', 'url' => ['/driver-profile']]):(''),
             Yii::$app->user->isGuest ? (
-                ['label' => 'Профиль водителя тест', 'url' => ['/driver-profile']]):(''),
+            ['label' => 'Регистрация', 'url' => ['/register']]):(''),
             Yii::$app->user->isGuest ? (
                     ['label' => 'Вход', 'url' => ['/signin']]
             ) : (

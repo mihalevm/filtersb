@@ -2,6 +2,7 @@
 
 $params = require __DIR__ . '/params.php';
 $db = require __DIR__ . '/db.php';
+$mailer = require __DIR__ . '/mailer.php';
 
 $config = [
     'id' => 'basic',
@@ -16,7 +17,6 @@ $config = [
     //'defaultRoute' => 'signin',
     'components' => [
         'request' => [
-            // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'UNzaGO6aY-Dhj_0UeiRTh4YS45QEPiRKIUe2',
         ],
         'cache' => [
@@ -27,15 +27,9 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+//            'errorAction' => 'site/error',
         ],
-        'mailer' => [
-            'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
-        ],
+        'mailer' => $mailer,
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [

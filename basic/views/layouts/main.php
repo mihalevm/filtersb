@@ -28,9 +28,15 @@ AppAsset::register($this);
 
 <div class="wrap">
     <?php
+    $brandUrl = Yii::$app->homeUrl;
+
+    if (!Yii::$app->user->isGuest) {
+        $brandUrl = Yii::$app->user->identity->utype =='D'?'/driver-dashboard':'/company-dashboard';
+    }
+
     NavBar::begin([
         'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => $brandUrl,
         'options' => [
             'class' => 'navbar-inverse navbar-fixed-top',
         ],
@@ -45,6 +51,7 @@ AppAsset::register($this);
             Yii::$app->user->isGuest ? (
                     ['label' => 'Вход', 'url' => ['/signin']]
             ) : (
+                '<li><a href="'.(Yii::$app->user->identity->utype =='D'?'/driver-profile':'/company-profile').'">Профиль</a></li>'.
                 '<li>'
                 . Html::beginForm(['/signin/logout'], 'post')
                 . Html::submitButton(

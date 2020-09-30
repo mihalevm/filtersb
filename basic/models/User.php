@@ -41,7 +41,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return self::findOne(['username' => $username]);
+        return self::find()->where(['username' => $username, 'active' => 'Y'])->one();
     }
 
     /**

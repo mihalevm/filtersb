@@ -100,10 +100,12 @@
                         echo DatePicker::widget([
                             'language' => 'ru',
                             'name' => 'work-1-employment-date',
-                            'value' => '23.02.1982',
+                            'value' => '',
+                            'options' => ['placeholder' => '23.02.1982'],
                             'type' => DatePicker::TYPE_RANGE,
                             'name2' => 'work-1-quit-date',
-                            'value2' => '26.02.1982',
+                            'value2' => '',
+                            'options2' => ['placeholder' => '26.02.1982'],
                             'separator'=>' до ', 
                             'pluginOptions' => [
                                 'autoclose' => true,
@@ -129,10 +131,12 @@
                                 echo DatePicker::widget([
                                     'language' => 'ru',
                                     'name' => 'work-2-employment-date',
-                                    'value' => '23.02.1982',
+                                    'value' => '',
+                                    'options' => ['placeholder' => '23.02.1982'],
                                     'type' => DatePicker::TYPE_RANGE,
                                     'name2' => 'work-2-quit-date',
-                                    'value2' => '26.02.1982',
+                                    'value2' => '',
+                                    'options2' => ['placeholder' => '23.02.1982'],
                                     'separator'=>' до ', 
                                     'pluginOptions' => [
                                         'autoclose' => true,
@@ -159,10 +163,12 @@
                                 echo DatePicker::widget([
                                     'language' => 'ru',
                                     'name' => 'work-3-employment-date',
-                                    'value' => '23.02.1982',
+                                    'value' => '',
+                                    'options' => ['placeholder' => '23.02.1982'],
                                     'type' => DatePicker::TYPE_RANGE,
                                     'name2' => 'work-3-quit-date',
-                                    'value2' => '26.02.1982',
+                                    'value2' => '',
+                                    'options2' => ['placeholder' => '23.02.1982'],
                                     'separator'=>' до ', 
                                     'pluginOptions' => [
                                         'autoclose' => true,

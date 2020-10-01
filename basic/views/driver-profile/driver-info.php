@@ -39,13 +39,14 @@
                             'model' => $model->birthDate,
                             'name' => 'birth-date',
                             'type' => DatePicker::TYPE_INPUT,
-                            'value' => '23.02.1982',
+                            'value' => '',
+                            'options' => ['placeholder' => '23.02.1982'],
                             'pluginOptions' => [
                                 'autoclose'=>true,
                                 'format' => 'dd.mm.yyyy'
                             ]
                         ]);
-                    ?>                   
+                    ?>
                 </td>
             </tr>
             <tr>
@@ -80,7 +81,8 @@
                             'model' => $model->licenseRealeaseDate,
                             'name' => 'license-release-date',
                             'type' => DatePicker::TYPE_INPUT,
-                            'value' => '23.02.1982',
+                            'value' => '',
+                            'options' => ['placeholder' => '23.02.1982'],
                             'pluginOptions' => [
                                 'autoclose'=>true,
                                 'format' => 'dd.mm.yyyy'

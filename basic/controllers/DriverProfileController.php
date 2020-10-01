@@ -4,14 +4,14 @@ namespace app\controllers;
 
 use Yii;
 use yii\web\Controller;
-use app\models\DriverProfile;
+use app\models\DriverProfileForm;
 
 class DriverProfileController extends Controller
 {
 
 	public function actionIndex() 
 	{
-		$model = new DriverProfile();
+		$model = new DriverProfileForm();
 		$dic_tachograph = $model->getDicTachograph();
 		$dic_trailertype = $model->getDicTrailerType();
 		

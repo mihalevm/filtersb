@@ -21,6 +21,7 @@ $this->title = 'Авторизация';
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
         ],
     ]); ?>
+        <?= $form->errorSummary($model) ?>
 
         <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 

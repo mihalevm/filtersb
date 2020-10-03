@@ -22,6 +22,7 @@ class CompanyDashboardForm extends Model {
     public $dserial;
     public $dnumber;
     public $bdate;
+    public $ddate;
 
     protected $db_conn;
 
@@ -30,7 +31,7 @@ class CompanyDashboardForm extends Model {
      */
     public function rules() {
         return [
-            ['email', 'required', 'message' => 'Заполните поле "Email"' ],
+//            ['email', 'required', 'message' => 'Заполните поле "Email"' ],
             ['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
             ['firstname', 'required', 'message' => 'Заполните поле "Имя"' ],
             ['secondname', 'required', 'message' => 'Заполните поле "Фамилия"' ],
@@ -40,9 +41,10 @@ class CompanyDashboardForm extends Model {
             ['pnumber', 'required', 'message' => 'Заполните поле "Номер паспорта"' ],
             ['dserial', 'required', 'message' => 'Заполните поле "Серия водительского"' ],
             ['dnumber', 'required', 'message' => 'Заполните поле "Номер водительского"' ],
+            ['ddate', 'required', 'message' => 'Укажите дату выдачи водительского удостоверения' ],
             ['email', 'email'],
             [['inn', 'pserial', 'pnumber', 'dserial', 'dnumber'], 'integer'],
-            ['bdate', 'date', 'format' => 'dd.MM.yyyy']
+            [['bdate', 'ddate'], 'date', 'format' => 'dd.MM.yyyy']
         ];
     }
 
@@ -52,6 +54,12 @@ class CompanyDashboardForm extends Model {
 
 
     public function AddDriver() {
+        $this->inn     = preg_replace('/\_/','', $this->inn);
+        $this->pserial = preg_replace('/\_/','', $this->pserial);
+        $this->pnumber = preg_replace('/\_/','', $this->pnumber);
+        $this->dserial = preg_replace('/\_/','', $this->dserial);
+        $this->dnumber = preg_replace('/\_/','', $this->dnumber);
+
         $this->db_conn->createCommand("insert into users (username) values (:email)",
             [
                 ':email'    => null,
@@ -61,29 +69,31 @@ class CompanyDashboardForm extends Model {
 
         $id = Yii::$app->db->getLastInsertID();
 
-        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, dserial, dnumber, id) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :dserial, :dnumber, :id)",
+        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, dserial, dnumber, ddate, id) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :dserial, :dnumber, :ddate, :id)",
             [
-                ':inn'          => null,
-                ':firstname'    => null,
-                ':secondname'   => null,
-                ':middlename'   => null,
-                ':bdate'        => null,
-                ':pserial'      => null,
-                ':pnumber'      => null,
-                ':dserial'      => null,
-                ':dnumber'      => null,
-                ':id'           => null,
+                ':inn'        => null,
+                ':firstname'  => null,
+                ':secondname' => null,
+                ':middlename' => null,
+                ':bdate'      => null,
+                ':pserial'    => null,
+                ':pnumber'    => null,
+                ':dserial'    => null,
+                ':dnumber'    => null,
+                ':ddate'      => null,
+                ':id'         => null,
             ])
-            ->bindValue(':inn',         $this->inn          )
-            ->bindValue(':firstname',   $this->firstname    )
-            ->bindValue(':secondname',  $this->secondname   )
-            ->bindValue(':middlename',  $this->middlename   )
-            ->bindValue(':bdate',       date_format(date_create_from_format('d.m.Y', $this->bdate), 'Y-m-d'))
-            ->bindValue(':pserial',     $this->pserial        )
-            ->bindValue(':pnumber',     $this->pnumber        )
-            ->bindValue(':dserial',     $this->pserial        )
-            ->bindValue(':dnumber',     $this->pnumber        )
-            ->bindValue(':id',          $id )
+            ->bindValue(':inn',        $this->inn        )
+            ->bindValue(':firstname',  $this->firstname  )
+            ->bindValue(':secondname', $this->secondname )
+            ->bindValue(':middlename', $this->middlename )
+            ->bindValue(':bdate',      date_format(date_create_from_format('d.m.Y', $this->bdate), 'Y-m-d'))
+            ->bindValue(':pserial',    $this->pserial    )
+            ->bindValue(':pnumber',    $this->pnumber    )
+            ->bindValue(':dserial',    $this->pserial    )
+            ->bindValue(':dnumber',    $this->pnumber    )
+            ->bindValue(':ddate',      date_format(date_create_from_format('d.m.Y', $this->ddate), 'Y-m-d'))
+            ->bindValue(':id',         $id )
             ->execute();
 
         $this->db_conn->createCommand("insert into tcdrivers (did, tid) values (:did, :tid)",

@@ -58,7 +58,7 @@ echo \yii\grid\GridView::widget([
         [
             'format' => 'ntext',
             'attribute'=>'birthday',
-            'label'=>'День рождения',
+            'label'=>'Дата рождения',
         ],
         [
             'label' => 'Трудоустроен',

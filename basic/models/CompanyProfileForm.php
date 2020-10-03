@@ -36,6 +36,7 @@ class CompanyProfileForm extends Model {
             ['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
             ['companyname', 'required', 'message' => 'Заполните поле "Название компании"' ],
             ['firstname', 'required', 'message' => 'Заполните поле "Имя"' ],
+            ['middlename', 'string'],
             ['secondname', 'required', 'message' => 'Заполните поле "Фамилия"' ],
             ['phone', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
             ['email', 'email'],
@@ -45,21 +46,25 @@ class CompanyProfileForm extends Model {
     }
 
     public function unqInnCheck ($attribute) {
-        $res = ($this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE u.id=u.id AND u.active='Y' AND i.inn=:inn")
-            ->bindValue(':inn', $this->inn)
-            ->queryAll())[0];
+        $this->inn = preg_replace('/\_/','', $this->inn);
 
-        if ($res['id'] != Yii::$app->user->identity->id) {
+        $res = $this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE i.id=u.id AND u.active='Y' AND i.inn=:inn and i.id<>:id")
+            ->bindValue(':inn', $this->inn)
+            ->bindValue(':id', Yii::$app->user->identity->id)
+            ->queryAll();
+
+        if (count($res)>0) {
             $this->addError('*', 'Компания с таким ИНН уже зарегестрирована');
         }
     }
 
     public function unqEmailCheck($attribute) {
-        $res = ($this->db_conn->createCommand("select id from users where active='Y' and username=:email")
+        $res = $this->db_conn->createCommand("select id from users where active='Y' and username=:email and id<>:id")
             ->bindValue(':email', $this->email)
-            ->queryAll())[0];
+            ->bindValue(':id', Yii::$app->user->identity->id)
+            ->queryAll();
 
-        if ($res['id'] != Yii::$app->user->identity->id) {
+        if (count($res)>0) {
             $this->addError('*', 'Указанный "Email" уже зарегестрирован');
         }
     }
@@ -71,6 +76,9 @@ class CompanyProfileForm extends Model {
     }
 
     public function saveCompanyProfile() {
+        $this->inn   = preg_replace('/\_/','', $this->inn);
+        $this->phone = preg_replace('/\_/','', $this->phone);
+
         $this->db_conn->createCommand("update userinfo set inn=:inn, companyname=:companyname, firstname=:firstname, secondname=:secondname, middlename=:middlename, personalphone=:phone  where id=:id",
             [
                 ':inn'          => null,

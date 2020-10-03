@@ -58,7 +58,7 @@ echo \yii\grid\GridView::widget([
         [
             'format' => 'ntext',
             'attribute'=>'birthday',
-            'label'=>'День рождения',
+            'label'=>'Дата рождения',
         ],
         [
             'label' => 'Трудоустроен',
@@ -93,6 +93,7 @@ Modal::begin([
     <?php $form = ActiveForm::begin([
         'id' => 'add-driver-form',
         'enableAjaxValidation' => true,
+        'enableClientValidation'=>false,
         'layout' => 'horizontal',
         'action' => '/company-dashboard/adddriver',
         'fieldConfig' => [
@@ -104,23 +105,25 @@ Modal::begin([
 
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-    <?= $form->field($model, 'firstname')->textInput()->label('Имя') ?>
+    <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'secondname')->textInput()->label('Фамилия') ?>
+    <?= $form->field($model, 'secondname')->textInput()->label('Фамилия<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'middlename')->textInput()->label('Отчество') ?>
+    <?= $form->field($model, 'middlename')->textInput()->label('Отчество<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('День рождения'); ?>
+    <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата рождения<span class="field-required">*</span>'); ?>
 
-    <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН') ?>
+    <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99999'])->label('Серия паспорта') ?>
+    <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия паспорта<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта') ?>
+    <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'dserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99999'])->label('Серия водительского') ?>
+    <?= $form->field($model, 'dserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия водительского<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'dnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер водительского') ?>
+    <?= $form->field($model, 'dnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер водительского<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'ddate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи водительского<span class="field-required">*</span>'); ?>
 
     <div class="form-group">
         <div class="col-lg-offset-8 col-lg-10">
@@ -169,6 +172,11 @@ Modal::begin([
         $("[href='#my-drivers']").click(function () {
             $.pjax.reload({container: "#drivers_list", timeout: 2e3});
         });
+
+        $('#edit-driver').on('shown.bs.modal', function() {
+            $('#add-driver-form').yiiActiveForm('resetForm');
+            $('#edit-driver').find('.modal-content').css('height', 'auto')
+        });
     });
 
     function getDriverReports() {
@@ -207,7 +215,7 @@ Modal::begin([
     function showDialogPropertyDriver(o) {
         $('#property-driver').data('did', $(o).data('id'));
         getDriverReports();
-        $('.modal-content').css('height',600);
+        $('.modal-content').css('height', 600);
         $('#property-driver').modal('show');
 
     }

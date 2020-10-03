@@ -33,9 +33,19 @@ class RegisterForm extends Model
             [['email', 'password','utype', 'inn'], 'required', 'on' => 'company'],
             ['email', 'email'],
             ['email', 'unqEmailCheck'],
+            ['password', 'validationPassword'],
             ['utype', 'string', 'length' => 1],
             ['inn',   'unqInnCheck']
         ];
+    }
+
+    public function validationPassword($a) {
+        if (strlen($this->password) < 8){
+            $this->addError('*', 'Пароль д.б. не менее 8 символов');
+        }
+        if ( !preg_match('/^[\00-\255]+$/', $this->password) ) {
+            $this->addError('*', 'Пароль должен содержать только символы на аглийской раскладки');
+        }
     }
 
     public function unqInnCheck ($attribute) {
@@ -43,11 +53,11 @@ class RegisterForm extends Model
             if (!isset($this->inn)) {
                 $this->addError('*', 'ИНН обязательное поле');
             } else {
-                $res = ($this->db_conn->createCommand("select count(*) as cnt from users where active='Y' and inn=:inn")
+                $res = $this->db_conn->createCommand("select count(*) as cnt from usersinfo where active='Y' and inn=:inn")
                     ->bindValue(':inn', $this->inn)
-                    ->queryAll())[0];
+                    ->queryAll();
 
-                if ($res['cnt'] > 0) {
+                if (count($res)>0) {
                     $this->addError('*', 'Компания с таким ИНН уже зарегестрирована');
                 }
             }
@@ -55,12 +65,12 @@ class RegisterForm extends Model
     }
 
     public function unqEmailCheck($attribute) {
-        $res = ($this->db_conn->createCommand("select count(*) as cnt from users where active='Y' and username=:email")
+        $res = $this->db_conn->createCommand("select count(*) as cnt from users where active='Y' and username=:email")
             ->bindValue(':email', $this->email)
-            ->queryAll())[0];
+            ->queryAll();
 
-        if ($res['cnt'] > 0) {
-            $this->addError('*', 'Указанный логин уже зарегестрирован');
+        if (count($res) > 0) {
+            $this->addError('*', 'Указанный Email уже зарегистрирован');
         }
 
     }

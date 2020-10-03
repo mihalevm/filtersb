@@ -4,33 +4,30 @@
 ?>
 
 <div class="driver-profile-extended">
-    <table class="table table-bordered">
+    <table class="table table-borderless">
         <tbody>
             <tr>
-                <th scope="table-danger row">Контактный телефон*:</th>
-                <td>
-                    <?= Html::tag('input', Html::encode($model->mainNumber), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?>
-                </td>
+                <th scope="row">Контактный телефон*:</th>
+                <td><?= Html::tag('input', Html::encode($model->mainNumber), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?></td>
             </tr>                
             <tr>
                 <th scope="row">Телефоны родственников (2 человека)*:</th>
                 <td>
-                    <label>тел №1: </label><?= Html::tag('input', Html::encode($model->relativesNumber1), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?><br>
-                    <label>тел №2: </label><?= Html::tag('input', Html::encode($model->relativesNumber2), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?>
+                    <?= Html::tag('input', Html::encode($model->relativesNumbers), ['class' => 'form-control', 'placeholder' => '+79998884411, +79998884411' ]) ?><br>
                 </td>                
             </tr>
             <tr>
                 <th scope="row">Семейное положение*:</th>
                 <td>
-                    <?= Html::dropDownList('med-card', 'null', ['0' => 'Холост(а)', '1' => 'В браке']) ?>
+                    <?= Html::dropDownList('familystatus', 'null', ['N' => 'Холост(а)', 'Y' => 'В браке']) ?>
                 </td>
             </tr>
-            <tr>
+            <!-- <tr>
                 <th scope="row">Дети, пол и возраст*:</th>
                 <td>
                     <textarea class="form-control" rows="10"></textarea>                        
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <th scope="row">Стаж вождения именно по категории “С” (лет)*:</th>
                 <td>
@@ -205,5 +202,5 @@
         <input type="checkbox" class="form-check-input" id="agreement-comments">
         <label class="form-check-label" for="agreement-comments">Cогласие на комментирование со стороны транспортных компаний.</label>
     </div><br>
-    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>    
+    <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
 </div> 

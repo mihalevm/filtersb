@@ -5,12 +5,12 @@
 ?>
 
 <div class="driver-profile">
-    <table class="table table-bordered">
+    <table class="table table-borderless">
         <tbody>
             <tr>
-                <th scope="table-danger row">Адрес электронной почты*:</th>
+                <th scope="row">Адрес электронной почты*:</th>
                 <td>
-                    <?= Html::tag('input', Html::encode($model->email), ['class' => 'form-control', 'placeholder' => 'inbox@example.com' ]) ?>
+                    <?= Html::tag('input', Html::encode($model['email']), ['class' => 'form-control', 'placeholder' => 'inbox@example.com' ]) ?>
                 </td>
             </tr>                
             <tr>
@@ -52,7 +52,7 @@
             <tr>
                 <th scope="row">Серия паспорта*:</th>
                 <td>
-                    <?= Html::tag('input', Html::encode($model->passportSeries), ['class' => 'form-control', 'placeholder' => '0001' ]) ?>
+                    <?= Html::tag('input', Html::encode($model->passportSerial), ['class' => 'form-control', 'placeholder' => '0001' ]) ?>
                 </td>
             </tr>
             <tr>
@@ -68,9 +68,15 @@
                 </td>
             </tr>                
             <tr>
-                <th scope="row">Серия и номер водительского удостоверения*:</th>
+                <th scope="row">Серия водительского удостоверения*:</th>
                 <td>                        
-                    <?= Html::tag('input', Html::encode($model->licenseSeriesNumber), ['class' => 'form-control', 'placeholder' => 'АВ0000000001' ]) ?>
+                    <?= Html::tag('input', Html::encode($model->licenseSerial), ['class' => 'form-control', 'placeholder' => '0001' ]) ?>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Номер водительского удостоверения*:</th>
+                <td>                        
+                    <?= Html::tag('input', Html::encode($model->licenseNumber), ['class' => 'form-control', 'placeholder' => '000001' ]) ?>
                 </td>
             </tr>
             <tr>
@@ -94,3 +100,4 @@
         </tbody>        
     </table>
 </div>
+<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>

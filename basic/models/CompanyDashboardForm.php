@@ -143,11 +143,13 @@ class CompanyDashboardForm extends Model {
         return $arr;
     }
 
-    public function getCompanyReports () {
-        $arr = $this->db_conn->createCommand("SELECT cdate, id FROM reports WHERE tid=:tid and did>0 order by cdate desc", [
-            ':tid'   => null,
+    public function getCompanyReports ($id) {
+        $arr = $this->db_conn->createCommand("SELECT r.cdate, r.id, r.payed, r.completed FROM reports r, tcdrivers t WHERE r.oid=:tid and r.did=t.did and t.id=:id order by cdate desc", [
+            ':tid' => null,
+            ':id'  => null,
         ])
-            ->bindValue(':tid',   Yii::$app->user->identity->id )
+            ->bindValue(':tid', Yii::$app->user->identity->id )
+            ->bindValue(':id',  intval($id) )
             ->queryAll();
 
         return $arr;

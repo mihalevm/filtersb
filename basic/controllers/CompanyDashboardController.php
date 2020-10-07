@@ -103,7 +103,7 @@ class CompanyDashboardController extends Controller {
         $model = new CompanyDashboardForm();
 
         $allReports = new ArrayDataProvider([
-            'allModels' => $model->getCompanyReports(),
+            'allModels' => $model->getCompanyReports($id),
             'sort' => [
                 'attributes' => ['cdate'],
             ],

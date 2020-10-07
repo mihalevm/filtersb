@@ -21,7 +21,7 @@ use rmrevin\yii\fontawesome\FAS;
             <button type="button" class="btn btn-primary pull-right" onclick="DEmployment()">Трудоустроить</button>
             <?php } ?>
             <?php if($dinfo['reqby']=='T') { ?>
-            <button type="button" class="btn btn-primary pull-right">Новый отчет</button>
+            <button type="button" class="btn btn-primary pull-right" onclick="genNewReport()">Новый отчет</button>
             <?php } ?>
         </div>
     </div>
@@ -65,7 +65,18 @@ use rmrevin\yii\fontawesome\FAS;
                         'label' => 'Действие',
                         'format' => 'raw',
                         'value' => function($data){
-                        return '<div onclick="event.stopPropagation();downloadReport('.$data['id'].')">'.FAS::icon('file-download').'</div>';
+                            $action = '';
+                            if (null !== $data['completed']){
+                                if ('Y' == $data['payed']) {
+                                    $action = '<div onclick="event.stopPropagation();downloadReport('.$data['id'].')" title="Скачать отчет">'.FAS::icon('file-download').'</div>';
+                                } else {
+                                    $action = '<div onclick="event.stopPropagation();payReport('.$data['id'].')"  title="Оплатить отчет">'.FAS::icon('wallet').'</div>';
+                                }
+                            } else {
+                                $action = '<div onclick="event.stopPropagation();completeReport('.$data['id'].')"  title="Завершить формирование отчета">'.FAS::icon('cog').'</div>';
+                            }
+
+                        return $action;
                     }
                     ],
                 ],
@@ -101,7 +112,28 @@ use rmrevin\yii\fontawesome\FAS;
         );
     }
 
-    function downloadReport(id) {
-        console.log(id);
+    function genNewReport() {
+        $('#property-driver').modal('hide');
+
+        var did = $('#property-driver').data('did');
+
+        setTimeout(function () {
+            $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
+            $('#generate-report').modal('show');
+        }, 800);
     }
+
+    function downloadReport(id) {
+        console.log('downloadReport:'+id);
+    }
+
+    function completeReport(id) {
+        $('#property-driver').data('rid', id);
+        genNewReport();
+    }
+
+    function payReport(id) {
+        console.log('payReport:'+id);
+    }
+
 </script>

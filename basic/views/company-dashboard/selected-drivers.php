@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: max
- * Date: 23.09.20
- * Time: 17:51
- */
+
 use rmrevin\yii\fontawesome\FA;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\date\DatePicker;
 use yii\widgets\Pjax;
-use yii\bootstrap\Tabs;
 
 ?>
 <br><button type="button" class="btn btn-primary pull-right mb-30" data-toggle="modal" data-target="#edit-driver">Добавить водителя</button>
@@ -78,8 +72,6 @@ echo \yii\grid\GridView::widget([
 ]);
 Pjax::end();
 ?>
-<!--    </div>-->
-<!--</div>-->
 
 <?php
 Modal::begin([
@@ -153,6 +145,32 @@ Modal::begin([
 </div>
 
 <?php Modal::end();?>
+
+<?php
+Modal::begin([
+    'header' => '<b>Создание отчета</b>',
+    'id' => 'generate-report',
+    'size' => 'modal-lg',
+]);
+?>
+
+<div class='modalContent'>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12" id="rep-drv-name"></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><hr></div>
+    </div>
+</div>
+
+<?php Modal::end();?>
+
 
 <script language="JavaScript">
     document.addEventListener('DOMContentLoaded', function() {

@@ -18,20 +18,21 @@ class DriverProfileController extends Controller
 		$model = new DriverProfileForm();
 		$dic_tachograph = $model->getDicTachograph();
 		$dic_trailertype = $model->getDicTrailerType();
-
-		header('Content-type: text/plain');
-
-    print_r($model);
-
-    exit;
 		
 		if ($model->load(Yii::$app->request->post()) && $model->validate()){
 			$model->saveDriverProfile();
-		}
-		
-		return $this->render('/driver-profile/index', [                             
-		  'driverInfo' => $this->renderPartial('driver-info', ['model' => $model ->getDriverProfile()]),
-		  'driverInfoExtended' => $this->renderPartial('driver-info-extended', ['model' => $model,'dic_tachograph' => $dic_tachograph, 'dic_trailertype' => $dic_trailertype]),
+		}		
+
+		return $this->render('/driver-profile/index', [			                             
+		  'driverInfo' => $this->renderPartial('driver-info', [
+					'model'   => $model,
+					'profile' => $model->getDriverProfile()
+				]),
+		  'driverInfoExtended' => $this->renderPartial('driver-info-extended', [
+				    'model' => $model,
+				    'dic_tachograph' => $dic_tachograph,
+					'dic_trailertype' => $dic_trailertype
+				]),
 		]);
 	}
 }

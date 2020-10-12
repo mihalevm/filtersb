@@ -23,29 +23,29 @@ class DriverProfileForm extends Model
 	public $mainNumber;
 	public $relativesNumbers;
 
-	public function rules() 
-	{
-		return [
-			[
-				['email', 'required', 'message' => 'Заполните поле "Адрес электронной почты"'],
-				['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
-				['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
-				['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
-				['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // Нужна проверка пустой даты
-				['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
-				['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
-				['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
-				['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
-				['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
-				['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ],
-				// ['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
-				// ['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
-			],
-			['email', 'email'],
-			['email', 'unqEmailCheck'],
-			['inn',   'unqInnCheck']
-		];
-	}
+	// public function rules() 
+	// {
+	// 	return [
+	// 		[
+	// 			['email', 'required', 'message' => 'Заполните поле "Адрес электронной почты"'],
+	// 			['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
+	// 			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
+	// 			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
+	// 			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // Нужна проверка пустой даты
+	// 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
+	// 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
+	// 			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
+	// 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
+	// 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
+	// 			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ],
+	// 			['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
+	// 			['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
+	// 		],
+	// 		['email', 'email'],
+	// 		['email', 'unqEmailCheck'],
+	// 		['inn',   'unqInnCheck']
+	// 	];
+	// }
 
 	protected $db_conn;
 
@@ -70,14 +70,14 @@ class DriverProfileForm extends Model
 	}
 
 	public function getDriverProfile () {
-        return ($this->db_conn->createCommand("select * from userinfo where id=:id")
-            ->bindValue(':id', Yii::$app->user->identity->id)
-            ->queryAll())[0];
-    }
+				return ($this->db_conn->createCommand("select * from userinfo where id=:id")
+						->bindValue(':id', Yii::$app->user->identity->id)
+						->queryAll())[0];
+		}
 
 	public function saveDriverProfile() {
 		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName,   
-		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, where id=:id",
+		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate where id=:id",
 				[
 					':secondName'   => null,
 					':firstname'    => null,
@@ -105,7 +105,7 @@ class DriverProfileForm extends Model
 				->execute();
 
 		if (isset($this->email) && $this->email != Yii::$app->user->identity->username) {
-			$this->db_conn->createCommand("update users set email=:email  where id=:id",
+			$this->db_conn->createCommand("update users set username=:email  where id=:id",
 				[
 					':email' => null,
 					':id' => null,

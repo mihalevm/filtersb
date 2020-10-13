@@ -17,6 +17,10 @@ $this->title = 'Профиль водителя';
                 'label' => 'Дополнительная информация',
                 'content' => $driverInfoExtended,
             ],
+            [
+                'label' => 'Предыдущие места работы',
+                'content' => $driverPreviousWork,
+            ],
         ],
     ]);
 ?>

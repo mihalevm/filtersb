@@ -1,6 +1,11 @@
 <?php
     use yii\helpers\Html;
     use kartik\date\DatePicker;
+    use yii\bootstrap\ActiveForm;
+
+    $form = ActiveForm::begin([
+        'id' => 'driver-info-extended'
+    ]);
 ?>
 
 <div class="driver-profile-extended">
@@ -8,18 +13,21 @@
         <tbody>
             <tr>
                 <th scope="row">Контактный телефон*:</th>
-                <td><?= Html::tag('input', Html::encode($model->mainNumber), ['class' => 'form-control', 'placeholder' => '+79998884411' ]) ?></td>
+                <td>
+                    <?= $form->field($model, 'mainNumber')->textInput(['value' => $profile['personalphone'], 'placeholder' => '+79998884411'])->label(false) ?>
+                </td>
             </tr>                
             <tr>
                 <th scope="row">Телефоны родственников (2 человека)*:</th>
                 <td>
-                    <?= Html::tag('input', Html::encode($model->relativesNumbers), ['class' => 'form-control', 'placeholder' => '+79998884411, +79998884411' ]) ?><br>
+                    <?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label(false) ?>
                 </td>                
             </tr>
             <tr>
                 <th scope="row">Семейное положение*:</th>
                 <td>
-                    <?= Html::dropDownList('familystatus', 'null', ['N' => 'Холост(а)', 'Y' => 'В браке']) ?>
+                    
+                    
                 </td>
             </tr>
             <!-- <tr>

@@ -24,15 +24,19 @@ class DriverProfileController extends Controller
 		}		
 
 		return $this->render('/driver-profile/index', [			                             
-		  'driverInfo' => $this->renderPartial('driver-info', [
-					'model'   => $model,
-					'profile' => $model->getDriverProfile()
-				]),
-		  'driverInfoExtended' => $this->renderPartial('driver-info-extended', [
-				    'model' => $model,
-				    'dic_tachograph' => $dic_tachograph,
-					'dic_trailertype' => $dic_trailertype
-				]),
+		  	'driverInfo' => $this->renderPartial('driver-info', [
+				'model'   => $model,
+				'profile' => $model->getDriverProfile()
+			]),
+		  	'driverInfoExtended' => $this->renderPartial('driver-info-extended', [
+				'model' => $model,
+				'profile' => $model->getDriverProfile(),
+				'dic_tachograph' => $dic_tachograph,
+				'dic_trailertype' => $dic_trailertype
+			]),
+		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
+				'model' => $model,				
+			]),
 		]);
 	}
 }

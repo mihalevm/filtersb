@@ -12,7 +12,8 @@
 	]);    
 ?>
 <br>
-<div>
+<div class="driver-info-content">
+
 	<?= $form->errorSummary($model) ?>
 
 	<?= $form->field($model, 'email')->textInput(['value' => Yii::$app->user->identity->username, 'placeholder' => 'inbox@example.com'])->label('Адрес электронной почты*:') ?>

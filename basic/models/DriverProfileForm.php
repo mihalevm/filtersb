@@ -22,6 +22,7 @@ class DriverProfileForm extends Model
 	public $licenseRealeaseDate;
 	public $mainNumber;
 	public $relativesNumbers;
+	public $tachograph;
 
 	// public function rules() 
 	// {
@@ -55,16 +56,17 @@ class DriverProfileForm extends Model
 	
 	public function getDicTachograph() {
 		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_tachograph` LIMIT 3"))
-			->queryAll();   
-		$list = ArrayHelper::map($list,'id', 'name');
+			->queryAll();
+
+		$list = ArrayHelper::map($list, 'id', 'name');	
 
 		return $list;
 	}
 
 	public function getDicTrailerType() {
 		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_trailertype` LIMIT 3"))
-			->queryAll();   
-		$list = ArrayHelper::map($list,'id', 'name');
+			->queryAll();
+		$list = ArrayHelper::map($list, 'id', 'name');
 
 		return $list;
 	}

@@ -20,6 +20,7 @@ echo \yii\grid\GridView::widget([
             'id'              => 'drv-item-'.$model['id'],
             'class'           => 'driver-item',
             'data-id'         => $model['id'],
+            'data-did'        => $model['did'],
             'data-username'   => $model['username'],
             'data-inn'        => $model['inn'],
             'data-firstname'  => $model['firstname'],
@@ -167,6 +168,9 @@ Modal::begin([
     <div class="row">
         <div class="col-md-12"><hr></div>
     </div>
+    <div class="row">
+        <div class="col-md-12" id="rep-engine-content"></div>
+    </div>
 </div>
 
 <?php Modal::end();?>
@@ -194,6 +198,16 @@ Modal::begin([
         $('#edit-driver').on('shown.bs.modal', function() {
             $('#add-driver-form').yiiActiveForm('resetForm');
             $('#edit-driver').find('.modal-content').css('height', 'auto')
+        });
+
+        $('#generate-report').on('shown.bs.modal', function() {
+            $('#rep-engine-content').html('');
+            $.post(window.location.origin + '/reportgrabber', {
+                s: 'S',
+                did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            }, function (data) {
+                $('#rep-engine-content').html(data);
+            });
         });
     });
 

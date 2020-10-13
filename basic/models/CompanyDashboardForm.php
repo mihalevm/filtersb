@@ -109,7 +109,7 @@ class CompanyDashboardForm extends Model {
     }
 
     public function selectCompanyDrivers($reqFlag) {
-        $arr = $this->db_conn->createCommand("SELECT t.id, u.username, i.inn, i.firstname, i.secondname, i.middlename, i.birthday, i.pserial, i.pnumber, i.dserial, i.dnumber, (SELECT COUNT(*) FROM tcdrivers tt WHERE tt.did=t.did AND  tt.tid<>t.tid) AS cnt FROM tcdrivers t, users u, userinfo i WHERE t.tid=:tid AND t.reqby=:reqby AND t.disabled='N' AND t.did = u.id AND t.did = i.id", [
+        $arr = $this->db_conn->createCommand("SELECT t.id, t.did, u.username, i.inn, i.firstname, i.secondname, i.middlename, i.birthday, i.pserial, i.pnumber, i.dserial, i.dnumber, (SELECT COUNT(*) FROM tcdrivers tt WHERE tt.did=t.did AND  tt.tid<>t.tid) AS cnt FROM tcdrivers t, users u, userinfo i WHERE t.tid=:tid AND t.reqby=:reqby AND t.disabled='N' AND t.did = u.id AND t.did = i.id", [
             ':reqby' => null,
             ':tid'   => null,
         ])

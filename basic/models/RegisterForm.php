@@ -53,11 +53,11 @@ class RegisterForm extends Model
             if (!isset($this->inn)) {
                 $this->addError('*', 'ИНН обязательное поле');
             } else {
-                $res = $this->db_conn->createCommand("select count(*) as cnt from userinfo where active='Y' and inn=:inn")
+                $res = $this->db_conn->createCommand("select count(*) as cnt from users u, userinfo i where u.active='Y' and i.inn=:inn and u.id = i.id")
                     ->bindValue(':inn', $this->inn)
                     ->queryAll();
 
-                if (count($res)>0) {
+                if (count($res) > 0 && $res[0]['cnt'] != 0) {
                     $this->addError('*', 'Компания с таким ИНН уже зарегестрирована');
                 }
             }
@@ -69,7 +69,7 @@ class RegisterForm extends Model
             ->bindValue(':email', $this->email)
             ->queryAll();
 
-        if (count($res) > 0) {
+        if (count($res) > 0 && $res[0]['cnt'] != 0) {
             $this->addError('*', 'Указанный Email уже зарегистрирован');
         }
 

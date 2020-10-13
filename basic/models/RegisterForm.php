@@ -53,7 +53,7 @@ class RegisterForm extends Model
             if (!isset($this->inn)) {
                 $this->addError('*', 'ИНН обязательное поле');
             } else {
-                $res = $this->db_conn->createCommand("select count(*) as cnt from usersinfo where active='Y' and inn=:inn")
+                $res = $this->db_conn->createCommand("select count(*) as cnt from userinfo where active='Y' and inn=:inn")
                     ->bindValue(':inn', $this->inn)
                     ->queryAll();
 

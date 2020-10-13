@@ -2,10 +2,9 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=srv.filtersb.ru;dbname=filtersb',
-    'username' => 'ervewsLIOwe3',
-    'password' => 'ali934sKIHwe',
+    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
+    'username' => 'root',
+    'password' => '',
     'charset' => 'utf8',
-
 ];
  

@@ -55,7 +55,7 @@
 
 	<div class="form-group field-driverprofileform-licenserealeasedate">
 		<?php
-			echo '<label class="col-lg-6 control-label" for="driverprofileform-licensereleasedate">Дата рождения*:</label>'; 
+			echo '<label class="col-lg-6 control-label" for="driverprofileform-licensereleasedate">Дата выдачи водительского удостоверения*:</label>'; 
 			echo '<div class="col-lg-6">';
 			echo DatePicker::widget([
 				'model' => 'licenseRealeaseDate',

@@ -24,29 +24,27 @@ class DriverProfileForm extends Model
 	public $relativesNumbers;
 	public $tachograph;
 
-	// public function rules() 
-	// {
-	// 	return [
-	// 		[
-	// 			['email', 'required', 'message' => 'Заполните поле "Адрес электронной почты"'],
-	// 			['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
-	// 			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
-	// 			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
-	// 			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // Нужна проверка пустой даты
-	// 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
-	// 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
-	// 			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
-	// 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
-	// 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
-	// 			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ],
-	// 			['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
-	// 			['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
-	// 		],
-	// 		['email', 'email'],
-	// 		['email', 'unqEmailCheck'],
-	// 		['inn',   'unqInnCheck']
-	// 	];
-	// }
+	public function rules() 
+	{
+		return [
+			['email', 'required', 'message' => 'Заполните поле "Адрес электронной почты"'],
+			['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
+			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
+			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
+			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // Нужна проверка пустой даты, не работает проверка обязательности
+			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
+			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
+			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
+			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
+			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
+			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ], // не работает проверка обязательности
+			['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
+			['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
+			['email', 'email'],
+			// ['email', 'unqEmailCheck'], // Не работает
+			// ['inn',   'unqInnCheck'] // Не работает
+		];
+	}	
 
 	protected $db_conn;
 
@@ -89,7 +87,7 @@ class DriverProfileForm extends Model
 					':inn'          => null,
 					':licenseSerial' => null,					
 					':licenseRealeaseDate' => null,					
-					// ':mainNumber'   => null,
+					':mainNumber'   => null,
 					':id'           => null,
 				])
 				->bindValue(':secondName',  $this->secondName)
@@ -102,7 +100,7 @@ class DriverProfileForm extends Model
 				->bindValue(':licenseSerial',   $this->licenseSerial)
 				->bindValue(':licenseNumber',   $this->licenseNumber)
 				->bindValue(':licenseRealeaseDate',   $this->licenseRealeaseDate)
-				// ->bindValue(':mainNumber',  $this->mainNumber)
+				->bindValue(':mainNumber',  $this->mainNumber)
 				->bindValue(':id',          Yii::$app->user->identity->id)
 				->execute();
 

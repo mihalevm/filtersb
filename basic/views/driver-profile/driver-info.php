@@ -10,6 +10,7 @@
 			'labelOptions' => ['class' => 'col-lg-6 control-label'],
 		],       
 	]);    
+
 ?>
 <br>
 <div class="driver-info-content">
@@ -24,24 +25,15 @@
 
 	<?= $form->field($model, 'thirdName')->textInput(['value' => $profile['middlename'], 'placeholder' => 'Иванович'])->label('Отчество*:') ?>
 
-	<div class="form-group field-driverprofileform-birthdate">
-		<?php
-			echo '<label class="col-lg-6 control-label" for="driverprofileform-birthdate">Дата рождения*:</label>'; 
-			echo '<div class="col-lg-6">';
-			echo DatePicker::widget([
-				'model' => 'birthDate',
-				'name' => 'birth-date',			
-				'type' => DatePicker::TYPE_INPUT,	
-				'value' => $profile['birthday'],
-				'options' => ['placeholder' => '23.02.1982'],
-				'pluginOptions' => [
-					'autoclose' => true,
-					'format' => 'dd.mm.yyyy'
-				]
-			]);
-			echo '</div>';
-		?>
-	</div>
+	<?= $form->field($model, 'birthDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'value' => $profile['birthday'],
+		'options' => ['placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Дата рождения*:') ?>
 
 	<?= $form->field($model, 'passportSerial')->textInput(['value' => $profile['pserial'], 'placeholder' => '0001'])->label('Серия паспорта*:') ?>
 
@@ -53,24 +45,27 @@
 
 	<?= $form->field($model, 'licenseNumber')->textInput(['value' => $profile['dnumber'], 'placeholder' => '000001'])->label('Номер водительского удостоверения*:') ?>
 
-	<div class="form-group field-driverprofileform-licenserealeasedate">
-		<?php
-			echo '<label class="col-lg-6 control-label" for="driverprofileform-licensereleasedate">Дата выдачи водительского удостоверения*:</label>'; 
-			echo '<div class="col-lg-6">';
-			echo DatePicker::widget([
-				'model' => 'licenseRealeaseDate',
-				'name' => 'license-release-date',
-				'type' => DatePicker::TYPE_INPUT,
-				'value' => $profile['ddate'],
-				'options' => ['placeholder' => '23.02.1982'],
-				'pluginOptions' => [
-					'autoclose'=>true,
-					'format' => 'dd.mm.yyyy'
-				]
-			]);
-			echo '</div>';
-		?>
-	</div>      
+	<?= $form->field($model, 'licenseRealeaseDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'value' => $profile['ddate'],
+		'options' => ['placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Дата выдачи водительского удостоверения*:') ?>
+
+	<?= $form->field($model, 'agreementPersonalData')->dropDownList(
+		['N' => 'Нет', 'Y' => 'Да'], 
+		['value' => $profile['agreepersdata']])->label('Cогласие на обработку персональных данных.') ?>
+
+	<?= $form->field($model, 'agreementThirdParty')->dropDownList(
+		['N' => 'Нет', 'Y' => 'Да'],
+		['value' => $profile['agreecheck']])->label('Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами.') ?>
+
+	<?= $form->field($model, 'agreementComments')->dropDownList(
+		['N' => 'Нет', 'Y' => 'Да'],		
+		['value' => $profile['agreecomment']])->label('Cогласие на комментирование со стороны транспортных компаний.') ?>
 
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'driver-info-save', 'method' => 'post']) ?>
 

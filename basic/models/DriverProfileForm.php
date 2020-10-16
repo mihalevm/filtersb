@@ -23,6 +23,20 @@ class DriverProfileForm extends Model
 	public $mainNumber;
 	public $relativesNumbers;
 	public $tachograph;
+	public $familyStatus;
+	public $children;
+	public $categoryC;
+	public $categoryE;
+	public $interPassportExpireDate;
+	public $medCard;
+	public $startDate;
+	public $flyInAccept;
+	public $agreementPersonalData;
+	public $agreementThirdParty;
+	public $agreementComments;
+	
+	// $birthday = date('d.m.Y', strtotime($profile['birthday'])); // Перенести в модель
+	// $ddate = date('d.m.Y', strtotime($profile['ddate']));
 
 	public function rules() 
 	{
@@ -31,15 +45,16 @@ class DriverProfileForm extends Model
 			['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
 			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
 			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
-			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // Нужна проверка пустой даты, не работает проверка обязательности
+			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // не работает проверка обязательности, не корректный формат даты
 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
 			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
-			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ], // не работает проверка обязательности
+			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ], // не работает проверка обязательности, не корректный формат даты
 			['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
 			['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
+			['familyStatus', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
 			['email', 'email'],
 			// ['email', 'unqEmailCheck'], // Не работает
 			// ['inn',   'unqInnCheck'] // Не работает
@@ -48,11 +63,13 @@ class DriverProfileForm extends Model
 
 	protected $db_conn;
 
-	function __construct () {
+	function __construct () 
+	{
 		$this->db_conn = Yii::$app->db;
 	}
 	
-	public function getDicTachograph() {
+	public function getDicTachograph() 
+	{
 		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_tachograph` LIMIT 3"))
 			->queryAll();
 
@@ -61,7 +78,8 @@ class DriverProfileForm extends Model
 		return $list;
 	}
 
-	public function getDicTrailerType() {
+	public function getDicTrailerType() 
+	{
 		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_trailertype` LIMIT 3"))
 			->queryAll();
 		$list = ArrayHelper::map($list, 'id', 'name');
@@ -69,40 +87,42 @@ class DriverProfileForm extends Model
 		return $list;
 	}
 
-	public function getDriverProfile () {
-				return ($this->db_conn->createCommand("select * from userinfo where id=:id")
-						->bindValue(':id', Yii::$app->user->identity->id)
-						->queryAll())[0];
-		}
+	public function getDriverProfile () 
+	{
+		return ($this->db_conn->createCommand("select * from userinfo where id=:id")
+			->bindValue(':id', Yii::$app->user->identity->id)
+			->queryAll())[0];
+	}
 
-	public function saveDriverProfile() {
+	public function saveDriverProfile() 
+	{
 		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName,   
 		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate where id=:id",
-				[
-					':secondName'   => null,
-					':firstname'    => null,
-					':thirdName'   => null,
-					':passportSerial' => null,
-					':passportNumber' => null,					
-					':inn'          => null,
-					':licenseSerial' => null,					
-					':licenseRealeaseDate' => null,					
-					':mainNumber'   => null,
-					':id'           => null,
-				])
-				->bindValue(':secondName',  $this->secondName)
-				->bindValue(':firstName',   $this->firstName)
-				->bindValue(':thirdName',   $this->thirdName)
-				->bindValue(':birthDate',   $this->birthDate)
-				->bindValue(':passportSerial',   $this->passportSerial)
-				->bindValue(':passportNumber',   $this->passportNumber)
-				->bindValue(':inn',         $this->inn)
-				->bindValue(':licenseSerial',   $this->licenseSerial)
-				->bindValue(':licenseNumber',   $this->licenseNumber)
-				->bindValue(':licenseRealeaseDate',   $this->licenseRealeaseDate)
-				->bindValue(':mainNumber',  $this->mainNumber)
-				->bindValue(':id',          Yii::$app->user->identity->id)
-				->execute();
+			[
+				':secondName'   => null,
+				':firstname'    => null,
+				':thirdName'   => null,
+				':passportSerial' => null,
+				':passportNumber' => null,					
+				':inn'          => null,
+				':licenseSerial' => null,					
+				':licenseRealeaseDate' => null,					
+				':mainNumber'   => null,
+				':id'           => null,
+			])
+		->bindValue(':secondName',  $this->secondName)
+		->bindValue(':firstName',   $this->firstName)
+		->bindValue(':thirdName',   $this->thirdName)
+		->bindValue(':birthDate',       date_format(date_create_from_format('d.m.Y', $this->birthDate), 'Y-m-d'))		
+		->bindValue(':passportSerial',   $this->passportSerial)
+		->bindValue(':passportNumber',   $this->passportNumber)
+		->bindValue(':inn',         $this->inn)
+		->bindValue(':licenseSerial',   $this->licenseSerial)
+		->bindValue(':licenseNumber',   $this->licenseNumber)
+		->bindValue(':licenseRealeaseDate',   $this->licenseRealeaseDate)
+		->bindValue(':mainNumber',  $this->mainNumber)
+		->bindValue(':id',          Yii::$app->user->identity->id)
+		->execute();
 
 		if (isset($this->email) && $this->email != Yii::$app->user->identity->username) {
 			$this->db_conn->createCommand("update users set username=:email  where id=:id",

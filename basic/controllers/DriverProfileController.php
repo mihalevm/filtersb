@@ -35,7 +35,8 @@ class DriverProfileController extends Controller
 				'dic_trailertype' => $dic_trailertype
 			]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
-				'model' => $model,				
+				'model' => $model,
+				'profile' => $model->getDriverProfile(),
 			]),
 		]);
 	}

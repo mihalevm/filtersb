@@ -2,8 +2,7 @@
 	use yii\helpers\Html;
 	use kartik\date\DatePicker;
 	use yii\bootstrap\ActiveForm;
-	use yii\jui\AutoComplete;	
-	//use yii\helpers\ArrayHelper;
+	use yii\jui\AutoComplete;		
 
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
@@ -18,33 +17,63 @@
 <div class="driver-info-extended-content">
 	<?= $form->field($model, 'mainNumber')->textInput(['value' => $profile['personalphone'], 'placeholder' => '+79998884411'])->label('Контактный телефон*:') ?>
 
-	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>
+	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>	
+
+	<?= $form->field($model, 'familyStatus')->widget(\yii\jui\AutoComplete::classname(), [
+		'clientOptions' => [						
+			'source' => [ 'В браке', 'Холост' ],
+		],
+	])->label('Семейное положение*:') ?>	
+
+	<?= $form->field($model, 'children')->textarea(['value' => '', 'rows' => '5'] )->label('Дети, пол и возраст*:') ?>
+		<br>
+		<br>
+		<br>
+		<br>
+	<?= $form->field($model, 'categoryC')->textInput(['value' => $profile['c_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “С” (лет)*:') ?>
+
+	<?= $form->field($model, 'categoryE')->textInput(['value' => $profile['e_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “Е” (лет)*:') ?>
 
 	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
-			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Пока не нашел варианта добавлять полностью весь список
+			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Need to change
 		],
-	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>	
+	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>
+	
+	<?= $form->field($model, 'children')->textarea(['value' => '', 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
+		<br>
+		<br>
+		<br>
+		<br>
+	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
+		'clientOptions' => [						
+			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change
+		],
+	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*:') ?>	
+	
+	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'value' => $profile['fpassdate'],
+		'options' => ['placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Дата окончания загран.паспорта*:') ?>
 
-	<textarea class="form-control" rows="10"></textarea>
-	<?= Html::dropDownList('international-passport', 'null', ['0' => 'Нет', '1' => 'Да']) ?>
-	<?= Html::dropDownList('conviction', 'null', ['0' => 'Нет', '1' => 'Да']) ?>
-	<textarea class="form-control" rows="10"></textarea>
-	<?= Html::dropDownList('med-card', 'null', ['0' => 'Нет', '1' => 'Да']) ?>
-	<textarea class="form-control" rows="5"></textarea>                  
+	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки (да/нет)*:') ?>
 
-	<?= Html::dropDownList('fly-in-accept', 'null', ['0' => 'Нет', '1' => 'Да']) ?>                
-	<div class="form-check">
-		<input type="checkbox" class="form-check-input" id="agreement-personal-data">
-		<label class="form-check-label" for="agreement-personal-data">Cогласие на обработку персональных данных.</label>
-	</div>
-	<div class="form-check">
-		<input type="checkbox" class="form-check-input" id="agreement-third-party">
-		<label class="form-check-label" for="agreement-third-party">Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами.</label>
-	</div>
-	<div class="form-check">
-		<input type="checkbox" class="form-check-input" id="agreement-comments">
-		<label class="form-check-label" for="agreement-comments">Cогласие на комментирование со стороны транспортных компаний.</label>
-	</div>
+	<?= $form->field($model, 'startDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'value' => $profile['startdate'],
+		'options' => ['placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Когда вы готовы приступить к работе*:') ?>
+	
+	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом*:') ?>
+
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
 </div>

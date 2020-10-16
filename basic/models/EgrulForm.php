@@ -126,7 +126,11 @@ class EgrulForm extends Model {
     public function EgrulRequest($did, $rid){
         $inn  = intval($this->getDriverINN($did));
 
-        $res = 0;
+        $result = [];
+
+        $result['code'] = 0;
+        $result['message'] = null;
+
         $first_time_mark = round(microtime(true) * 1000);
 
         if ($inn > 0) {
@@ -142,26 +146,26 @@ class EgrulForm extends Model {
                         $res = json_decode($content);
                         if (property_exists($res, 'rows')) {
                             if (sizeof($res->rows) > 0) {
-                                $res = $this->addDriverData($did, $rid, $content);
+                                $result['code'] = $this->addDriverData($did, $rid, $content);
                             } else {
-                                $res = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
+                                $result['message'] = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
                             }
                         } else {
-                            $res = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
+                            $result['message'] = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
                         }
                     } else {
-                        $res = 'Ошибка запроса в базу ЕГРЮЛ';
+                        $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
                     }
                 } else {
-                    $res = 'Ошибка запроса в базу ЕГРЮЛ';
+                    $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
                 }
             } else {
-                $res = 'Ошибка запроса в базу ЕГРЮЛ';
+                $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
             }
         } else {
-            $res = 'ИНН водителя неверно задан в профиле';
+            $result['message'] = 'ИНН водителя неверно задан в профиле';
         }
 
-        return $res;
+        return $result;
     }
 }

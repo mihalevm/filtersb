@@ -47,11 +47,12 @@ class ReportgrabberController extends Controller {
 
                 $res = $model->EgrulRequest($r->post('did'), $r->post('rid'));
 
-                if (intval($res) > 0 ) {
+                if (intval($res['code']) > 0 || null !=$res['message'] ) {
                     $renderView = 'egrul';
 
                     $params = [
-                        'result' => $res
+                        'result'  => $res['code'],
+                        'message' => $res['message']
                     ];
                 }
             }

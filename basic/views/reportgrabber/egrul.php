@@ -6,7 +6,7 @@
     if (intval($result) > 0) {
         echo "Данные из базы ЕГРЮЛ получены.";
     } else {
-        echo $result;
+        echo $message;
     }
 ?>
             </h4>

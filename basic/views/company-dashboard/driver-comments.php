@@ -10,7 +10,7 @@ use rmrevin\yii\fontawesome\FAS;
         <div class="col-md-12">
             <h4>Оставьте отзыв</h4><hr>
         </div>
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="input-group">
                 <div class="input-group-btn">
                     <button class="btn btn-default" type="button" title="Положительно" onclick="setComentRait(1)"><?=FAS::icon('thumbs-up')?></button>

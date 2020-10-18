@@ -100,7 +100,7 @@ class DriverProfileForm extends Model
 	public function saveDriverProfile() 
 	{
 		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
-		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate where id=:id",
+		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty where id=:id",
 			[
 				':secondName'   => null,
 				':firstName'    => null,
@@ -111,7 +111,10 @@ class DriverProfileForm extends Model
 				':inn'          => null,
 				':licenseSerial' => null,
 				':licenseNumber' => null,
-				':licenseRealeaseDate' => null,					
+				':licenseRealeaseDate' => null,		
+				':agreementPersonalData' => null,
+				':agreementThirdParty' => null,
+				':agreementComments' => null,				
 				':id'           => null,
 			])
 		->bindValue(':secondName',  $this->secondName)
@@ -124,6 +127,9 @@ class DriverProfileForm extends Model
 		->bindValue(':licenseSerial',   $this->licenseSerial)
 		->bindValue(':licenseNumber',   $this->licenseNumber)
 		->bindValue(':licenseRealeaseDate',  date_format(date_create_from_format('d.m.Y', $this->licenseRealeaseDate), 'Y-m-d') )
+		->bindValue(':agreementPersonalData',   $this->agreementPersonalData)
+		->bindValue(':agreementThirdParty',   $this->agreementThirdParty)
+		->bindValue(':agreementComments',         $this->agreementComments)
 		->bindValue(':id',          Yii::$app->user->identity->id)
 		->execute();
 

@@ -11,9 +11,7 @@
 			'labelOptions' => ['class' => 'col-lg-6 control-label'],
 		], 
 	]);	
-	
-	$dic_tachograph;
-	$dic_trailertype;
+
 ?>
 <br>
 <div class="driver-info-extended-content">
@@ -37,16 +35,29 @@
 
 	<?= $form->field($model, 'categoryE')->textInput(['value' => $profile['e_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “Е” (лет)*:') ?>
 
-	<?= $form->field($model, 'tachograph')->dropDownList(
-		$dic_tachograph)->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>
+	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
+		'clientOptions' => [						
+			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Need to change
+		],
+		'options' => [
+			'value' => $profile['tachograph']
+		]		
+	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:*') ?>	
 
 	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
 		<br>
 		<br>
 		<br>
 		<br>
-	<?= $form->field($model, 'trailertype')->dropDownList(
-		$dic_trailertype)->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>
+
+	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
+		'clientOptions' => [						
+			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change
+		],
+		'options' => [
+			'value' => $profile['trailertype']	
+		]		
+	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>	
 
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		

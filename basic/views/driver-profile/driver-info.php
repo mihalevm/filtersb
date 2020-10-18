@@ -26,9 +26,8 @@
 	<?= $form->field($model, 'thirdName')->textInput(['value' => $profile['middlename'], 'placeholder' => 'Иванович'])->label('Отчество*:') ?>
 
 	<?= $form->field($model, 'birthDate')->widget(DatePicker::classname(), [		
-		'type' => DatePicker::TYPE_INPUT,		
-		'value' => $profile['birthday'],
-		'options' => ['placeholder' => '23.02.1982'],
+		'type' => DatePicker::TYPE_INPUT,
+		'options' => ['value' => $profile['birthday'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
@@ -45,15 +44,14 @@
 
 	<?= $form->field($model, 'licenseNumber')->textInput(['value' => $profile['dnumber'], 'placeholder' => '000001'])->label('Номер водительского удостоверения*:') ?>
 
-	<?= $form->field($model, 'licenseRealeaseDate')->widget(DatePicker::classname(), [		
-		'type' => DatePicker::TYPE_INPUT,		
-		'value' => $profile['ddate'],
-		'options' => ['placeholder' => '23.02.1982'],
-		'pluginOptions' => [
-			'autoclose' => true,
-			'format' => 'dd.mm.yyyy'
-		]
-	])->label('Дата выдачи водительского удостоверения*:') ?>
+		<?= $form->field($model, 'licenseRealeaseDate')->widget(DatePicker::classname(), [		
+			'type' => DatePicker::TYPE_INPUT,			
+			'options' => ['value' => $profile['ddate'], 'placeholder' => '23.02.1982'],
+			'pluginOptions' => [
+				'autoclose' => true,
+				'format' => 'dd.mm.yyyy'
+			]
+			])->label('Дата выдачи водительского удостоверения*:') ?>
 
 	<?= $form->field($model, 'agreementPersonalData')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'], 

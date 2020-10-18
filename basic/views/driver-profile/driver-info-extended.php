@@ -15,17 +15,18 @@
 ?>
 <br>
 <div class="driver-info-extended-content">
+
+	<?= $form->errorSummary($model) ?>
+
 	<?= $form->field($model, 'mainNumber')->textInput(['value' => $profile['personalphone'], 'placeholder' => '+79998884411'])->label('Контактный телефон*:') ?>
 
-	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>	
+	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>
 
-	<?= $form->field($model, 'familyStatus')->widget(\yii\jui\AutoComplete::classname(), [
-		'clientOptions' => [						
-			'source' => [ 'В браке', 'Холост' ],
-		],
-	])->label('Семейное положение*:') ?>	
+	<?= $form->field($model, 'familyStatus')->dropDownList(
+		['N' => 'Нет', 'Y' => 'Да'], 
+		['value' => $profile['familystatus']])->label('Семейное положение*:') ?>
 
-	<?= $form->field($model, 'children')->textarea(['value' => '', 'rows' => '5'] )->label('Дети, пол и возраст*:') ?>
+	<?= $form->field($model, 'childs')->textarea(['value' => $profile['childs'], 'rows' => '5'] )->label('Дети, пол и возраст*:') ?>
 		<br>
 		<br>
 		<br>
@@ -36,37 +37,35 @@
 
 	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
-			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Need to change
+			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ],
 		],
 	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>
 	
-	<?= $form->field($model, 'children')->textarea(['value' => '', 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
+	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
 		<br>
 		<br>
 		<br>
 		<br>
-	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
+	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
-			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change
+			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ],
 		],
-	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*:') ?>	
+	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>	
 	
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
-		'value' => $profile['fpassdate'],
-		'options' => ['placeholder' => '23.02.1982'],
+		'options' => ['value' => $profile['fpassdate'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
 	])->label('Дата окончания загран.паспорта*:') ?>
 
-	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки (да/нет)*:') ?>
+	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки*:') ?>
 
 	<?= $form->field($model, 'startDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
-		'value' => $profile['startdate'],
-		'options' => ['placeholder' => '23.02.1982'],
+		'options' => ['value' => $profile['startdate'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'

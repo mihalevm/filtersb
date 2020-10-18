@@ -23,20 +23,27 @@ class DriverProfileForm extends Model
 	public $mainNumber;
 	public $relativesNumbers;
 	public $tachograph;
+	public $trailertype;
+	public $marks;
 	public $familyStatus;
-	public $children;
+	public $childs;
 	public $categoryC;
 	public $categoryE;
 	public $interPassportExpireDate;
 	public $medCard;
 	public $startDate;
 	public $flyInAccept;
+	public $workplaceList;
 	public $agreementPersonalData;
 	public $agreementThirdParty;
 	public $agreementComments;
-	
-	// $birthday = date('d.m.Y', strtotime($profile['birthday'])); // Перенести в модель
-	// $ddate = date('d.m.Y', strtotime($profile['ddate']));
+	public $workStartDate;
+	public $workEndDate;
+	public $company;
+	public $post;
+	public $action;
+	public $dismissal;
+	public $guarantor;	
 
 	public function rules() 
 	{
@@ -45,16 +52,36 @@ class DriverProfileForm extends Model
 			['secondName', 'required', 'message' => 'Заполните поле "Фамилия"'],
 			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
 			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
-			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'], // не работает проверка обязательности, не корректный формат даты
+			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'],
 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
 			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
-			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ], // не работает проверка обязательности, не корректный формат даты
-			['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
-			['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
-			['familyStatus', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ],
+			// ['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
+			// ['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
+			// ['familyStatus', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			// ['childs', 'required', 'message' => 'Заполните поле "Дети, пол и возраст*:"' ],
+			// ['categoryC', 'required', 'message' => 'Заполните поле "Стаж вождения именно по категории “С” (лет)*:"' ],
+			// ['categoryE', 'required', 'message' => 'Заполните поле "Стаж вождения именно по категории “Е” (лет)*:"' ],
+			// ['tachograph', 'required', 'message' => 'Заполните поле "Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:"' ],
+			// ['trailertype', 'required', 'message' => 'Заполните поле "Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*"' ],
+			// ['marks', 'required', 'message' => 'Заполните поле "Марки транспортных средств, которыми управляли на последних местах работы*:' ],
+			// ['interPassportExpireDate', 'required', 'message' => 'Заполните поле "Дата окончания загран.паспорта*:"' ],
+			// ['medCard', 'required', 'message' => 'Заполните поле "Наличие медицинской книжки*:"' ],
+			// ['startDate', 'required', 'message' => 'Заполните поле "Когда вы готовы приступить к работе*:"' ],
+			// ['flyInAccept', 'required', 'message' => 'Заполните поле "Согласна ли ваша семья/близкие родственники работе вахтовым методом*:"' ],
+			// ['agreementPersonalData', 'required', 'message' => 'Заполните поле "Cогласие на обработку персональных данных."' ],
+			// ['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
+			// ['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
+			// ['workStartDate', 'required', 'message' => 'Заполните поле "Дата приема на работу*:"' ],
+			// ['workEndDate', 'required', 'message' => 'Заполните поле "Дата увольнения с работы*:"' ],
+			// ['company', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			// ['post', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			// ['action', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			// ['dismissal', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			// ['guarantor', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
 			['email', 'email'],
 			// ['email', 'unqEmailCheck'], // Не работает
 			// ['inn',   'unqInnCheck'] // Не работает
@@ -89,25 +116,43 @@ class DriverProfileForm extends Model
 
 	public function getDriverProfile () 
 	{
-		return ($this->db_conn->createCommand("select * from userinfo where id=:id")
+		$list = ($this->db_conn->createCommand("select * from userinfo where id=:id"))
 			->bindValue(':id', Yii::$app->user->identity->id)
-			->queryAll())[0];
+			->queryAll();
+
+		$list[0]['ddate'] = date('d.m.Y', strtotime($list[0]['ddate']));
+		$list[0]['birthday'] = date('d.m.Y', strtotime($list[0]['birthday']));
+
+		return $list[0];
+	}
+
+	public function getDriverProfileWorkplace () 
+	{
+		$list = ($this->db_conn->createCommand("select * from workplace where did=:id"))
+			->bindValue(':id', Yii::$app->user->identity->id)
+			->queryAll();
+
+		$list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
+		$list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
+
+		return $list[0];
 	}
 
 	public function saveDriverProfile() 
 	{
-		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName,   
+		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
 		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate where id=:id",
 			[
 				':secondName'   => null,
-				':firstname'    => null,
-				':thirdName'   => null,
+				':firstName'    => null,
+				':thirdName'   	=> null,
+				':birthDate'   	=> null,
 				':passportSerial' => null,
 				':passportNumber' => null,					
 				':inn'          => null,
-				':licenseSerial' => null,					
+				':licenseSerial' => null,
+				':licenseNumber' => null,
 				':licenseRealeaseDate' => null,					
-				':mainNumber'   => null,
 				':id'           => null,
 			])
 		->bindValue(':secondName',  $this->secondName)
@@ -119,8 +164,7 @@ class DriverProfileForm extends Model
 		->bindValue(':inn',         $this->inn)
 		->bindValue(':licenseSerial',   $this->licenseSerial)
 		->bindValue(':licenseNumber',   $this->licenseNumber)
-		->bindValue(':licenseRealeaseDate',   $this->licenseRealeaseDate)
-		->bindValue(':mainNumber',  $this->mainNumber)
+		->bindValue(':licenseRealeaseDate',  date_format(date_create_from_format('d.m.Y', $this->licenseRealeaseDate), 'Y-m-d') )
 		->bindValue(':id',          Yii::$app->user->identity->id)
 		->execute();
 

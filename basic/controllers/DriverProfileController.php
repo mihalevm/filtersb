@@ -36,7 +36,7 @@ class DriverProfileController extends Controller
 			]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
 				'model' => $model,
-				'profile' => $model->getDriverProfile(),
+				'profile' => $model->getDriverProfileWorkplace(),
 			]),
 		]);
 	}

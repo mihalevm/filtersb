@@ -4,35 +4,52 @@
 	use yii\bootstrap\ActiveForm;
 
 	$form = ActiveForm::begin([
-		'id' => 'driver-previous-work'       
-	]);		
+		'id' => 'driver-previous-work',
+		'fieldConfig' => [
+			'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>",
+			'labelOptions' => ['class' => 'col-lg-6 control-label'],
+		],        
+	]);
 ?>
 <br>
 <div class="driver-previous-work-content">
-	<?php
-		echo '<label class="control-label">Дата приёма и увольнения</label>';
-		echo DatePicker::widget([
-			'language' => 'ru',
-			'name' => 'work-2-employment-date',
-			'value' => '',
-			'options' => ['placeholder' => '23.02.1982'],
-			'type' => DatePicker::TYPE_RANGE,
-			'name2' => 'work-2-quit-date',
-			'value2' => '',
-			'options2' => ['placeholder' => '23.02.1982'],
-			'separator'=>' до ', 
-			'pluginOptions' => [
-				'autoclose' => true,
-				'format' => 'dd.mm.yyyy',                                    
-			]
-		]);                        
-	?><br>
-	<label>Название организации</label><input type="text" class="form-control"><br>
-	<label>Должность</label><input type="text" class="form-control"><br>
-	<label>Содержание деятельности</label><textarea class="form-control" rows="5"></textarea><br>
-	<label>Причина увольнения</label><input type="text" class="form-control"><br>
-	<label>Кто может дать рекомендации с даннного места работы (ФИО, контакт для связи)</label><textarea class="form-control" rows="10"></textarea>
-	<br>	
+
+	<?= $form->errorSummary($model) ?>
+
+	<?= $form->field($model, 'workplaceList')->dropDownList(['0' => 'Первое место работы', '1' => 'Второе место работы', '1' => 'Третье место работы'])->label('Выберите место работы:') ?>
+
+	<?= $form->field($model, 'workStartDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'options' => ['value' =>  $profile['sdate'], 'placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Дата приема на работу*:') ?>	
+	
+	<?= $form->field($model, 'workEndDate')->widget(DatePicker::classname(), [		
+		'type' => DatePicker::TYPE_INPUT,		
+		'value' => $profile['edate'],
+		'options' => ['value' =>  $profile['sdate'], 'placeholder' => '23.02.1982'],
+		'pluginOptions' => [
+			'autoclose' => true,
+			'format' => 'dd.mm.yyyy'
+		]
+	])->label('Дата увольнения с работы*:') ?>
+
+	<?= $form->field($model, 'company')->textInput(['value' => $profile['company'],])->label('Название организации') ?>
+	<?= $form->field($model, 'post')->textInput(['value' => $profile['post'],])->label('Должность') ?>
+	<?= $form->field($model, 'action')->textarea(['value' => $profile['action'], 'rows' => '5'] )->label('Содержание деятельности') ?>
+	<br>
+	<br>
+	<br>
+	<br>
+	<?= $form->field($model, 'dismissal')->textInput(['value' => $profile['dismissal'],])->label('Причина увольнения') ?>
+	<?= $form->field($model, 'guarantor')->textarea(['value' => $profile['guarantor'], 'rows' => '10'] )->label('Содержание деятельности') ?>
+	<br>
+	<br>
+	<br>
+	<br>
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
 	<?php ActiveForm::end(); ?>
 </div>

@@ -16,10 +16,10 @@
 
 	<?= $form->errorSummary($model) ?>
 
-	<?= $form->field($model, 'workplaceList')->dropDownList(['0' => 'Первое место работы', '1' => 'Второе место работы', '1' => 'Третье место работы'])->label('Выберите место работы:') ?>
+	<?= $form->field($model, 'workplaceList')->dropDownList(['0' => 'Первое место работы', '1' => 'Второе место работы', '2' => 'Третье место работы'])->label('Выберите место работы:') ?>
 
 	<?= $form->field($model, 'workStartDate')->widget(DatePicker::classname(), [		
-		'type' => DatePicker::TYPE_INPUT,		
+		'type' => DatePicker::TYPE_INPUT,		 
 		'options' => ['value' =>  $profile['sdate'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [
 			'autoclose' => true,
@@ -30,7 +30,7 @@
 	<?= $form->field($model, 'workEndDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
 		'value' => $profile['edate'],
-		'options' => ['value' =>  $profile['sdate'], 'placeholder' => '23.02.1982'],
+		'options' => ['value' =>  $profile['edate'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
@@ -45,11 +45,13 @@
 	<br>
 	<br>
 	<?= $form->field($model, 'dismissal')->textInput(['value' => $profile['dismissal'],])->label('Причина увольнения') ?>
-	<?= $form->field($model, 'guarantor')->textarea(['value' => $profile['guarantor'], 'rows' => '10'] )->label('Содержание деятельности') ?>
+	<?= $form->field($model, 'guarantor')->textarea(['value' => $profile['guarantor'], 'rows' => '10'] )->label('Кто может дать рекомендации с даннного места
+	работы (ФИО, контакт для связи)') ?>
 	<br>
 	<br>
 	<br>
 	<br>
 	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
+
 	<?php ActiveForm::end(); ?>
 </div>

@@ -4,7 +4,6 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-use app\models\CompanyProfileForm;
 use yii\helpers\ArrayHelper;
 
 class DriverProfileForm extends Model
@@ -20,30 +19,9 @@ class DriverProfileForm extends Model
 	public $licenseSerial;
 	public $licenseNumber;
 	public $licenseRealeaseDate;
-	public $mainNumber;
-	public $relativesNumbers;
-	public $tachograph;
-	public $trailertype;
-	public $marks;
-	public $familyStatus;
-	public $childs;
-	public $categoryC;
-	public $categoryE;
-	public $interPassportExpireDate;
-	public $medCard;
-	public $startDate;
-	public $flyInAccept;
-	public $workplaceList;
 	public $agreementPersonalData;
 	public $agreementThirdParty;
-	public $agreementComments;
-	public $workStartDate;
-	public $workEndDate;
-	public $company;
-	public $post;
-	public $action;
-	public $dismissal;
-	public $guarantor;	
+	public $agreementComments;	
 
 	public function rules() 
 	{
@@ -59,32 +37,12 @@ class DriverProfileForm extends Model
 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
 			['licenseRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи водительского удостоверения"' ],
-			// ['mainNumber', 'required', 'message' => 'Заполните поле "Контактный телефон"' ],
-			// ['relativesNumbers', 'required', 'message' => 'Заполните поле "Телефоны родственников (2 человека)"' ],
-			// ['familyStatus', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
-			// ['childs', 'required', 'message' => 'Заполните поле "Дети, пол и возраст*:"' ],
-			// ['categoryC', 'required', 'message' => 'Заполните поле "Стаж вождения именно по категории “С” (лет)*:"' ],
-			// ['categoryE', 'required', 'message' => 'Заполните поле "Стаж вождения именно по категории “Е” (лет)*:"' ],
-			// ['tachograph', 'required', 'message' => 'Заполните поле "Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:"' ],
-			// ['trailertype', 'required', 'message' => 'Заполните поле "Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*"' ],
-			// ['marks', 'required', 'message' => 'Заполните поле "Марки транспортных средств, которыми управляли на последних местах работы*:' ],
-			// ['interPassportExpireDate', 'required', 'message' => 'Заполните поле "Дата окончания загран.паспорта*:"' ],
-			// ['medCard', 'required', 'message' => 'Заполните поле "Наличие медицинской книжки*:"' ],
-			// ['startDate', 'required', 'message' => 'Заполните поле "Когда вы готовы приступить к работе*:"' ],
-			// ['flyInAccept', 'required', 'message' => 'Заполните поле "Согласна ли ваша семья/близкие родственники работе вахтовым методом*:"' ],
-			// ['agreementPersonalData', 'required', 'message' => 'Заполните поле "Cогласие на обработку персональных данных."' ],
-			// ['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
-			// ['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
-			// ['workStartDate', 'required', 'message' => 'Заполните поле "Дата приема на работу*:"' ],
-			// ['workEndDate', 'required', 'message' => 'Заполните поле "Дата увольнения с работы*:"' ],
-			// ['company', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
-			// ['post', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
-			// ['action', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
-			// ['dismissal', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
-			// ['guarantor', 'required', 'message' => 'Заполните поле "Семейное положение*:"' ],
+			['agreementPersonalData', 'required', 'message' => 'Заполните поле "Cогласие на обработку персональных данных."' ],
+			['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
+			['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
 			['email', 'email'],
-			// ['email', 'unqEmailCheck'], // Не работает
-			// ['inn',   'unqInnCheck'] // Не работает
+			['email', 'unqEmailCheck'], 
+			['inn',   'unqInnCheck']
 		];
 	}	
 
@@ -95,24 +53,25 @@ class DriverProfileForm extends Model
 		$this->db_conn = Yii::$app->db;
 	}
 	
-	public function getDicTachograph() 
-	{
-		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_tachograph` LIMIT 3"))
-			->queryAll();
+    public function unqInnCheck ($attribute) {
+        $res = ($this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE u.id=u.id AND u.active='Y' AND i.inn=:inn")
+            ->bindValue(':inn', $this->inn)
+            ->queryAll())[0];
 
-		$list = ArrayHelper::map($list, 'id', 'name');	
+        if ($res['id'] != Yii::$app->user->identity->id) {
+            $this->addError('*', 'Компания с таким ИНН уже зарегестрирована');
+        }
+    }
 
-		return $list;
-	}
+    public function unqEmailCheck($attribute) {
+        $res = ($this->db_conn->createCommand("select id from users where active='Y' and username=:email")
+            ->bindValue(':email', $this->email)
+            ->queryAll())[0];
 
-	public function getDicTrailerType() 
-	{
-		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_trailertype` LIMIT 3"))
-			->queryAll();
-		$list = ArrayHelper::map($list, 'id', 'name');
-
-		return $list;
-	}
+        if ($res['id'] != Yii::$app->user->identity->id) {
+            $this->addError('*', 'Указанный "Email" уже зарегестрирован');
+        }
+    }
 
 	public function getDriverProfile () 
 	{

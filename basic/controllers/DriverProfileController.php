@@ -5,6 +5,8 @@ namespace app\controllers;
 use Yii;
 use yii\web\Controller;
 use app\models\DriverProfileForm;
+use app\models\DriverProfileExtendedForm;
+use app\models\DriverProfileWorkplaceForm;
 
 class DriverProfileController extends Controller
 {
@@ -16,12 +18,22 @@ class DriverProfileController extends Controller
 		}
 
 		$model = new DriverProfileForm();
-		$dic_tachograph = $model->getDicTachograph();
-		$dic_trailertype = $model->getDicTrailerType();
+		$extendedModel = new DriverProfileExtendedForm();
+		$workplaceModel = new DriverProfileWorkplaceForm();
+		$dic_tachograph = $extendedModel->getDicTachograph();
+		$dic_trailertype = $extendedModel->getDicTrailerType();
 		
 		if ($model->load(Yii::$app->request->post()) && $model->validate()){
 			$model->saveDriverProfile();
-		}		
+		}
+		
+		if ($extendedModel->load(Yii::$app->request->post()) && $extendedModel->validate()){
+			$extendedModel->saveDriverProfileExtended();
+		}
+		
+		if ($workplaceModel->load(Yii::$app->request->post()) && $workplaceModel->validate()){
+			$workplaceModel->saveDriverProfileWorkplace();
+		}	
 
 		return $this->render('/driver-profile/index', [			                             
 		  	'driverInfo' => $this->renderPartial('driver-info', [
@@ -29,14 +41,14 @@ class DriverProfileController extends Controller
 				'profile' => $model->getDriverProfile()
 			]),
 		  	'driverInfoExtended' => $this->renderPartial('driver-info-extended', [
-				'model' => $model,
-				'profile' => $model->getDriverProfile(),
+				'model' => $extendedModel,
+				'profile' => $extendedModel->getDriverProfile(),
 				'dic_tachograph' => $dic_tachograph,
 				'dic_trailertype' => $dic_trailertype
 			]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
-				'model' => $model,
-				'profile' => $model->getDriverProfileWorkplace(),
+				'model' => $workplaceModel,
+				'profile' => $workplaceModel->getDriverProfileWorkplace(),
 			]),
 		]);
 	}

@@ -11,7 +11,9 @@
 			'labelOptions' => ['class' => 'col-lg-6 control-label'],
 		], 
 	]);	
-
+	
+	$dic_tachograph;
+	$dic_trailertype;
 ?>
 <br>
 <div class="driver-info-extended-content">
@@ -35,23 +37,17 @@
 
 	<?= $form->field($model, 'categoryE')->textInput(['value' => $profile['e_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “Е” (лет)*:') ?>
 
-	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
-		'clientOptions' => [						
-			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ],
-		],
-	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>
-	
+	<?= $form->field($model, 'tachograph')->dropDownList(
+		$dic_tachograph)->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:') ?>
+
 	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
 		<br>
 		<br>
 		<br>
 		<br>
-	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
-		'clientOptions' => [						
-			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ],
-		],
-	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>	
-	
+	<?= $form->field($model, 'trailertype')->dropDownList(
+		$dic_trailertype)->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>
+
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
 		'options' => ['value' => $profile['fpassdate'], 'placeholder' => '23.02.1982'],
@@ -74,5 +70,7 @@
 	
 	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом*:') ?>
 
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
+	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+
+	<?php ActiveForm::end(); ?>
 </div>

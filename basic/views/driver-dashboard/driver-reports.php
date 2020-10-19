@@ -1,27 +1,15 @@
 <?php
 use yii\widgets\Pjax;
 use rmrevin\yii\fontawesome\FAS;
+use yii\bootstrap\Modal;
+
 ?>
 
 <br>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-4">
-            <div class="row">
-                <div class="col-md-12">
-                    <?= $dinfo['firstname'] ?> <?= $dinfo['secondname'] ?> <?= $dinfo['middlename'] ?>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
-            <?php if($dinfo['reqby']=='R') { ?>
-            <button type="button" class="btn btn-primary pull-right" onclick="DEmployment()">Трудоустроить</button>
-            <?php } ?>
-            <?php if($dinfo['reqby']=='T') { ?>
+<div class="container-fluid" id="property-driver" data-did="1" data-rid="">
+    <div class="row" id="drv-item-1" data-did="<?=Yii::$app->user->identity->id ?>">
+        <div class="col-md-12">
             <button type="button" class="btn btn-primary pull-right" onclick="genNewReport()">Новый отчет</button>
-            <?php } ?>
         </div>
     </div>
     <div class="row">
@@ -87,37 +75,57 @@ use rmrevin\yii\fontawesome\FAS;
     </div>
 </div>
 
+<?php
+Modal::begin([
+    'header' => '<b>Создание отчета</b>',
+    'id' => 'generate-report',
+    'size' => 'modal-lg',
+]);
+?>
+
+<div class='modalContent'>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12" id="rep-drv-name"></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><hr></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="rep-engine-content"></div>
+    </div>
+</div>
+
+<?php Modal::end();?>
+
 <script language="JavaScript">
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#generate-report').on('shown.bs.modal', function() {
+            $('#rep-engine-content').html('');
+            $.post(window.location.origin + '/reportgrabber', {
+                s: 'S',
+                did: <?=Yii::$app->user->identity->id ?>,
+            }, function (data) {
+                $('#rep-engine-content').html(data);
+            });
+        });
 
-     $('#reports_list').find('.pagination:first').find('a').click(function (e) {
-         e.preventDefault();
-         $.get(
-             $(this).attr("href"),
-             {},
-             function (data) {
-                 $('#property-driver-modal-tab0').html(data);
-             }
-         );
-     });
-
-    function DEmployment() {
-        $.get(
-            window.location+'/demployment',
-            {id:$('#property-driver').data('did')},
-            function (data) {
-                refreshRDrivers();
-                $('#property-driver').modal('hide');
-            }
-        );
-    }
+        $('#generate-report').on('hidden.bs.modal', function () {
+            $.pjax.reload({container: "#reports_list", timeout: 2e3});
+        });
+    });
 
     function genNewReport() {
         $('#property-driver').modal('hide');
 
-        var did = $('#property-driver').data('did');
-
         setTimeout(function () {
-            $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
+//            $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
+            $('.modal-content').css('height','700');
             $('#generate-report').modal('show');
         }, 800);
     }

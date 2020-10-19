@@ -49,7 +49,7 @@ class SigninForm extends Model
             $user = $this->getUser();
 
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, 'Не верное имя пользователя или пароль');
+                $this->addError('*', 'Не верное имя пользователя или пароль');
             }
         }
     }

@@ -1,6 +1,7 @@
 <?php
 namespace app\controllers;
 
+use kartik\form\ActiveForm;
 use Yii;
 use yii\web\Controller;
 use app\models\CompanyDashboardForm;
@@ -63,6 +64,8 @@ class CompanyDashboardController extends Controller {
             $model->AddDriver();
             return $this->redirect('/company-dashboard');
         }
+
+        return $this->_sendJSONAnswer(ActiveForm::validate($model));
     }
 
     public function actionDeletedriver() {
@@ -100,7 +103,7 @@ class CompanyDashboardController extends Controller {
         $model = new CompanyDashboardForm();
 
         $allReports = new ArrayDataProvider([
-            'allModels' => $model->getCompanyReports(),
+            'allModels' => $model->getCompanyReports($id),
             'sort' => [
                 'attributes' => ['cdate'],
             ],

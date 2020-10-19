@@ -170,3 +170,26 @@ a.desc:after {
 .table-borderless > thead > tr > th {
     border: none;
 }
+.field-required {
+    color: red;
+    font-size: 12px;
+    padding: 3px;
+}
+
+.control-tools {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+}
+
+.spinner-holder {
+    position: fixed;
+    left: 49%;
+    top: 49%;
+    font-size: 45px;
+    color: orange;
+}
+
+.has-error {
+    border-color: lightcoral;
+}

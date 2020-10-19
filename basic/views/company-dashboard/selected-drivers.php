@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: max
- * Date: 23.09.20
- * Time: 17:51
- */
+
 use rmrevin\yii\fontawesome\FA;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use kartik\date\DatePicker;
 use yii\widgets\Pjax;
-use yii\bootstrap\Tabs;
 
 ?>
 <br><button type="button" class="btn btn-primary pull-right mb-30" data-toggle="modal" data-target="#edit-driver">Добавить водителя</button>
@@ -26,6 +20,7 @@ echo \yii\grid\GridView::widget([
             'id'              => 'drv-item-'.$model['id'],
             'class'           => 'driver-item',
             'data-id'         => $model['id'],
+            'data-did'        => $model['did'],
             'data-username'   => $model['username'],
             'data-inn'        => $model['inn'],
             'data-firstname'  => $model['firstname'],
@@ -58,7 +53,7 @@ echo \yii\grid\GridView::widget([
         [
             'format' => 'ntext',
             'attribute'=>'birthday',
-            'label'=>'День рождения',
+            'label'=>'Дата рождения',
         ],
         [
             'label' => 'Трудоустроен',
@@ -78,8 +73,6 @@ echo \yii\grid\GridView::widget([
 ]);
 Pjax::end();
 ?>
-<!--    </div>-->
-<!--</div>-->
 
 <?php
 Modal::begin([
@@ -93,6 +86,7 @@ Modal::begin([
     <?php $form = ActiveForm::begin([
         'id' => 'add-driver-form',
         'enableAjaxValidation' => true,
+        'enableClientValidation'=>false,
         'layout' => 'horizontal',
         'action' => '/company-dashboard/adddriver',
         'fieldConfig' => [
@@ -104,23 +98,25 @@ Modal::begin([
 
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
-    <?= $form->field($model, 'firstname')->textInput()->label('Имя') ?>
+    <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'secondname')->textInput()->label('Фамилия') ?>
+    <?= $form->field($model, 'secondname')->textInput()->label('Фамилия<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'middlename')->textInput()->label('Отчество') ?>
+    <?= $form->field($model, 'middlename')->textInput()->label('Отчество<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('День рождения'); ?>
+    <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата рождения<span class="field-required">*</span>'); ?>
 
-    <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН') ?>
+    <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99999'])->label('Серия паспорта') ?>
+    <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия паспорта<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта') ?>
+    <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'dserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99999'])->label('Серия водительского') ?>
+    <?= $form->field($model, 'dserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия водительского<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'dnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер водительского') ?>
+    <?= $form->field($model, 'dnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер водительского<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'ddate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи водительского<span class="field-required">*</span>'); ?>
 
     <div class="form-group">
         <div class="col-lg-offset-8 col-lg-10">
@@ -151,6 +147,35 @@ Modal::begin([
 
 <?php Modal::end();?>
 
+<?php
+Modal::begin([
+    'header' => '<b>Создание отчета</b>',
+    'id' => 'generate-report',
+    'size' => 'modal-lg',
+]);
+?>
+
+<div class='modalContent'>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="col-md-12" id="rep-drv-name"></div>
+            </div>
+        </div>
+        <div class="col-md-8">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"><hr></div>
+    </div>
+    <div class="row">
+        <div class="col-md-12" id="rep-engine-content"></div>
+    </div>
+</div>
+
+<?php Modal::end();?>
+
+
 <script language="JavaScript">
     document.addEventListener('DOMContentLoaded', function() {
         $("[href*='property-driver-modal-tab']").on('shown.bs.tab', function (e) {
@@ -168,6 +193,21 @@ Modal::begin([
 
         $("[href='#my-drivers']").click(function () {
             $.pjax.reload({container: "#drivers_list", timeout: 2e3});
+        });
+
+        $('#edit-driver').on('shown.bs.modal', function() {
+            $('#add-driver-form').yiiActiveForm('resetForm');
+            $('#edit-driver').find('.modal-content').css('height', 'auto')
+        });
+
+        $('#generate-report').on('shown.bs.modal', function() {
+            $('#rep-engine-content').html('');
+            $.post(window.location.origin + '/reportgrabber', {
+                s: 'S',
+                did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            }, function (data) {
+                $('#rep-engine-content').html(data);
+            });
         });
     });
 
@@ -207,7 +247,7 @@ Modal::begin([
     function showDialogPropertyDriver(o) {
         $('#property-driver').data('did', $(o).data('id'));
         getDriverReports();
-        $('.modal-content').css('height',600);
+        $('.modal-content').css('height', 600);
         $('#property-driver').modal('show');
 
     }

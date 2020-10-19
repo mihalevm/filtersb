@@ -19,10 +19,26 @@ class CompanyDashboardForm extends Model {
     public $inn;
     public $pserial;
     public $pnumber;
+    public $pdate;
     public $dserial;
     public $dnumber;
     public $bdate;
     public $ddate;
+    public $rpostzip;
+    public $rregion;
+    public $rcity;
+    public $rstreet;
+    public $rhouse;
+    public $rbuild;
+    public $rflat;
+    public $lpostzip;
+    public $lregion;
+    public $lcity;
+    public $lstreet;
+    public $lhouse;
+    public $lbuild;
+    public $lflat;
+    public $dup_address;
 
     protected $db_conn;
 
@@ -41,17 +57,22 @@ class CompanyDashboardForm extends Model {
             ['pnumber', 'required', 'message' => 'Заполните поле "Номер паспорта"' ],
             ['dserial', 'required', 'message' => 'Заполните поле "Серия водительского"' ],
             ['dnumber', 'required', 'message' => 'Заполните поле "Номер водительского"' ],
+            ['pdate', 'required', 'message' => 'Укажите дату выдачи паспорта' ],
             ['ddate', 'required', 'message' => 'Укажите дату выдачи водительского удостоверения' ],
+            ['rregion', 'required', 'message' => 'Укажите регион регистрации' ],
+            ['rcity', 'required', 'message' => 'Укажите город регистрации' ],
+            ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
             ['email', 'email'],
             [['inn', 'pserial', 'pnumber', 'dserial', 'dnumber'], 'integer'],
-            [['bdate', 'ddate'], 'date', 'format' => 'dd.MM.yyyy']
+            [['bdate', 'ddate','pdate'], 'date', 'format' => 'dd.MM.yyyy'],
+            [['rpostzip', 'lpostzip'], 'default', 'value' => '000000'],
+            [['rstreet', 'lstreet'],   'default', 'value' => 'НЕТ'],
         ];
     }
 
     function __construct () {
         $this->db_conn = Yii::$app->db;
     }
-
 
     public function AddDriver() {
         $this->inn     = preg_replace('/\_/','', $this->inn);
@@ -69,7 +90,7 @@ class CompanyDashboardForm extends Model {
 
         $id = Yii::$app->db->getLastInsertID();
 
-        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, dserial, dnumber, ddate, id) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :dserial, :dnumber, :ddate, :id)",
+        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, pdate, dserial, dnumber, ddate, id) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :pdate,:dserial, :dnumber, :ddate, :id)",
             [
                 ':inn'        => null,
                 ':firstname'  => null,
@@ -78,6 +99,7 @@ class CompanyDashboardForm extends Model {
                 ':bdate'      => null,
                 ':pserial'    => null,
                 ':pnumber'    => null,
+                ':pdate'      => null,
                 ':dserial'    => null,
                 ':dnumber'    => null,
                 ':ddate'      => null,
@@ -90,6 +112,7 @@ class CompanyDashboardForm extends Model {
             ->bindValue(':bdate',      date_format(date_create_from_format('d.m.Y', $this->bdate), 'Y-m-d'))
             ->bindValue(':pserial',    $this->pserial    )
             ->bindValue(':pnumber',    $this->pnumber    )
+            ->bindValue(':pdate',      $this->pdate      )
             ->bindValue(':dserial',    $this->pserial    )
             ->bindValue(':dnumber',    $this->pnumber    )
             ->bindValue(':ddate',      date_format(date_create_from_format('d.m.Y', $this->ddate), 'Y-m-d'))

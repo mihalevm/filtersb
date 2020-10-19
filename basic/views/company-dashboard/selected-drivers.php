@@ -1,11 +1,12 @@
 <?php
 
 use rmrevin\yii\fontawesome\FA;
-use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Modal;
 use kartik\date\DatePicker;
 use yii\widgets\Pjax;
+use kartik\switchinput\SwitchInput;
 
 ?>
 <br><button type="button" class="btn btn-primary pull-right mb-30" data-toggle="modal" data-target="#edit-driver">Добавить водителя</button>
@@ -95,7 +96,7 @@ Modal::begin([
         ],
     ]); ?>
     <?= $form->errorSummary($model) ?>
-
+<div name="driver-item-tab-1">
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 
     <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
@@ -108,6 +109,8 @@ Modal::begin([
 
     <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН<span class="field-required">*</span>') ?>
 
+    <?= $form->field($model, 'pdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи паспорта<span class="field-required">*</span>'); ?>
+
     <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия паспорта<span class="field-required">*</span>') ?>
 
     <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта<span class="field-required">*</span>') ?>
@@ -119,11 +122,53 @@ Modal::begin([
     <?= $form->field($model, 'ddate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи водительского<span class="field-required">*</span>'); ?>
 
     <div class="form-group">
+        <div class="col-lg-offset-9 col-lg-10">
+            <span class="label label-info fake-bnt" onclick="nextDriverParams()">Далее</span>
+        </div>
+    </div>
+</div>
+
+<div name="driver-item-tab-2" style="display: none">
+    <div class="separator">Адрес регистрации</div>
+    <?= $form->field($model, 'rpostzip')->textInput()->label('Почтовый индекс') ?>
+
+    <?= $form->field($model, 'rregion')->textInput()->label('Область/край<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'rcity')->textInput()->label('Город<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'rstreet')->textInput()->label('Улица<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'rhouse')->textInput()->label('Дом') ?>
+
+    <?= $form->field($model, 'rbuild')->textInput()->label('Строение') ?>
+
+    <?= $form->field($model, 'rflat')->textInput()->label('Квартира') ?>
+
+    <div class="separator">Адрес проживания</div>
+    <?= $form->field($model, 'dup_address')->widget(SwitchInput::classname(), ['pluginEvents'=>["switchChange.bootstrapSwitch" => 'function(){duplicateAddress(this)}'] ,'pluginOptions' => ['size' => 'mini', 'onText' => 'Да', 'offText' => 'Нет',], 'options' => ['class' => 'pull-right']])->label('Адреса совпадают') ?>
+
+    <div class="living-address">
+    <?= $form->field($model, 'lpostzip')->textInput()->label('Почтовый индекс') ?>
+
+    <?= $form->field($model, 'lregion')->textInput()->label('Область/край<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'lcity')->textInput()->label('Город<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'lstreet')->textInput()->label('Улица<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'lhouse')->textInput()->label('Дом') ?>
+
+    <?= $form->field($model, 'lbuild')->textInput()->label('Строение') ?>
+
+    <?= $form->field($model, 'lflat')->textInput()->label('Квартира') ?>
+    </div>
+    <div class="form-group">
         <div class="col-lg-offset-8 col-lg-10">
+            <span class="label label-info fake-bnt" onclick="nextDriverParams()">Назад</span>
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'add-driver-button']) ?>
         </div>
     </div>
-
+</div>
     <?php ActiveForm::end(); ?>
 </div>
 
@@ -197,7 +242,8 @@ Modal::begin([
 
         $('#edit-driver').on('shown.bs.modal', function() {
             $('#add-driver-form').yiiActiveForm('resetForm');
-            $('#edit-driver').find('.modal-content').css('height', 'auto')
+            $('#edit-driver').find('.modal-content').css('height', 'auto');
+            nextDriverParams(true);
         });
 
         $('#generate-report').on('shown.bs.modal', function() {
@@ -210,6 +256,14 @@ Modal::begin([
             });
         });
     });
+
+    function duplicateAddress(o) {
+        if ($(o).prop('checked')) {
+            $('.living-address').hide();
+        } else {
+            $('.living-address').show();
+        }
+    }
 
     function getDriverReports() {
         $('#property-driver-modal-tab0').html('');
@@ -270,5 +324,24 @@ Modal::begin([
                 $.pjax.reload({container: "#drivers_list", timeout: 2e3});
             });
         }
+    }
+
+    function nextDriverParams(start = null) {
+        if (null == start) {
+            if ($("[name='driver-item-tab-2']").first().css('display') == 'none') {
+                $("[name='driver-item-tab-1']").first().hide();
+                $("[name='driver-item-tab-2']").first().show();
+            } else {
+                $("[name='driver-item-tab-2']").first().hide();
+                $("[name='driver-item-tab-1']").first().show();
+            }
+        } else {
+            if ($("[name='driver-item-tab-1']").first().css('display') == 'none') {
+                $("[name='driver-item-tab-2']").first().hide();
+                $("[name='driver-item-tab-1']").first().show();
+            }
+        }
+
+        return false;
     }
 </script>

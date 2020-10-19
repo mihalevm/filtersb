@@ -87,7 +87,7 @@ a.desc:after {
 }
 
 .form-group {
-    height: 45px;
+    height: 30px;
 }
 
 .error-summary {
@@ -146,6 +146,11 @@ a.desc:after {
     height: 30px;
 }
 
+.bootstrap-switch-id-companydashboardform-dup_address {
+    margin-left: 15px;
+    margin-top: 4px;
+}
+
 .mb-30 {
     margin-bottom: 30px !important;
 }
@@ -185,3 +190,35 @@ a.desc:after {
 .has-error {
     border-color: lightcoral;
 }
+
+.fake-bnt {
+    font-size: 14px;
+    font-weight: 100;
+    font-family: inherit;
+    line-height: 2;
+    text-shadow: none;
+    cursor: default;
+    display: inline-table;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    font-size: 12px;
+    color: darkgrey;
+    margin: 12px;
+}
+.separator::before, .separator::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid darkgrey;
+}
+.separator::before {
+    margin-right: .25em;
+}
+.separator::after {
+    margin-left: .25em;
+}
+
+.living-address{}

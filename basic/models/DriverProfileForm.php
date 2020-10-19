@@ -41,8 +41,8 @@ class DriverProfileForm extends Model
 			['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
 			['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
 			['email', 'email'],
-			['email', 'unqEmailCheck'], 
-			['inn',   'unqInnCheck']
+			// ['email', 'unqEmailCheck'], 
+			// ['inn',   'unqInnCheck']
 		];
 	}	
 
@@ -53,25 +53,27 @@ class DriverProfileForm extends Model
 		$this->db_conn = Yii::$app->db;
 	}
 	
-    public function unqInnCheck ($attribute) {
-        $res = ($this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE u.id=u.id AND u.active='Y' AND i.inn=:inn")
-            ->bindValue(':inn', $this->inn)
-            ->queryAll())[0];
+	// public function unqInnCheck ($attribute) 
+	// {
+    //     $res = ($this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE u.id=u.id AND u.active='Y' AND i.inn=:inn")
+    //         ->bindValue(':inn', $this->inn)
+    //         ->queryAll())[0];
 
-        if ($res['id'] != Yii::$app->user->identity->id) {
-            $this->addError('*', 'Компания с таким ИНН уже зарегестрирована');
-        }
-    }
+    //     if ($res['id'] != Yii::$app->user->identity->id) {
+    //         $this->addError('*', 'Водитель с таким ИНН уже зарегистрирован');
+    //     }
+    // }
 
-    public function unqEmailCheck($attribute) {
-        $res = ($this->db_conn->createCommand("select id from users where active='Y' and username=:email")
-            ->bindValue(':email', $this->email)
-            ->queryAll())[0];
+	// public function unqEmailCheck($attribute)
+	// {
+    //     $res = ($this->db_conn->createCommand("select id from users where active='Y' and username=:email")
+    //         ->bindValue(':email', $this->email)
+    //         ->queryAll())[0];
 
-        if ($res['id'] != Yii::$app->user->identity->id) {
-            $this->addError('*', 'Указанный "Email" уже зарегестрирован');
-        }
-    }
+    //     if ($res['id'] != Yii::$app->user->identity->id) {
+    //         $this->addError('*', 'Указанный "Email" уже зарегистрирован');
+    //     }
+    // }
 
 	public function getDriverProfile () 
 	{
@@ -87,9 +89,9 @@ class DriverProfileForm extends Model
 
 	public function getDriverProfileWorkplace () 
 	{
-		$list = ($this->db_conn->createCommand("select * from workplace where did=:id"))
+		$list = ($this->db_conn->createCommand("select * from workplace where did=:id limit 3"))
 			->bindValue(':id', Yii::$app->user->identity->id)
-			->queryAll();
+			->queryAll();			
 
 		$list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
 		$list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));

@@ -23,7 +23,7 @@
 	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>
 
 	<?= $form->field($model, 'familyStatus')->dropDownList(
-		['N' => 'Нет', 'Y' => 'Да'], 
+		['N' => 'Холост', 'Y' => 'В браке'], 
 		['value' => $profile['familystatus']])->label('Семейное положение*:') ?>
 
 	<?= $form->field($model, 'childs')->textarea(['value' => $profile['childs'], 'rows' => '5'] )->label('Дети, пол и возраст*:') ?>

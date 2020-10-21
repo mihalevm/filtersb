@@ -84,19 +84,7 @@ class DriverProfileForm extends Model
 		$list[0]['ddate'] = date('d.m.Y', strtotime($list[0]['ddate']));
 		$list[0]['birthday'] = date('d.m.Y', strtotime($list[0]['birthday']));
 
-		return $list[0];
-	}
-
-	public function getDriverProfileWorkplace () 
-	{
-		$list = ($this->db_conn->createCommand("select * from workplace where did=:id limit 3"))
-			->bindValue(':id', Yii::$app->user->identity->id)
-			->queryAll();			
-
-		$list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
-		$list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
-
-		return $list[0];
+		return sizeof($list) ? $list[0]:null;
 	}
 
 	public function saveDriverProfile() 

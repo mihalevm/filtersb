@@ -40,14 +40,16 @@ class DriverProfileWorkplaceForm extends Model
 
 	public function getDriverProfileWorkplace () 
 	{
-		$list = ($this->db_conn->createCommand("select * from workplace where did=:id"))
+		$list = ($this->db_conn->createCommand("select * from workplace where did=:id limit 3"))
 			->bindValue(':id', Yii::$app->user->identity->id)
 			->queryAll();
 
 		if(sizeof($list)) {
-            $list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
-            $list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
-        }
+			foreach ($list as &$value) {			
+				$value['sdate'] = date('d.m.Y', strtotime($value['sdate']));
+				$value['edate'] = date('d.m.Y', strtotime($value['edate']));		
+			}
+        }		
 
 		return sizeof($list) ? $list[0]:null;
 	}

@@ -49,7 +49,7 @@
 		<br>
 		<br>
 		<br>
-
+		
 	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
 			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change

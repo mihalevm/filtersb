@@ -158,6 +158,15 @@ a.desc:after {
 .mr-10 {
     margin-right: 10px !important;
 }
+
+.mr-12 {
+    margin-right: 10px !important;
+}
+
+.mt-10 {
+    margin-top: 10px !important;
+}
+
 .driver-item {
     text-align: center;
     cursor: pointer;
@@ -230,3 +239,7 @@ a.desc:after {
 }
 
 .living-address{}
+
+.lh-15 {
+    line-height: 1.5;
+}

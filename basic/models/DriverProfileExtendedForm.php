@@ -73,8 +73,10 @@ class DriverProfileExtendedForm extends Model
 			->bindValue(':id', Yii::$app->user->identity->id)
 			->queryAll();
 
-		$list[0]['fpassdate'] = date('d.m.Y', strtotime($list[0]['fpassdate']));
-		$list[0]['startdate'] = date('d.m.Y', strtotime($list[0]['startdate']));
+		if (sizeof($list)) {
+            $list[0]['fpassdate'] = date('d.m.Y', strtotime($list[0]['fpassdate']));
+            $list[0]['startdate'] = date('d.m.Y', strtotime($list[0]['startdate']));
+        }
 
 		return sizeof($list) ? $list[0]:null;
 	}

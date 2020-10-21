@@ -7,8 +7,8 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
 		'fieldConfig' => [
-			'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>",
-			'labelOptions' => ['class' => 'col-lg-6 control-label'],
+            'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
+            'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
 		], 
 	]);	
 
@@ -81,7 +81,7 @@
 	
 	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом*:') ?>
 
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right mr-12 mt-10', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
 
 	<?php ActiveForm::end(); ?>
 </div>

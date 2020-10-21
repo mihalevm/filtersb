@@ -6,8 +6,8 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-previous-work',
 		'fieldConfig' => [
-			'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>",
-			'labelOptions' => ['class' => 'col-lg-6 control-label'],
+            'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
+            'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
 		],        
 	]);
 ?>
@@ -51,7 +51,7 @@
 	<br>
 	<br>
 	<br>
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
+	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right mr-12 mt-10', 'method' => 'post']) ?>
 
 	<?php ActiveForm::end(); ?>
 </div>

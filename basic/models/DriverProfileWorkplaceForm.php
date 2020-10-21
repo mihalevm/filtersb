@@ -44,8 +44,10 @@ class DriverProfileWorkplaceForm extends Model
 			->bindValue(':id', Yii::$app->user->identity->id)
 			->queryAll();
 
-		$list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
-		$list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
+		if(sizeof($list)) {
+            $list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
+            $list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
+        }
 
 		return sizeof($list) ? $list[0]:null;
 	}

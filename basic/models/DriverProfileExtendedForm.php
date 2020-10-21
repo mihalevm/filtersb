@@ -76,7 +76,7 @@ class DriverProfileExtendedForm extends Model
 		$list[0]['fpassdate'] = date('d.m.Y', strtotime($list[0]['fpassdate']));
 		$list[0]['startdate'] = date('d.m.Y', strtotime($list[0]['startdate']));
 
-		return $list[0];
+		return sizeof($list) ? $list[0]:null;
 	}
 
 	public function saveDriverProfileExtended() 

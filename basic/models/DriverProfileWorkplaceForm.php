@@ -47,7 +47,7 @@ class DriverProfileWorkplaceForm extends Model
 		$list[0]['sdate'] = date('d.m.Y', strtotime($list[0]['sdate']));
 		$list[0]['edate'] = date('d.m.Y', strtotime($list[0]['edate']));
 
-		return $list[0];
+		return sizeof($list) ? $list[0]:null;
 	}
 
 	public function saveDriverProfileWorkplace() 

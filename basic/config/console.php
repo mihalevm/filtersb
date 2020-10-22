@@ -1,7 +1,9 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
+$params   = require __DIR__ . '/params.php';
+$db       = require __DIR__ . '/db.php';
+$mailer   = require __DIR__ . '/mailer.php';
+$scorista = require __DIR__ . '/scorista.php';
 
 $config = [
     'id' => 'basic-console',

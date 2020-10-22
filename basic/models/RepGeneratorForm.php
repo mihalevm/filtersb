@@ -56,7 +56,7 @@ class RepGeneratorForm extends Model {
             'error' => 500
         ];
 
-        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd from reports where id=:rid and oid=:oid",[
+        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista from reports where id=:rid and oid=:oid",[
             ':rid' => null,
             ':oid' => null,
         ])
@@ -67,10 +67,11 @@ class RepGeneratorForm extends Model {
         if ( sizeof($reports) ) {
             $attrs['rdate'] = $reports[0]['cdate'];
             $attrs['email'] = Yii::$app->user->identity->username;
-            $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Cреди недействительных не значится")) > 0 ? 1 : 0;
+            $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
             $attrs['egrul'] = $reports[0]['egrul'];
             $attrs['gibdd'] = $reports[0]['gibdd'];
             $attrs['fssp']  = $this->parseContent($reports[0]['fssp']);
+            $attrs['scorista'] = $reports[0]['scorista'];
             $attrs['error'] = 200;
         }
 

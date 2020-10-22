@@ -7,19 +7,32 @@
  */
 $this->title = 'Отчет';
 ?>
+<p style="width:100%; background-color: black; color: white; padding: 15px;">
+    <span style="text-align: left; font-size: 24px; font-weight: 600;">ФильтрСБ</span>
+</p>
+<hr/>
 <div>
     <table style="margin-left: auto; margin-right: auto;" border="0" width="100%">
         <tbody>
         <tr>
-            <td>Дата подачи заявки:</td>
+            <td style="width: 50%"><i>Дата подачи заявки:</i></td>
             <td><?=$rdate?></td>
         </tr>
         <tr>
-            <td>Адрес эл. почты пользователя:</td>
+            <td style="width: 50%"><i>Адрес эл. почты пользователя:</i></td>
             <td><?=$email?></td>
         </tr>
+        </tbody>
+    </table>
+
+    <hr style="border-top: 1px lightgrey dotted"/>
+
+    <p><b>Проверка по базе паспортов:</b></p>
+
+    <table style="margin-left: auto; margin-right: auto;" border="0" width="100%">
+        <tbody>
         <tr>
-            <td>Проверка по базе паспортов:</td>
+            <td style="width: 50%">Статус:</td>
             <td><?php
                 if (null !== $pvalidate){
                     if ($pvalidate){
@@ -34,8 +47,8 @@ $this->title = 'Отчет';
         </tr>
         </tbody>
     </table>
-    <p>&nbsp;</p>
-    <p>Выписка из реестра ЕГРЮЛ:</p>
+
+    <p><b>Выписка из реестра ЕГРЮЛ:</b></p>
     <?php
         if (null !== $egrul){
             $egrul = json_decode($egrul);
@@ -44,23 +57,23 @@ $this->title = 'Отчет';
     <table style="margin-left: auto; margin-right: auto;" border="0" width="100%">
         <tbody>
         <tr>
-            <td>Название:</td>
+            <td style="width: 50%">Название:</td>
             <td><?=$egrul->n?></td>
         </tr>
         <tr>
-            <td>Дата прекращения деятельности:</td>
+            <td style="width: 50%">Дата прекращения деятельности:</td>
             <td><?=$egrul->e?></td>
         </tr>
         <tr>
-            <td>ОГРНИП:</td>
+            <td style="width: 50%">ОГРНИП:</td>
             <td><?=$egrul->o?></td>
         </tr>
         <tr>
-            <td>ИНН:</td>
+            <td style="width: 50%">ИНН:</td>
             <td><?=$egrul->i?></td>
         </tr>
         <tr>
-            <td>Дата присвоения ОГРНИП:</td>
+            <td style="width: 50%">Дата присвоения ОГРНИП:</td>
             <td><?=$egrul->r?></td>
         </tr>
         </tbody>
@@ -68,7 +81,7 @@ $this->title = 'Отчет';
     <?php } else {
             echo '<p style="text-align: center">Проверка не проводилась.</p>';
         }?>
-    <p>Проверка водительского удостоверения по базе ГИБДД:</p>
+    <p><b>Проверка водительского удостоверения по базе ГИБДД:</b></p>
     <?php
     if (null !== $gibdd){
         $gibdd = json_decode($gibdd);
@@ -76,30 +89,30 @@ $this->title = 'Отчет';
         <table style="margin-left: auto; margin-right: auto;" border="0" width="100%">
             <tbody>
             <tr>
-                <td>Номер\Серия:</td>
+                <td style="width: 50%">Номер\Серия:</td>
                 <td><?=$gibdd->doc->num?></td>
             </tr>
             <tr>
-                <td>Дата выдачи:</td>
+                <td style="width: 50%">Дата выдачи:</td>
                 <td><?=$gibdd->doc->date?></td>
             </tr>
             <tr>
-                <td>Категории:</td>
+                <td style="width: 50%">Категории:</td>
                 <td><?=$gibdd->doc->cat?></td>
             </tr>
             <tr>
-                <td>День рождения:</td>
+                <td style="width: 50%">День рождения:</td>
                 <td><?=$gibdd->doc->bdate?></td>
             </tr>
             <tr>
-                <td>Дата окончания:</td>
+                <td style="width: 50%">Дата окончания:</td>
                 <td><?=$gibdd->doc->srok?></td>
             </tr>
             <?php
                 if (strlen($gibdd->doc->wanted)>0) {
             ?>
             <tr>
-                <td>Документ не действителен и разыскивается с:</td>
+                <td style="width: 50%">Документ не действителен и разыскивается с:</td>
                 <td><?=$gibdd->doc->wanted?></td>
             </tr>
             <?php } ?>
@@ -109,7 +122,7 @@ $this->title = 'Отчет';
         echo '<p style="text-align: center">Проверка не проводилась.</p>';
     }?>
 
-    <p>Проверка по базе ФССП:</p>
+    <p><b>Проверка по базе ФССП:</b></p>
     <?php
     if (null !== $fssp && sizeof($fssp)>0){
         ?>
@@ -154,3 +167,18 @@ $this->title = 'Отчет';
     }?>
 
 </div>
+
+<?php if (null !== $scorista) {
+    $packet = json_decode($scorista);
+    ?>
+    <p><b>Проверка по базе Административныx и уголовныx правонарушений:</b></p>
+    <ul>
+    <?php
+        if ( intval($packet->data->cronos->result) > 0 ) {
+            foreach ($packet->data->cronos->cronos as $cronosItems){
+                echo '<li>'.$cronosItems.'</li>';
+            };
+        }
+    ?>
+    </ul>
+<?php } ?>

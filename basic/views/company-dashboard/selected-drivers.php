@@ -86,8 +86,8 @@ Modal::begin([
 <div id='modalContent'>
     <?php $form = ActiveForm::begin([
         'id' => 'add-driver-form',
-        'enableAjaxValidation' => true,
-        'enableClientValidation'=>false,
+        'enableAjaxValidation'   => false,
+        'enableClientValidation' => true,
         'layout' => 'horizontal',
         'action' => '/company-dashboard/adddriver',
         'fieldConfig' => [
@@ -98,6 +98,8 @@ Modal::begin([
     <?= $form->errorSummary($model) ?>
 <div name="driver-item-tab-1">
     <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+
+    <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999'])->label('Номер телефона<span class="field-required">*</span>') ?>
 
     <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
 

@@ -46,7 +46,7 @@ use yii\helpers\Html;
 
         if ( $(o).is(':checked') ) {
             $.post(window.location.origin + '/reportgrabber', {
-                s: 'pay',
+                s: 'prep',
                 did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
                 rid: $('#property-driver').data('rid'),
             }, function (data) {

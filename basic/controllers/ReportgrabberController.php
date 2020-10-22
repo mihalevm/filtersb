@@ -8,6 +8,8 @@ use app\models\FsspForm;
 use app\models\PcheckForm;
 use app\models\GibddForm;
 use app\models\RepGeneratorForm;
+use app\models\ScoristaForm;
+use app\models\PaymentForm;
 
 class ReportgrabberController extends Controller {
 
@@ -109,6 +111,21 @@ class ReportgrabberController extends Controller {
                     'rid' => $r->post('rid')
                 ];
             }
+            if ( $r->post('s') == 'prep') {
+                $model = new ScoristaForm();
+
+                $res = $model->Check($r->post('rid'), $r->post('did'), 'validate');
+
+                $renderView = 'scorista';
+
+                $params = [
+                    'result' => $res,
+                ];
+            }
+            if ( $r->post('s') == 'pay') {
+                $renderView = 'payment';
+                $params = [];
+            }
         }
 
         return $this->renderPartial($renderView, $params);
@@ -127,6 +144,7 @@ class ReportgrabberController extends Controller {
                 'egrul'     => $attrs['egrul'],
                 'gibdd'     => $attrs['gibdd'],
                 'fssp'      => $attrs['fssp'],
+                'scorista'  => $attrs['scorista'],
             ]);
 
         $mpdf->WriteHTML($html_template);
@@ -149,6 +167,7 @@ class ReportgrabberController extends Controller {
             'egrul'     => $attrs['egrul'],
             'gibdd'     => $attrs['gibdd'],
             'fssp'      => $attrs['fssp'],
+            'scorista'  => $attrs['scorista'],
         ]);
 
         $mpdf->WriteHTML($html_template);
@@ -162,5 +181,12 @@ class ReportgrabberController extends Controller {
             ->send();
 
         return $this->_sendJSONAnswer(1);
+    }
+
+    public function actionMakepay ($did) {
+        $model = new PaymentForm();
+        $res   = $model->addPayment($did);
+
+        return $this->_sendJSONAnswer($res);
     }
 }

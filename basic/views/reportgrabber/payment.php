@@ -34,14 +34,16 @@
         $('#pay-init-status').text('');
         $.get(window.location.origin + '/reportgrabber/makepay', {
             did:$('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            rid: $('#property-driver').data('rid')
         }, function (data) {
-            if (parseInt(data) > 0){
-                $('#pay-init-status').html('<p>Оплата прошла успешно.</p><p>Отчет поставлен в очередь для формирования.</p>');
+            if (parseInt(data.code) == 200 ){
+                $('#pay-init-status').html('<p>Сейчас Вы будете переадресованы на страницу оплаты.</p>');
                 setTimeout(function () {
-                    nexStep('E', parseInt(data));
+                    window.open(data.rurl);
+                    nexStep('E', parseInt(data.rid));
                 }, 2000);
             } else {
-                $('#pay-init-status').text('Ошибка выполнения оплаты.');
+                $('#pay-init-status').text('Ошибка размещения заказа.');
             };
         });
     }

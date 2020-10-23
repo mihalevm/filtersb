@@ -31,9 +31,11 @@
 
 <script language="JavaScript">
     $(document).ready(function () {
-        setTimeout(function () {
-            nexStep();
-        }, 3000);
+        if (200 == <?=$result['code']?>){
+            setTimeout(function () {
+                nexStep();
+            }, 3000);
+        }
     });
 
     function skipStep() {
@@ -41,6 +43,7 @@
         $.post(window.location.origin + '/reportgrabber', {
             s: 'E',
             did:$('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            rid: $('#property-driver').data('rid'),
         }, function (data) {
             $('#rep-engine-content').html(data);
         });
@@ -51,6 +54,7 @@
         $.post(window.location.origin + '/reportgrabber', {
             s: 'pay',
             did:$('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            rid: $('#property-driver').data('rid'),
         }, function (data) {
             $('#rep-engine-content').html(data);
         });

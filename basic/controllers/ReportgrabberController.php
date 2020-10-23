@@ -183,9 +183,9 @@ class ReportgrabberController extends Controller {
         return $this->_sendJSONAnswer(1);
     }
 
-    public function actionMakepay ($did) {
+    public function actionMakepay ($did, $rid) {
         $model = new PaymentForm();
-        $res   = $model->addPayment($did);
+        $res   = $model->addPayment($did, $rid);
 
         return $this->_sendJSONAnswer($res);
     }

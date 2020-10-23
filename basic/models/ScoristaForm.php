@@ -12,7 +12,6 @@ use Yii;
 use yii\httpclient\Client;
 use yii\base\Model;
 
-
 class ScoristaForm extends Model {
     protected $db_conn;
     protected $username;
@@ -23,11 +22,11 @@ class ScoristaForm extends Model {
 
     function __construct () {
         $this->db_conn  = Yii::$app->db;
-        $this->username = Yii::$app->scorista['username'];
-        $this->token    = Yii::$app->scorista['token'];
+        $this->username = Yii::$app->params['scorista_username'];
+        $this->token    = Yii::$app->params['scorista_token'];
         $this->nonce    = sha1(uniqid(true));
         $this->password = sha1($this->nonce.$this->token);
-        $this->rest_url = Yii::$app->scorista['rest_url'];
+        $this->rest_url = Yii::$app->params['scorista_rest_url'];
     }
 
     private function addScoristaRequest ($rid, $scrid) {

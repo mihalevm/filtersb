@@ -1,9 +1,12 @@
 <?php
 
-$params   = require __DIR__ . '/params.php';
+$params   = array_merge(
+    require __DIR__ . '/params.php',
+    require __DIR__ . '/scorista.php',
+    require __DIR__ . '/yandex-kassa.php'
+);
 $db       = require __DIR__ . '/db.php';
 $mailer   = require __DIR__ . '/mailer.php';
-$scorista = require __DIR__ . '/scorista.php';
 
 $config = [
     'id' => 'basic-console',

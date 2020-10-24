@@ -253,6 +253,7 @@ Modal::begin([
             $.post(window.location.origin + '/reportgrabber', {
                 s: 'S',
                 did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
+                rid: $('#property-driver').data('rid'),
             }, function (data) {
                 $('#rep-engine-content').html(data);
             });

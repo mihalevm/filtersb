@@ -268,6 +268,7 @@ class ScoristaForm extends Model {
     }
 
     public function getRequestedContent () {
+        $rids = [];
         $tasks = $this->db_conn->createCommand("select id, oid, rid, scrid from scorista where scrid is not null and status is NULL AND CURRENT_TIMESTAMP()-rdate > 60", [])->queryAll();
 
         if (count($tasks) > 0 ) {
@@ -286,6 +287,7 @@ class ScoristaForm extends Model {
                         if ($jres->status == 'DONE') {
                             $this->updateReports($taskItem['rid'], $response->content);
                             $this->updateScoristaOrders($taskItem['id'], $jres->status, null);
+                            array_push($rids, $taskItem['rid']);
                         }
                     }
                 } else {
@@ -298,6 +300,65 @@ class ScoristaForm extends Model {
             }
         }
 
-        return;
+        return $rids;
+    }
+
+    private function parseContent ($html) {
+        $data = [];
+
+        if (null !=$html && strlen(strstr($html, "empty")) == 0) {
+            $dom = new \DOMDocument();
+            $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOERROR);
+            $all_tr = $dom->getElementsByTagName('tr');
+
+            foreach ($all_tr as $tr) {
+                $node = $tr->childNodes;
+
+                if ($node->length > 1 && $node->item(5)->nodeName == 'td') {
+                    $matches = null;
+                    preg_match('/^(.+):\s(\d+\.\d\d)/U', $node->item(5)->nodeValue, $matches);
+                    if (strcasecmp('Исполнительский сбор', $matches[1]) !== 0) {
+                        $data = [
+                            'owner' => $node->item(0)->nodeValue,
+                            'doc_num' => $node->item(1)->nodeValue,
+                            'doc_id' => $node->item(2)->nodeValue,
+                            'doc_edate' => $node->item(3)->nodeValue,
+                            'summ' => $node->item(2)->nodeValue,
+                            'psumm' => floatval($matches[2]),
+                            'fssp_div' => $node->item(6)->nodeValue,
+                            'fssp_ex' => $node->item(7)->nodeValue
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    public function getDocAttrs($rid) {
+        $attrs = [
+            'error' => 500
+        ];
+
+        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista, (select username from users where id=did) as demail, (select username from users where id=oid) as oemail from reports where id=:rid",[
+            ':rid' => null,
+        ])
+            ->bindValue(':rid', $rid)
+            ->queryAll();
+
+        if ( sizeof($reports) ) {
+            $attrs['rdate']  = $reports[0]['cdate'];
+            $attrs['demail'] = $reports[0]['demail'];
+            $attrs['oemail'] = $reports[0]['oemail'];
+            $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
+            $attrs['egrul'] = $reports[0]['egrul'];
+            $attrs['gibdd'] = $reports[0]['gibdd'];
+            $attrs['fssp']  = $this->parseContent($reports[0]['fssp']);
+            $attrs['scorista'] = $reports[0]['scorista'];
+            $attrs['error'] = 200;
+        }
+
+        return $attrs;
     }
 }

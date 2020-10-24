@@ -42,7 +42,19 @@ class ReportgrabberController extends Controller {
 
         if ( null != $r->post('s') && null != $r->post('did') && intval($r->post('did')) > 0 ) {
             if ( $r->post('s') == 'S') {
+                $payedContent = false;
+
+                if (null != $r->post('rid') && intval($r->post('rid'))>0){
+                    $model= new RepGeneratorForm();
+                    $conetnt = $model->getDocAttrs($r->post('rid'));
+                    $payedContent = null != $conetnt['scorista'];
+                }
+
                 $renderView = 'index';
+
+                $params = [
+                    'payedContent'  => $payedContent,
+                ];
             }
             if ( $r->post('s') == 'E') {
                 $model = new EgrulForm();
@@ -139,7 +151,7 @@ class ReportgrabberController extends Controller {
 
         $html_template = $this->renderPartial('doc_template',[
                 'rdate'     => $attrs['rdate'],
-                'email'     => $attrs['email'],
+                'email'     => $attrs['demail'],
                 'pvalidate' => $attrs['pvalidate'],
                 'egrul'     => $attrs['egrul'],
                 'gibdd'     => $attrs['gibdd'],
@@ -162,7 +174,7 @@ class ReportgrabberController extends Controller {
 
         $html_template = $this->renderPartial('doc_template',[
             'rdate'     => $attrs['rdate'],
-            'email'     => $attrs['email'],
+            'email'     => $attrs['demail'],
             'pvalidate' => $attrs['pvalidate'],
             'egrul'     => $attrs['egrul'],
             'gibdd'     => $attrs['gibdd'],
@@ -174,7 +186,7 @@ class ReportgrabberController extends Controller {
         $mpdf->Output($filename, 'F');
 
         Yii::$app->mailer->compose('email_report', $attrs)
-            ->setTo(Yii::$app->user->identity->username)
+            ->setTo($attrs['oemail'])
             ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
             ->setSubject('Отчет с сайта Фильтр СБ')
             ->attach($filename)

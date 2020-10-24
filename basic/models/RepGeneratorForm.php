@@ -56,17 +56,18 @@ class RepGeneratorForm extends Model {
             'error' => 500
         ];
 
-        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista from reports where id=:rid and oid=:oid",[
-            ':rid' => null,
-            ':oid' => null,
-        ])
-            ->bindValue(':rid', $rid)
-            ->bindValue(':oid', Yii::$app->user->identity->id)
-            ->queryAll();
+        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista, (select username from users where id=did) as demail, (select username from users where id=oid) as oemail from reports where id=:rid and oid=:oid",[
+                ':rid' => null,
+                ':oid' => null,
+            ])
+                ->bindValue(':rid', $rid)
+                ->bindValue(':oid', Yii::$app->user->identity->id)
+                ->queryAll();
 
         if ( sizeof($reports) ) {
-            $attrs['rdate'] = $reports[0]['cdate'];
-            $attrs['email'] = Yii::$app->user->identity->username;
+            $attrs['rdate']  = $reports[0]['cdate'];
+            $attrs['demail'] = $reports[0]['demail'];
+            $attrs['oemail'] = $reports[0]['oemail'];
             $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
             $attrs['egrul'] = $reports[0]['egrul'];
             $attrs['gibdd'] = $reports[0]['gibdd'];

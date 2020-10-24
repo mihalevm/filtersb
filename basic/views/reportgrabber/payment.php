@@ -39,7 +39,7 @@
             if (parseInt(data.code) == 200 ){
                 $('#pay-init-status').html('<p>Сейчас Вы будете переадресованы на страницу оплаты.</p>');
                 setTimeout(function () {
-                    window.open(data.rurl);
+                    window.open(data.rurl, '_blank');
                     nexStep('E', parseInt(data.rid));
                 }, 2000);
             } else {

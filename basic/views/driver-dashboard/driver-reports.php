@@ -51,20 +51,12 @@ use yii\bootstrap\Modal;
                     [
                         'label' => 'Действие',
                         'format' => 'raw',
-                        'value' => function($data){
-                            $action = '';
-                            if (null !== $data['completed']){
-                                if ('Y' == $data['payed']) {
-                                    $action = '<div onclick="event.stopPropagation();downloadReport('.$data['id'].')" title="Скачать отчет">'.FAS::icon('file-download').'</div>';
-                                } else {
-                                    $action = '<div onclick="event.stopPropagation();payReport('.$data['id'].')"  title="Оплатить отчет">'.FAS::icon('wallet').'</div>';
-                                }
-                            } else {
-                                $action = '<div onclick="event.stopPropagation();completeReport('.$data['id'].')"  title="Завершить формирование отчета">'.FAS::icon('cog').'</div>';
-                            }
+                        'value' => function($data) {
+                            $download = '<span onclick="event.stopPropagation();downloadReport('.$data['id'].')" title="Скачать отчет">'.FAS::icon('file-download').'</span>';
+                            $update   = intval($data['completed']) ? '' : '<span onclick="event.stopPropagation();completeReport('.$data['id'].')"  title="Завершить формирование отчета">'.FAS::icon('cog').'</span>';
 
-                        return $action;
-                    }
+                            return $update.'&nbsp;'.$download;
+                        }
                     ],
                 ],
             ]);
@@ -131,16 +123,12 @@ Modal::begin([
     }
 
     function downloadReport(id) {
-        console.log('downloadReport:'+id);
+        window.open(window.location.origin + '/reportgrabber/getreport?rid='+id, '_blank');
     }
 
     function completeReport(id) {
         $('#property-driver').data('rid', id);
         genNewReport();
-    }
-
-    function payReport(id) {
-        console.log('payReport:'+id);
     }
 
 </script>

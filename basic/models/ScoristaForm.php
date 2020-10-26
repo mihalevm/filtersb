@@ -12,37 +12,39 @@ use Yii;
 use yii\httpclient\Client;
 use yii\base\Model;
 
-
 class ScoristaForm extends Model {
     protected $db_conn;
     protected $username;
     protected $token;
     protected $nonce;
     protected $password;
+    protected $rest_url;
 
     function __construct () {
         $this->db_conn  = Yii::$app->db;
-        $this->username = 'mihalevmv@e-arbitrage.biz';
-        $this->token    = '0d58f99f9d3cab6d4999edff748c8c21919d2749';
+        $this->username = Yii::$app->params['scorista_username'];
+        $this->token    = Yii::$app->params['scorista_token'];
         $this->nonce    = sha1(uniqid(true));
         $this->password = sha1($this->nonce.$this->token);
+        $this->rest_url = Yii::$app->params['scorista_rest_url'];
     }
 
-    private function addPassportValidate ($rid, $content) {
-        $this->db_conn->createCommand("update reports set passport=:content where id=:rid",
+    private function addScoristaRequest ($rid, $scrid) {
+        $this->db_conn->createCommand("insert into scorista (oid, rid, scrid) values (:oid, :rid, :scrid)",
             [
+                ':oid'     => null,
                 ':rid'     => null,
-                ':content' => null
+                ':scrid'   => null,
             ])
-            ->bindValue(':rid',     intval($rid))
-            ->bindValue(':content', $content )
+            ->bindValue(':oid',   intval(Yii::$app->user->identity->id))
+            ->bindValue(':rid',   $rid)
+            ->bindValue(':scrid', $scrid)
             ->execute();
 
-        return 0;
+        return Yii::$app->db->getLastInsertID();
     }
 
     private function getHttpClient ( $params ) {
-        $rest_url = 'https://api.scorista.ru/dossier/json';
         $client   = new Client();
 
         $response = $client->createRequest()
@@ -50,19 +52,10 @@ class ScoristaForm extends Model {
                 'timeout' => 10
             ])
             ->setMethod('post')
-            ->setUrl($rest_url)
+            ->setUrl($this->rest_url)
             ->setFormat(Client::FORMAT_JSON)
             ->setData($params)
             ->setHeaders([
-//                'Accept'           => 'text/html,application/xhtml+xm…plication/xml;q=0.9,*/*;q=0.8',
-//                'Accept-Encoding'  => 'gzip, deflate, br',
-//                'Accept-Language'  => 'ru-RU,ru;q=0.8,en-US;q=0.5,en;q=0.3',
-//                'Cache-Control'    => 'max-age=0',
-//                'Connection'       => 'keep-alive',
-//                'Content-Type'     => 'application/x-www-form-urlencoded; charset=UTF-8',
-//                'Host'             => $host,
-//                'Referer'          => $http,
-//                'User-Agent'       => 'Mozilla/5.0 (Windows NT 6.3; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0',
                 'username'         => $this->username,
                 'nonce'            => $this->nonce,
                 'password'         => $this->password
@@ -70,8 +63,8 @@ class ScoristaForm extends Model {
 
         return $response->send();
     }
-/*
-    public function getDriverInfo($rid) {
+
+    public function getDriverInfoReq($rid) {
         $arr = $this->db_conn->createCommand("SELECT i.*, r.payed FROM reports r, userinfo i WHERE r.id = :rid and r.oid = :oid AND r.did = i.id",[
             ':rid' => null,
             ':oid' => null,
@@ -82,9 +75,9 @@ class ScoristaForm extends Model {
 
         return sizeof($arr) ? $arr[0]:null;
     }
-*/
-    public function getDriverInfo($did) {
-        $arr = $this->db_conn->createCommand("SELECT i.*, 'Y' as payed FROM userinfo i WHERE i.id = :did",[
+
+    public function getDriverInfoVal($did) {
+        $arr = $this->db_conn->createCommand("SELECT *, 'Y' as payed FROM userinfo WHERE id=:did",[
             ':did' => null,
         ])
             ->bindValue(':did', $did)
@@ -93,11 +86,10 @@ class ScoristaForm extends Model {
         return sizeof($arr) ? $arr[0]:null;
     }
 
-
-    public function Check($rid) {
+    public function Check($rid, $did, $type) {
         $answer = [];
 
-        $userInfo = $this->getDriverInfo($rid);
+        $userInfo = ($type == 'validate' ? $this->getDriverInfoVal($did) : $this->getDriverInfoReq($rid));
 
         if ( null != $userInfo ) {
             if ( $userInfo['payed'] == 'Y' ) {
@@ -118,67 +110,97 @@ class ScoristaForm extends Model {
                     $raddress = json_decode($userInfo['raddress']);
                     $laddress = json_decode($userInfo['laddress']);
 
-                    $req_packet = [
-                        'form' => [
-                            'persona' => [
-                                'personalInfo'        => [
-                                    'lastName'       => $userInfo['secondname'] ,
-                                    'firstName'      => $userInfo['firstname'],
-                                    'patronimic'     => $userInfo['middlename'],
-                                    'gender'         => 1,
-                                    'birthDate'      => date_format(date_create_from_format('Y-m-d', $userInfo['birthday']), 'd.m.Y'),
-                                    'placeOfBirth'   => 'НЕТ',
-                                    'passportSN'     => $userInfo['pserial'].' '.$userInfo['pnumber'],
-                                    'issueDate'      => date_format(date_create_from_format('Y-m-d', $userInfo['pdate']), 'd.m.Y'),
-                                    'issueAuthority' => 'НЕТ'
-                                ],
-                                'addressRegistration' => [
-                                    'postIndex' => $raddress->postzip,
-                                    'region'    => $raddress->region,
-                                    'city'      => $raddress->city,
-                                    'street'    => $raddress->street,
-                                    'house'     => $raddress->house,
-                                    'building'  => $raddress->build,
-                                    'flat'      => $raddress->flat,
-                                ],
-                                'addressResidential'  => [
-                                    'postIndex' => $laddress->postzip,
-                                    'region'    => $laddress->region,
-                                    'city'      => $laddress->city,
-                                    'street'    => $laddress->street,
-                                    'house'     => $laddress->house,
-                                    'building'  => $laddress->build,
-                                    'flat'      => $laddress->flat,
-                                ],
-                                'contactInfo'         => [
-                                    'cellular' => $userInfo['personalphone']
-                                ],
-                                'cronos'              => 1
-                            ]
-                        ]
-                    ];
-
-                    $response = $this->getHttpClient($req_packet);
-
-                    if ($response->getIsOk()) {
-//                        {"status":"OK","requestid":"agrid5f8fb2224a75a"}
-                        $jres = json_decode($response->content);
-
-                        if (property_exists($jres, 'status') && $jres->status == 'OK') {
-                            $answer = [
-                                'code'    => 200,
-                                'message' => $response->content
+                    if (
+                        null != $raddress->region &&
+                        null != $raddress->city &&
+                        null != $raddress->street &&
+                        (null != $raddress->house || null != $raddress->build || null != $raddress->flat) &&
+                        null != $laddress->region &&
+                        null != $laddress->city &&
+                        null != $laddress->street &&
+                        (null != $laddress->house || null != $laddress->build || null != $laddress->flat)
+                    ) {
+                        if ($type !== 'validate') {
+                            $req_packet = [
+                                'form' => [
+                                    'persona' => [
+                                        'personalInfo' => [
+                                            'lastName' => $userInfo['secondname'],
+                                            'firstName' => $userInfo['firstname'],
+                                            'patronimic' => $userInfo['middlename'],
+                                            'gender' => 1,
+                                            'birthDate' => date_format(date_create_from_format('Y-m-d', $userInfo['birthday']), 'd.m.Y'),
+                                            'placeOfBirth' => 'НЕТ',
+                                            'passportSN' => $userInfo['pserial'] . ' ' . $userInfo['pnumber'],
+                                            'issueDate' => date_format(date_create_from_format('Y-m-d', $userInfo['pdate']), 'd.m.Y'),
+                                            'issueAuthority' => 'НЕТ'
+                                        ],
+                                        'addressRegistration' => [
+                                            'postIndex' => $raddress->postzip,
+                                            'region' => $raddress->region,
+                                            'city' => $raddress->city,
+                                            'street' => $raddress->street,
+                                            'house' => $raddress->house,
+                                            'building' => $raddress->build,
+                                            'flat' => $raddress->flat,
+                                        ],
+                                        'addressResidential' => [
+                                            'postIndex' => $laddress->postzip,
+                                            'region' => $laddress->region,
+                                            'city' => $laddress->city,
+                                            'street' => $laddress->street,
+                                            'house' => $laddress->house,
+                                            'building' => $laddress->build,
+                                            'flat' => $laddress->flat,
+                                        ],
+                                        'contactInfo' => [
+                                            'cellular' => $userInfo['personalphone']
+                                        ],
+                                        'cronos' => 1
+                                    ]
+                                ]
                             ];
+
+                            $response = $this->getHttpClient($req_packet);
+
+                            if ($response->getIsOk()) {
+                                $jres = json_decode($response->content);
+//                            $jres = json_decode('{"status":"OK","requestid":"agrid5f8fb2224a75a"}');
+
+                                if (property_exists($jres, 'status') && $jres->status == 'OK') {
+                                    if ($this->addScoristaRequest($rid, $jres->requestid) > 0) {
+                                        $answer = [
+                                            'code' => 200,
+                                            'message' => 'Ваш запрос поставлен в очередь.'
+                                        ];
+                                    } else {
+                                        $answer = [
+                                            'code' => 500,
+                                            'message' => 'Ошибка добаления запроса в очередь'
+                                        ];
+                                    }
+                                } else {
+                                    $answer = [
+                                        'code' => 500,
+                                        'message' => 'Ошибка запроса данных'
+                                    ];
+                                }
+                            } else {
+                                $answer = [
+                                    'code' => 500,
+                                    'message' => 'Ошибка запроса к серверу'
+                                ];
+                            }
                         } else {
                             $answer = [
-                                'code'    => 500,
-                                'message' => 'Ошибка запроса данных'
+                                'code' => 200,
+                                'message' => 'Данные сотрудника валидны'
                             ];
                         }
                     } else {
                         $answer = [
                             'code'    => 500,
-                            'message' => 'Ошибка запроса к серверу'
+                            'message' => 'Адрес проживания либо регистрации задан не верно'
                         ];
                     }
                 } else {
@@ -201,5 +223,142 @@ class ScoristaForm extends Model {
         }
 
         return $answer;
+    }
+
+/*
+ * Console part
+ *
+ * */
+
+    private function updateScoristaOrders ($id, $status, $msg) {
+        $this->db_conn->createCommand("update scorista set status=:status, message=:msg where id=:id",
+                [
+                    ':status' => null,
+                    ':msg'    => null,
+                    ':id'     => null
+                ])
+                ->bindValue(':id',     intval($id) )
+                ->bindValue(':status', $status )
+                ->bindValue(':msg',    $msg )
+                ->execute();
+    }
+
+    private function updateReports ($rid, $content) {
+        $this->db_conn->createCommand("update reports set scorista=:content where id=:rid",
+            [
+                ':content' => null,
+                ':rid'     => null
+            ])
+            ->bindValue(':rid',     intval($rid) )
+            ->bindValue(':content', $content )
+            ->execute();
+    }
+
+
+    public function addOrder () {
+        $tasks = $this->db_conn->createCommand("select rid from scorista where scrid is null and status is null", [])->queryAll();
+
+        if (count($tasks) > 0 ) {
+            foreach ($tasks as $taskItem){
+                $this->Check($taskItem['rid'], null, 'request');
+            }
+        }
+
+        return 0;
+    }
+
+    public function getRequestedContent () {
+        $rids = [];
+        $tasks = $this->db_conn->createCommand("select id, oid, rid, scrid from scorista where scrid is not null and status is NULL AND CURRENT_TIMESTAMP()-rdate > 60", [])->queryAll();
+
+        if (count($tasks) > 0 ) {
+            foreach ($tasks as $taskItem){
+                $request_packet = [
+                    'requestID' => $taskItem['scrid']
+                ];
+
+                $response = $this->getHttpClient($request_packet);
+
+                if ($response->getIsOk()) {
+
+                    $jres = json_decode($response->content);
+
+                    if (property_exists($jres, 'status')) {
+                        if ($jres->status == 'DONE') {
+                            $this->updateReports($taskItem['rid'], $response->content);
+                            $this->updateScoristaOrders($taskItem['id'], $jres->status, null);
+                            array_push($rids, $taskItem['rid']);
+                        }
+                    }
+                } else {
+                    $jres = json_decode($response->content);
+
+                    if (property_exists($jres, 'status')) {
+                        $this->updateScoristaOrders($taskItem['id'], $jres->status, $response->content);
+                    }
+                }
+            }
+        }
+
+        return $rids;
+    }
+
+    private function parseContent ($html) {
+        $data = [];
+
+        if (null !=$html && strlen(strstr($html, "empty")) == 0) {
+            $dom = new \DOMDocument();
+            $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOERROR);
+            $all_tr = $dom->getElementsByTagName('tr');
+
+            foreach ($all_tr as $tr) {
+                $node = $tr->childNodes;
+
+                if ($node->length > 1 && $node->item(5)->nodeName == 'td') {
+                    $matches = null;
+                    preg_match('/^(.+):\s(\d+\.\d\d)/U', $node->item(5)->nodeValue, $matches);
+                    if (strcasecmp('Исполнительский сбор', $matches[1]) !== 0) {
+                        $data = [
+                            'owner' => $node->item(0)->nodeValue,
+                            'doc_num' => $node->item(1)->nodeValue,
+                            'doc_id' => $node->item(2)->nodeValue,
+                            'doc_edate' => $node->item(3)->nodeValue,
+                            'summ' => $node->item(2)->nodeValue,
+                            'psumm' => floatval($matches[2]),
+                            'fssp_div' => $node->item(6)->nodeValue,
+                            'fssp_ex' => $node->item(7)->nodeValue
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $data;
+    }
+
+    public function getDocAttrs($rid) {
+        $attrs = [
+            'error' => 500
+        ];
+
+        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista, (select username from users where id=did) as demail, (select username from users where id=oid) as oemail from reports where id=:rid",[
+            ':rid' => null,
+        ])
+            ->bindValue(':rid', $rid)
+            ->queryAll();
+
+        if ( sizeof($reports) ) {
+            $attrs['rdate']  = $reports[0]['cdate'];
+            $attrs['demail'] = $reports[0]['demail'];
+            $attrs['oemail'] = $reports[0]['oemail'];
+            $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
+            $attrs['egrul'] = $reports[0]['egrul'];
+            $attrs['gibdd'] = $reports[0]['gibdd'];
+            $attrs['fssp']  = $this->parseContent($reports[0]['fssp']);
+            $attrs['scorista'] = $reports[0]['scorista'];
+            $attrs['error'] = 200;
+        }
+
+        return $attrs;
     }
 }

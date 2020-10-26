@@ -1,8 +1,12 @@
 <?php
 
-$params = require __DIR__ . '/params.php';
-$db = require __DIR__ . '/db.php';
-$mailer = require __DIR__ . '/mailer.php';
+$params   = array_merge(
+        require __DIR__ . '/params.php',
+        require __DIR__ . '/scorista.php',
+        require __DIR__ . '/yandex-kassa.php'
+    );
+$db       = require __DIR__ . '/db.php';
+$mailer   = require __DIR__ . '/mailer.php';
 
 $config = [
     'id' => 'basic',
@@ -47,7 +51,7 @@ $config = [
             ],
         ],
     ],
-    'params' => $params,
+    'params'   => $params,
 ];
 
 if (YII_ENV_DEV) {

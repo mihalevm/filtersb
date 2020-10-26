@@ -41,7 +41,7 @@ class FsspForm extends Model {
 
         $response = $client->createRequest()
             ->setOptions([
-                'timeout' => 2
+                'timeout' => 5
             ])
             ->setMethod('get')
             ->setUrl($url)

@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<script language="JavaScripтак у тебя там и не видноt">
+<script language="JavaScript">
     function repeatStep() {
         $('#rep-engine-content').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
         $.post(window.location.origin + '/reportgrabber', {

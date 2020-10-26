@@ -77,7 +77,7 @@ class CompanyProfileForm extends Model {
 
     public function saveCompanyProfile() {
         $this->inn   = preg_replace('/\_/','', $this->inn);
-        $this->phone = preg_replace('/\_/','', $this->phone);
+        $this->phone = preg_replace('/\-/','', $this->phone);
 
         $this->db_conn->createCommand("update userinfo set inn=:inn, companyname=:companyname, firstname=:firstname, secondname=:secondname, middlename=:middlename, personalphone=:phone  where id=:id",
             [

@@ -3,10 +3,10 @@
         <div class="col-md-12">
             <h4 class="text-center">
 <?php
-    if (intval($result) > 0) {
-        echo "Данные из базы МВД получены.";
+    if ($result['code'] == 200) {
+        echo "<p>Данне сотрудника заполнены верно.</p><p>Сейчас вы будете перенаправлены на страницу оплаты.</p>";
     } else {
-        echo $result;
+        echo $result['message'];
     }
 ?>
             </h4>
@@ -15,13 +15,13 @@
     <div class="row control-tools">
         <div class="col-md-12">
 <?php
-    if (intval($result) > 0) {
+    if ($result['code'] === 200) {
 ?>
         <button type="button" class="btn btn-primary pull-right" onclick="nexStep()">Далее</button>
 <?php
     } else {
 ?>
-        <button type="button" class="btn btn-primary pull-right" onclick="repeatStep()">Повторить</button>
+        <button type="button" class="btn btn-primary pull-right" onclick="skipStep()">Пропустить</button>
 <?php
     }
 ?>
@@ -29,13 +29,21 @@
     </div>
 </div>
 
-<script language="JavaScripтак у тебя там и не видноt">
-    function repeatStep() {
+<script language="JavaScript">
+    $(document).ready(function () {
+        if (200 == <?=$result['code']?>){
+            setTimeout(function () {
+                nexStep();
+            }, 3000);
+        }
+    });
+
+    function skipStep() {
         $('#rep-engine-content').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
         $.post(window.location.origin + '/reportgrabber', {
-            s: 'G',
+            s: 'E',
             did:$('#drv-item-'+$('#property-driver').data('did')).data('did'),
-            rid:<?=$rid?>
+            rid: $('#property-driver').data('rid'),
         }, function (data) {
             $('#rep-engine-content').html(data);
         });
@@ -44,9 +52,9 @@
     function nexStep() {
         $('#rep-engine-content').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
         $.post(window.location.origin + '/reportgrabber', {
-            s: 'finish',
+            s: 'pay',
             did:$('#drv-item-'+$('#property-driver').data('did')).data('did'),
-            rid:<?=$rid?>
+            rid: $('#property-driver').data('rid'),
         }, function (data) {
             $('#rep-engine-content').html(data);
         });

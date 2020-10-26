@@ -20,7 +20,7 @@ class DriverDashboardForm extends Model {
     }
 
     public function getDriverReports () {
-        $arr = $this->db_conn->createCommand("SELECT cast(r.cdate as date) as cdate, r.id, r.payed, r.completed FROM reports r WHERE r.oid=r.did and r.did=:did order by cdate desc", [
+        $arr = $this->db_conn->createCommand("SELECT cast(r.cdate as date) as cdate, r.id, r.payed, (if(r.egrul IS NULL, FALSE, TRUE) and if(r.fssp IS NULL, FALSE, TRUE) AND  if(r.passport IS NULL, FALSE, TRUE) and if(r.passport IS NULL, FALSE, TRUE) and if((r.scorista IS NULL and r.payed='Y') or r.payed='N' , FALSE, TRUE) ) as completed FROM reports r WHERE r.oid=r.did and r.did=:did order by cdate desc", [
             ':did'  => null,
         ])
             ->bindValue(':did',  intval((Yii::$app->user->identity->id)) )

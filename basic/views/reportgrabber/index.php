@@ -23,6 +23,11 @@ use yii\helpers\Html;
             <br/>
             <div class="collapse" id="rep-pay-info">
                 <div class="well text-left">
+                    <?php
+                        if ($payedContent) {
+                            echo '<p><b>Внимание! Отчет уже содержит оплаченную часть данных. Вы хотите обновить эти данные?</b></p>';
+                        }
+                    ?>
                     При запросе платного отчета очень важно правильно заполнить поля профиля сотрудника.<br/>
                     Т.к. при поиске будут сопоставлены указанные Вами данные.<br/>
                     В случае ошибки или не полного заполнения профиля сформированный отчет будет не информативным.<br/>
@@ -46,7 +51,7 @@ use yii\helpers\Html;
 
         if ( $(o).is(':checked') ) {
             $.post(window.location.origin + '/reportgrabber', {
-                s: 'pay',
+                s: 'prep',
                 did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
                 rid: $('#property-driver').data('rid'),
             }, function (data) {

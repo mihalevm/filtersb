@@ -38,9 +38,11 @@
 	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
 			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Need to change
+			'minLength'=>'0',
+			'autoFill'=> true,							
 		],
 		'options' => [
-			'value' => $profile['tachograph']
+			'value' => $profile['tachograph'],			
 		]		
 	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:*') ?>	
 
@@ -49,10 +51,12 @@
 		<br>
 		<br>
 		<br>
-
+		
 	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
 			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change
+			'minLength'=>'0',
+			'autoFill'=> true,
 		],
 		'options' => [
 			'value' => $profile['trailertype']	
@@ -85,3 +89,19 @@
 
 	<?php ActiveForm::end(); ?>
 </div>
+
+
+<script language="JavaScript">
+	document.addEventListener('DOMContentLoaded', function() {
+		$( "#driverprofileextendedform-tachograph" ).focus(function(){
+			if (this.value == "") {
+				$(this).autocomplete("search");
+			}
+		});
+		$( "#driverprofileextendedform-trailertype" ).focus(function(){
+			if (this.value == "") {
+				$(this).autocomplete("search");
+			}
+		});
+	})
+</script>

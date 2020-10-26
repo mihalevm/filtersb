@@ -10,6 +10,7 @@ use app\models\DriverProfileWorkplaceForm;
 
 class DriverProfileController extends Controller
 {
+	
 
 	public function actionIndex() 
 	{
@@ -48,8 +49,29 @@ class DriverProfileController extends Controller
 			]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
 				'model' => $workplaceModel,
-				'profile' => $workplaceModel->getDriverProfileWorkplace(),
+				'profile' => $workplaceModel->getDriverProfileWorkplace()				
 			]),
 		]);
 	}
+
+	public function actionPreviousWorksList()
+	{
+		if (Yii::$app->user->isGuest) {
+            return $this->redirect('/signin');
+		}
+		
+		$model = new DriverProfileWorkplaceForm();
+		$workplaceModel = $model->getDriverProfileWorkplaceList();
+
+		return $this-> _sendJSONAnswer($workplaceModel);
+	}
+
+	private function _sendJSONAnswer($res)
+	{
+        $response = Yii::$app->response;
+        $response->format = \yii\web\Response::FORMAT_JSON;
+        $response->data = $res;
+
+        return $response;
+    }
 }

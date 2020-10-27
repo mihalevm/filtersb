@@ -66,6 +66,7 @@ class ReportgrabberController extends Controller {
 
                     $params = [
                         'result'  => $res['code'],
+                        'rid'     => $res['rid'],
                         'message' => $res['message']
                     ];
                 }
@@ -149,18 +150,20 @@ class ReportgrabberController extends Controller {
         $mpdf  = new \Mpdf\Mpdf(['tempDir' => '/tmp']);
         $attrs = $model->getDocAttrs($rid);
 
-        $html_template = $this->renderPartial('doc_template',[
-                'rdate'     => $attrs['rdate'],
-                'email'     => $attrs['demail'],
+        if( $attrs['error'] == 200 ) {
+            $html_template = $this->renderPartial('doc_template', [
+                'rdate' => $attrs['rdate'],
+                'email' => $attrs['demail'],
                 'pvalidate' => $attrs['pvalidate'],
-                'egrul'     => $attrs['egrul'],
-                'gibdd'     => $attrs['gibdd'],
-                'fssp'      => $attrs['fssp'],
-                'scorista'  => $attrs['scorista'],
+                'egrul' => $attrs['egrul'],
+                'gibdd' => $attrs['gibdd'],
+                'fssp' => $attrs['fssp'],
+                'scorista' => $attrs['scorista'],
             ]);
 
-        $mpdf->WriteHTML($html_template);
-        $pdf = $mpdf->Output();
+            $mpdf->WriteHTML($html_template);
+            $pdf = $mpdf->Output();
+        }
 
         return $pdf ? $this->_sendPDFDoc($pdf) : '';
     }

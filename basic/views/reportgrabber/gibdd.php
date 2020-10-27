@@ -1,30 +1,20 @@
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-12">
-            <h4 class="text-center">
+        <div class="col-md-12 text-center">
 <?php
     if (intval($result) > 0) {
-        echo "Данные из базы ГИБДД получены.";
+        echo '<h4>Данные из базы ГИБДД получены.</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';
     } else {
         echo $result;
     }
 ?>
-            </h4>
         </div>
     </div>
     <div class="row control-tools">
         <div class="col-md-12">
-<?php
-    if (intval($result) > 0) {
-?>
-        <button type="button" class="btn btn-primary pull-right" onclick="nexStep()">Далее</button>
-<?php
-    } else {
-?>
-        <button type="button" class="btn btn-primary pull-right" onclick="repeatStep()">Повторить</button>
-<?php
-    }
-?>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= intval($result) > 0?'block':'none' ?>" id="nextStep" onclick="nexStep()">Далее</button>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= intval($result) == 0?'block':'none' ?>" id="skipStep" onclick="nexStep()">Пропустить</button>
+            <button type="button" class="btn btn-primary pull-right mr-12" style="display:<?= intval($result) == 0?'block':'none' ?>" id="repeatStep" onclick="repeatStep()">Повторить</button>
         </div>
     </div>
 </div>

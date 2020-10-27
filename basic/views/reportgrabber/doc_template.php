@@ -53,12 +53,14 @@ $this->title = 'Отчет';
         if (null !== $egrul){
             $egrul = json_decode($egrul);
             $egrul = $egrul->rows[0];
+
+            if( property_exists($egrul, 'n') ) {
     ?>
     <table style="margin-left: auto; margin-right: auto;" border="0" width="100%">
         <tbody>
         <tr>
-            <td style="width: 50%">Название:</td>
-            <td><?=$egrul->n?></td>
+            <td style="width: 50%">Наименование:</td>
+            <td><?=property_exists($egrul,'o') && intval($egrul->o) > 0 ? 'ИП '.$egrul->n : $egrul->n?></td>
         </tr>
         <tr>
             <td style="width: 50%">Дата прекращения деятельности:</td>
@@ -66,7 +68,7 @@ $this->title = 'Отчет';
         </tr>
         <tr>
             <td style="width: 50%">ОГРНИП:</td>
-            <td><?=$egrul->o?></td>
+            <td><?=property_exists($egrul,'o')?$egrul->o : 'Нет'?></td>
         </tr>
         <tr>
             <td style="width: 50%">ИНН:</td>
@@ -74,11 +76,16 @@ $this->title = 'Отчет';
         </tr>
         <tr>
             <td style="width: 50%">Дата присвоения ОГРНИП:</td>
-            <td><?=$egrul->r?></td>
+            <td><?=property_exists($egrul,'r')?$egrul->r : 'Не указана'?></td>
         </tr>
         </tbody>
     </table>
-    <?php } else {
+    <?php   } else {
+                if (property_exists($egrul, 'cnt') && intval($egrul->cnt) == 0){
+                    echo '<p style="text-align: center">Указанный ИНН в реестре не найден.</p>';
+                }
+            }
+        } else {
             echo '<p style="text-align: center">Проверка не проводилась.</p>';
         }?>
     <p><b>Проверка водительского удостоверения по базе ГИБДД:</b></p>

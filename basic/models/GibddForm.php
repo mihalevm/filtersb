@@ -54,7 +54,7 @@ class GibddForm extends Model {
 
     public function Check($rid, $did) {
         $answer = null;
-        $result = 'Ошибка получения данных из базы ГИБДД.';
+        $result = '<h4>Ошибка получения данных из базы ГИБДД.</h4><br/>Вы можете пропустить этот шаг нажав кнопку "Пропустиь"<br/>либо повторить попытку нажав кнопку "Повторить"';
         $driverInfo = $this->getDriverInfo($did);
 
         $answer = $this->gibdd_fetch($driverInfo['dserial'].$driverInfo['dnumber'], $driverInfo['ddate']);

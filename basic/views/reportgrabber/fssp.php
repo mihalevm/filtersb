@@ -8,7 +8,7 @@ if ($session['error'] == 200) {
     <br/>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <input class="form-control" id="captcha_str" placeholder="" type="text" data-sid="<?=$session['cookies']?>"required >
+            <input class="form-control" id="captcha_str" placeholder="" type="text" data-sid="<?=$session['cookies']?>" autocomplete="off" required >
         </div>
     </div>
     <br/>
@@ -27,7 +27,7 @@ if ($session['error'] == 200) {
 <?php
 } else {
 ?>
-        <div class="col-md-12">Ошибка обращения к серверу ФССП</div>
+    <div class="col-md-12 text-center"><h4>Ошибка обращения к серверу ФССП</h4></div>
 <?php
 }
 ?>
@@ -35,17 +35,9 @@ if ($session['error'] == 200) {
 
     <div class="row control-tools">
         <div class="col-md-12">
-<?php
-if ($session['error'] == 200) {
-    ?>
-    <button type="button" class="btn btn-primary pull-right" onclick="nexStep()">Далее</button>
-    <?php
-} else {
-    ?>
-    <button type="button" class="btn btn-primary pull-right" onclick="repeatStep()">Повторить</button>
-    <?php
-}
-?>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= $session['error'] == 200?'block':'none' ?>" id="nextStep" onclick="nexStep()">Далее</button>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= $session['error'] != 200?'block':'none' ?>" id="skipStep" onclick="nexStep()">Пропустить</button>
+            <button type="button" class="btn btn-primary pull-right mr-12" style="display:<?= $session['error'] != 200?'block':'none' ?>" id="repeatStep" onclick="repeatStep()">Повторить</button>
         </div>
     </div>
     <br/>
@@ -72,9 +64,9 @@ if ($session['error'] == 200) {
     }
 
     function requestData() {
-        $('#rep-fssp-result').text('');
-
         if ($('#captcha_str').val()) {
+            $('#rep-fssp-result').html('<div class="spinner-holder-data"><i class="fas fa-spinner fa-spin"></i></div>');
+
             $.post(window.location.origin + '/reportgrabber', {
                 s: 'F',
                 rid:<?=$rid?>,
@@ -82,10 +74,16 @@ if ($session['error'] == 200) {
                 sid: $('#captcha_str').data('sid'),
                 code: $('#captcha_str').val()
             }, function (r) {
-                if (parseInt(r.code) == 200){
-                    $('#rep-engine-content').html(r.data);
+                if (parseInt(r.error) == 200){
+                    $('#rep-fssp-result').html(r.data);
+                    $('#skipStep').hide();
+                    $('#repeatStep').hide();
+                    $('#nextStep').show();
                 } else {
-                    $('#rep-fssp-result').text(r.data);
+                    $('#rep-fssp-result').html(r.data);
+                    $('#nextStep').hide();
+                    $('#skipStep').show();
+                    $('#repeatStep').show();
                 }
             });
         } else {

@@ -4,7 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\base\Model;
-
+use yii\helpers\ArrayHelper;
 /**
  * LoginForm is the model behind the login form.
  *
@@ -167,7 +167,7 @@ class CompanyDashboardForm extends Model {
     }
 
     public function selectCompanyDrivers($reqFlag) {
-        $arr = $this->db_conn->createCommand("SELECT t.id, t.did, u.username, i.inn, i.firstname, i.secondname, i.middlename, i.birthday, i.pserial, i.pnumber, i.dserial, i.dnumber, (SELECT COUNT(*) FROM tcdrivers tt WHERE tt.did=t.did AND  tt.tid<>t.tid) AS cnt FROM tcdrivers t, users u, userinfo i WHERE t.tid=:tid AND t.reqby=:reqby AND t.disabled='N' AND t.did = u.id AND t.did = i.id", [
+        $arr = $this->db_conn->createCommand("SELECT t.id, t.did, u.username, i.inn, i.firstname, i.secondname, i.middlename, i.birthday, i.pserial, i.pnumber, i.dserial, i.dnumber, (SELECT COUNT(*) FROM tcdrivers tt WHERE tt.did=t.did AND tt.tid<>t.tid and tt.reqby='T') AS cnt FROM tcdrivers t, users u, userinfo i WHERE t.tid=:tid AND t.reqby=:reqby AND t.disabled='N' AND t.did = u.id AND t.did = i.id", [
             ':reqby' => null,
             ':tid'   => null,
         ])
@@ -190,13 +190,23 @@ class CompanyDashboardForm extends Model {
     }
 
     public function getDriverInfo($id) {
-        $arr = ($this->db_conn->createCommand("SELECT u.username,u.active,t.reqby,i.* FROM tcdrivers t, userinfo i, users u WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND u.id=t.did", [
+        $arr = $this->db_conn->createCommand("SELECT u.username,u.active,t.reqby,i.* FROM tcdrivers t, userinfo i, users u WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND u.id=t.did", [
             ':id' => null,
             ':tid'   => null,
         ])
             ->bindValue(':id',  $id )
             ->bindValue(':tid', Yii::$app->user->identity->id )
-            ->queryAll())[0];
+            ->queryAll();
+
+        return count($arr) ? $arr[0] : null;
+    }
+
+    public function getDriverWorkPlace($did) {
+        $arr = $this->db_conn->createCommand("SELECT * FROM workplace WHERE did=:did", [
+            ':did' => null,
+        ])
+            ->bindValue(':did',  $did )
+            ->queryAll();
 
         return $arr;
     }
@@ -251,6 +261,13 @@ class CompanyDashboardForm extends Model {
             ->execute();
 
         return 1;
+    }
+
+    public function getSelectedCompanyName ($cset) {
+        $companysName =  $this->db_conn->createCommand("select id, companyname from userinfo WHERE id in ($cset)", [])
+            ->queryAll();
+
+        return count($companysName) ? ArrayHelper::map($companysName, 'id', 'companyname') : null;
     }
 
 }

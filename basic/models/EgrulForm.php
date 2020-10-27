@@ -129,9 +129,14 @@ class EgrulForm extends Model {
         $result = [];
 
         $result['code'] = 0;
+        $result['rid']  = $rid;
         $result['message'] = null;
 
         $first_time_mark = round(microtime(true) * 1000);
+
+        if (null == $rid) {
+            $result['rid'] = $this->addDriverData($did, $rid, null);
+        }
 
         if ($inn > 0) {
             $res = $this->_sendFirstRequest($inn);
@@ -147,23 +152,26 @@ class EgrulForm extends Model {
                         if (property_exists($res, 'rows')) {
                             if (sizeof($res->rows) > 0) {
                                 $result['code'] = $this->addDriverData($did, $rid, $content);
+                                $result['message'] = '<h4>Данные из базы ЕГРЮЛ получены.</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';
                             } else {
-                                $result['message'] = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
+                                $result['message'] = '<h4>Указанный ИНН водителя не найден в базе ЕГРЮЛ</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';
+                                $result['code'] = 1;
                             }
                         } else {
-                            $result['message'] = 'Указанный ИНН водителя не найден в базе ЕГРЮЛ';
+                            $result['message'] = '<h4>Указанный ИНН водителя не найден в базе ЕГРЮЛ</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';
+                            $result['code'] = 1;
                         }
                     } else {
-                        $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
+                        $result['message'] = '<h4>Ошибка запроса в базу ЕГРЮЛ</h4><br/>Вы можете пропустить этот шаг нажав кнопку "Пропустиь"<br/>либо повторить попытку нажав кнопку "Повторить"';
                     }
                 } else {
-                    $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
+                    $result['message'] = '<h4>Ошибка запроса в базу ЕГРЮЛ</h4><br/>Вы можете пропустить этот шаг нажав кнопку "Пропустиь"<br/>либо повторить попытку нажав кнопку "Повторить"';
                 }
             } else {
-                $result['message'] = 'Ошибка запроса в базу ЕГРЮЛ';
+                $result['message'] = '<h4>Ошибка запроса в базу ЕГРЮЛ</h4><br/>Вы можете пропустить этот шаг нажав кнопку "Пропустиь"<br/>либо повторить попытку нажав кнопку "Повторить"';
             }
         } else {
-            $result['message'] = 'ИНН водителя неверно задан в профиле';
+            $result['message'] = '<h4>ИНН водителя неверно задан в профиле</h4><br/>Вы можете пропустить этот шаг нажав кнопку "Пропустиь"';
         }
 
         return $result;

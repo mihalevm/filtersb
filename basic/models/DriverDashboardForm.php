@@ -30,7 +30,7 @@ class DriverDashboardForm extends Model {
     }
 
     public function getDriverRequests () {
-        $arr = $this->db_conn->createCommand("SELECT t.id, cast(t.rdate as date) as rdate, t.reqby, i.companyname FROM tcdrivers t, userinfo i WHERE t.did=:did AND t.tid=i.id order by rdate desc", [
+        $arr = $this->db_conn->createCommand("SELECT distinct t.id, cast(t.rdate as date) as rdate, t.reqby, i.companyname FROM tcdrivers t, userinfo i WHERE t.did=:did AND t.tid=i.id order by rdate desc", [
             ':did'  => null,
         ])
             ->bindValue(':did',  intval((Yii::$app->user->identity->id)) )

@@ -32,7 +32,7 @@
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Дата приема на работу*:') ?>	
+	])->label('Дата приема на работу<span class="field-required">*</span>') ?>
 	
 	<?= $form->field($model, 'workEndDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,
@@ -41,7 +41,7 @@
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Дата увольнения с работы*:') ?>
+	])->label('Дата увольнения с работы<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'company')->textInput(['value' => ($profile != null) ? $profile['company'] : '',])->label('Название организации') ?>
 	<?= $form->field($model, 'post')->textInput(['value' => ($profile != null) ? $profile['post'] : '',])->label('Должность') ?>
@@ -51,15 +51,19 @@
 	<br>
 	<br>
 	<?= $form->field($model, 'dismissal')->textInput(['value' => ($profile != null) ? $profile['dismissal'] : '',])->label('Причина увольнения') ?>
-	<?= $form->field($model, 'guarantor')->textarea(['value' => ($profile != null) ? $profile['guarantor'] : '', 'rows' => '10'] )->label('Кто может дать рекомендации с даннного места
-	работы (ФИО, контакт для связи)') ?>
+	<?= $form->field($model, 'guarantor')->textarea(['value' => ($profile != null) ? $profile['guarantor'] : '', 'rows' => '10'] )->label('Кто может дать рекомендации с даннного места работы (ФИО, контакт для связи)') ?>
 	<br>
 	<br>
 	<br>
 	<br>
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right mr-12 mt-10', 'method' => 'post']) ?>
 
-	<?php ActiveForm::end(); ?>
+    <div class="form-group col-lg-11 text-right mt-10">
+        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
+        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
+    </div>
+
+
+    <?php ActiveForm::end(); ?>
 </div>
 
 <script language="JavaScript">

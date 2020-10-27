@@ -2,7 +2,8 @@
 	use yii\helpers\Html;
 	use kartik\date\DatePicker;
 	use yii\bootstrap\ActiveForm;
-	use yii\jui\AutoComplete;		
+	use yii\jui\AutoComplete;
+	use dosamigos\multiselect\MultiSelect;
 
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
@@ -18,35 +19,49 @@
 
 	<?= $form->errorSummary($model) ?>
 
-	<?= $form->field($model, 'mainNumber')->textInput(['value' => $profile['personalphone'], 'placeholder' => '+79998884411'])->label('Контактный телефон*:') ?>
+    <?= $form->field($model, 'mainNumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999', 'options' => ['placeholder' => '+79998884411', 'value'=>$profile['personalphone']]])->label('Контактный телефон<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'relativesNumbers')->textInput(['value' => $profile['relphones'], 'placeholder' => '+79998884411, +79998884411'])->label('Телефоны родственников (2 человека)*:') ?>
+    <?= $form->field($model, 'relativesNumbers')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999, 9-999-999-9999', 'options' => ['placeholder' => '+79998884411, +79998884411', 'value'=>$profile['relphones']]])->label('Телефоны родственников (2 человека)<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'familyStatus')->dropDownList(
 		['N' => 'Холост', 'Y' => 'В браке'], 
-		['value' => $profile['familystatus']])->label('Семейное положение*:') ?>
+		['value' => $profile['familystatus']])->label('Семейное положение<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'childs')->textarea(['value' => $profile['childs'], 'rows' => '5'] )->label('Дети, пол и возраст*:') ?>
+	<?= $form->field($model, 'childs')->textarea(['value' => $profile['childs'], 'rows' => '5'] )->label('Дети, пол и возраст<span class="field-required">*</span>') ?>
 		<br>
 		<br>
 		<br>
 		<br>
-	<?= $form->field($model, 'categoryC')->textInput(['value' => $profile['c_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “С” (лет)*:') ?>
+    <?= $form->field($model, 'categoryC')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99', 'options' => ['placeholder' => '10', 'value'=>$profile['c_experience']]])->label('Стаж вождения именно по категории “С” (лет)<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'categoryE')->textInput(['value' => $profile['e_experience'], 'placeholder' => '10'])->label('Стаж вождения именно по категории “Е” (лет)*:') ?>
+    <?= $form->field($model, 'categoryE')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99', 'options' => ['placeholder' => '10', 'value'=>$profile['e_experience']]])->label('Стаж вождения именно по категории “Е” (лет)<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
-			'source' => [ $dic_tachograph[1], $dic_tachograph[2], $dic_tachograph[3] ], // Need to change
+			'source' => array_values($dic_tachograph),
 			'minLength'=>'0',
 			'autoFill'=> true,							
 		],
 		'options' => [
 			'value' => $profile['tachograph'],			
 		]		
-	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)*:*') ?>	
+	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы*:') ?>
+    <?= $form->field($model, 'companyset')->widget(MultiSelect::className(),[
+        'data'    => $companyList,
+        'options' => [
+                'value'   => explode(',',$profile['companyset']),
+                'multiple' => 'multiple'
+        ],
+        'clientOptions' => [
+            'nonSelectedText' => 'Ни чего не выбрано',
+            'allSelectedText' => 'Выбраны все варианты',
+            'nSelectedText'   => 'Выбрано несколько вариантов',
+            'buttonWidth'     => '100%',
+        ],
+    ])->label('Предпочитаемые места работы') ?>
+
+	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы<span class="field-required">*</span>') ?>
 		<br>
 		<br>
 		<br>
@@ -54,14 +69,14 @@
 		
 	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
 		'clientOptions' => [						
-			'source' => [ $dic_trailertype[1], $dic_trailertype[2], $dic_trailertype[3] ], // Need to change
-			'minLength'=>'0',
-			'autoFill'=> true,
+			'source'     => array_values($dic_trailertype),
+			'minLength'  => '0',
+			'autoFill'   => true,
 		],
 		'options' => [
 			'value' => $profile['trailertype']	
 		]		
-	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько):*') ?>	
+	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
@@ -70,9 +85,9 @@
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Дата окончания загран.паспорта*:') ?>
+	])->label('Дата окончания загран.паспорта<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки*:') ?>
+	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'startDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
@@ -81,11 +96,14 @@
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Когда вы готовы приступить к работе*:') ?>
+	])->label('Когда вы готовы приступить к работе<span class="field-required">*</span>') ?>
 	
-	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом*:') ?>
+	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом<span class="field-required">*</span>') ?>
 
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right mr-12 mt-10', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+    <div class="form-group col-lg-11 text-right">
+        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
+        <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+    </div>
 
 	<?php ActiveForm::end(); ?>
 </div>

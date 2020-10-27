@@ -15,13 +15,14 @@ class DriverProfileForm extends Model
 	public $birthDate;
 	public $passportSerial;
 	public $passportNumber;
+	public $passportRealeaseDate;
 	public $inn;
 	public $licenseSerial;
 	public $licenseNumber;
 	public $licenseRealeaseDate;
 	public $agreementPersonalData;
 	public $agreementThirdParty;
-	public $agreementComments;	
+	public $agreementComments;
 
 	public function rules() 
 	{
@@ -33,6 +34,7 @@ class DriverProfileForm extends Model
 			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'],
 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
+			['passportRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи паспорта"'],
 			['inn', 'required', 'message' => 'Заполните поле "ИНН"' ],
 			['licenseSerial', 'required', 'message' => 'Заполните поле "Серия водительского удостоверения"' ],
 			['licenseNumber', 'required', 'message' => 'Заполните поле "Номер водительского удостоверения"' ],
@@ -41,7 +43,7 @@ class DriverProfileForm extends Model
 			['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
 			['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
 			['email', 'email'],
-			// ['email', 'unqEmailCheck'], 
+			// ['email', 'unqEmailCheck'],
 			// ['inn',   'unqInnCheck']
 		];
 	}	
@@ -84,6 +86,7 @@ class DriverProfileForm extends Model
         if (sizeof($list)) {
             $list[0]['ddate'] = date('d.m.Y', strtotime($list[0]['ddate']));
             $list[0]['birthday'] = date('d.m.Y', strtotime($list[0]['birthday']));
+            $list[0]['pdate'] = date('d.m.Y', strtotime($list[0]['pdate']));
         }
 
 		return sizeof($list) ? $list[0]:null;
@@ -91,8 +94,11 @@ class DriverProfileForm extends Model
 
 	public function saveDriverProfile() 
 	{
-		$this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
-		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty where id=:id",
+
+        $this->inn   = preg_replace('/\_/','', $this->inn);
+
+        $this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
+		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty, pdate=:passportRealeaseDate where id=:id",
 			[
 				':secondName'   => null,
 				':firstName'    => null,
@@ -100,6 +106,7 @@ class DriverProfileForm extends Model
 				':birthDate'   	=> null,
 				':passportSerial' => null,
 				':passportNumber' => null,					
+				':passportRealeaseDate' => null,
 				':inn'          => null,
 				':licenseSerial' => null,
 				':licenseNumber' => null,
@@ -115,6 +122,7 @@ class DriverProfileForm extends Model
 		->bindValue(':birthDate',       date_format(date_create_from_format('d.m.Y', $this->birthDate), 'Y-m-d'))		
 		->bindValue(':passportSerial',   $this->passportSerial)
 		->bindValue(':passportNumber',   $this->passportNumber)
+		->bindValue(':passportRealeaseDate',   date_format(date_create_from_format('d.m.Y', $this->passportRealeaseDate), 'Y-m-d'))
 		->bindValue(':inn',         $this->inn)
 		->bindValue(':licenseSerial',   $this->licenseSerial)
 		->bindValue(':licenseNumber',   $this->licenseNumber)

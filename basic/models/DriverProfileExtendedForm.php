@@ -20,7 +20,8 @@ class DriverProfileExtendedForm extends Model
 	public $interPassportExpireDate;
 	public $medCard;
 	public $startDate;
-	public $flyInAccept;	
+	public $flyInAccept;
+    public $companyset;
 
 	public function rules() 
 	{
@@ -38,7 +39,8 @@ class DriverProfileExtendedForm extends Model
 			['medCard', 'required', 'message' => 'Заполните поле "Наличие медицинской книжки*:"' ],
 			['startDate', 'required', 'message' => 'Заполните поле "Когда вы готовы приступить к работе*:"' ],
 			['flyInAccept', 'required', 'message' => 'Заполните поле "Согласна ли ваша семья/близкие родственники работе вахтовым методом*:"' ],
-		];
+            ['companyset', 'each', 'rule' => ['integer']],
+        ];
 	}	
 
 	protected $db_conn;
@@ -50,7 +52,7 @@ class DriverProfileExtendedForm extends Model
 	
 	public function getDicTachograph() 
 	{
-		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_tachograph` LIMIT 3"))
+		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_tachograph`"))
 			->queryAll();
 
 		$list = ArrayHelper::map($list, 'id', 'name');	
@@ -60,9 +62,9 @@ class DriverProfileExtendedForm extends Model
 
 	public function getDicTrailerType() 
 	{
-		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_trailertype` LIMIT 3"))
+		$list = ($this->db_conn->createCommand("SELECT * FROM `filtersb`.`dic_trailertype`"))
 			->queryAll();
-		$list = ArrayHelper::map($list, 'id', 'name');
+		$list = ArrayHelper:: map($list, 'id', 'name');
 
 		return $list;
 	}
@@ -81,11 +83,27 @@ class DriverProfileExtendedForm extends Model
 		return sizeof($list) ? $list[0]:null;
 	}
 
-	public function saveDriverProfileExtended() 
+    public function getAllCompany() {
+        $arr = $this->db_conn->createCommand("SELECT distinct i.id, i.companyname FROM users u, userinfo i WHERE u.id=i.id AND u.utype='C' and i.companyname is not null", [])
+            ->queryAll();
+
+        return ArrayHelper::map($arr, 'id', 'companyname');
+    }
+
+    public function saveDriverProfileExtended()
 	{
-		$this->db_conn->createCommand("update userinfo set personalphone=:mainNumber, relphones=:relativesNumbers, tachograph=:tachograph, trailertype=:trailertype,   
+
+        $this->mainNumber = preg_replace('/\-/','', $this->mainNumber);
+        $this->mainNumber = preg_replace('/\_/','', $this->mainNumber);
+        $this->relativesNumbers = preg_replace('/\-/','', $this->relativesNumbers);
+        $this->relativesNumbers = preg_replace('/\_/','', $this->relativesNumbers);
+        $this->categoryC = preg_replace('/\_/','', $this->categoryC);
+        $this->categoryE = preg_replace('/\_/','', $this->categoryE);
+        $this->companyset = implode(',', $this->companyset);
+
+        $this->db_conn->createCommand("update userinfo set personalphone=:mainNumber, relphones=:relativesNumbers, tachograph=:tachograph, trailertype=:trailertype,   
 		transporttype=:marks, familystatus=:familyStatus, childs=:childs, c_experience=:categoryC, e_experience=:categoryE, fpassdate=:interPassportExpireDate, medbook=:medCard,
-		startdate=:startDate, agreefamily=:flyInAccept  where id=:id",
+		startdate=:startDate, agreefamily=:flyInAccept, companyset=:companyset  where id=:id",
 			[
 				':mainNumber'   => null,
 				':relativesNumbers'    => null,
@@ -100,6 +118,7 @@ class DriverProfileExtendedForm extends Model
 				':startDate' => null,					
 				':flyInAccept' => null,					
 				':id'           => null,
+				':companyset'    => null,
 			])
 		->bindValue(':mainNumber',  $this->mainNumber)
 		->bindValue(':relativesNumbers',   $this->relativesNumbers)
@@ -114,6 +133,7 @@ class DriverProfileExtendedForm extends Model
 		->bindValue(':medCard',   $this->medCard)
 		->bindValue(':startDate',  date_format(date_create_from_format('d.m.Y', $this->startDate), 'Y-m-d'))
 		->bindValue(':flyInAccept',   $this->flyInAccept)
+		->bindValue(':companyset',   $this->companyset)
 		->bindValue(':id',          Yii::$app->user->identity->id)
 		->execute();
 	}

@@ -23,20 +23,25 @@ class DriverProfileController extends Controller
 		$workplaceModel = new DriverProfileWorkplaceForm();
 		$dic_tachograph = $extendedModel->getDicTachograph();
 		$dic_trailertype = $extendedModel->getDicTrailerType();
+		$step = 0;
 		
 		if ($model->load(Yii::$app->request->post()) && $model->validate()){
 			$model->saveDriverProfile();
+            $step = 1;
 		}
 		
 		if ($extendedModel->load(Yii::$app->request->post()) && $extendedModel->validate()){
 			$extendedModel->saveDriverProfileExtended();
+            $step = 2;
 		}
 		
 		if ($workplaceModel->load(Yii::$app->request->post()) && $workplaceModel->validate()){
 			$workplaceModel->saveDriverProfileWorkplace();
-		}	
+			$this->redirect('/');
+			return;
+		}
 
-		return $this->render('/driver-profile/index', [			                             
+		return $this->render('index', [
 		  	'driverInfo' => $this->renderPartial('driver-info', [
 				'model'   => $model,
 				'profile' => $model->getDriverProfile()
@@ -45,12 +50,14 @@ class DriverProfileController extends Controller
 				'model' => $extendedModel,
 				'profile' => $extendedModel->getDriverProfile(),
 				'dic_tachograph' => $dic_tachograph,
-				'dic_trailertype' => $dic_trailertype
+				'dic_trailertype' => $dic_trailertype,
+                'companyList' => $extendedModel->getAllCompany(),
 			]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
 				'model' => $workplaceModel,
 				'profile' => $workplaceModel->getDriverProfileWorkplace()				
 			]),
+            'step' => $step,
 		]);
 	}
 

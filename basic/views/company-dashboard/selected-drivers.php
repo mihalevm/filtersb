@@ -1,5 +1,4 @@
 <?php
-
 use rmrevin\yii\fontawesome\FA;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
@@ -80,6 +79,10 @@ Modal::begin([
     'header' => '<b>Добавление водителя</b>',
     'id' => 'edit-driver',
     'size' => 'modal-md',
+    'options' =>[
+        'data-backdrop' => 'static',
+        'data-keyboard' => 'false'
+        ]
 ]);
 ?>
 
@@ -91,8 +94,8 @@ Modal::begin([
         'layout' => 'horizontal',
         'action' => '/company-dashboard/adddriver',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>",
-            'labelOptions' => ['class' => 'col-lg-5 control-label'],
+            'template' => "{label}\n<div class=\"col-lg-6 col-sm-12\">{input}</div>",
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
         ],
     ]); ?>
     <?= $form->errorSummary($model) ?>
@@ -124,14 +127,16 @@ Modal::begin([
     <?= $form->field($model, 'ddate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи водительского<span class="field-required">*</span>'); ?>
 
     <div class="form-group">
-        <div class="col-lg-offset-9 col-lg-10">
+        <div class="col-sm-offset-10 col-sm-12 col-lg-offset-10 col-lg-12 mt-10">
             <span class="label label-info fake-bnt" onclick="nextDriverParams()">Далее</span>
         </div>
     </div>
 </div>
 
 <div name="driver-item-tab-2" style="display: none">
-    <div class="separator">Адрес регистрации</div>
+    <div class="form-group">
+        <div class="separator">Адрес регистрации</div>
+    </div>
     <?= $form->field($model, 'rpostzip')->textInput()->label('Почтовый индекс') ?>
 
     <?= $form->field($model, 'rregion')->textInput()->label('Область/край<span class="field-required">*</span>') ?>
@@ -146,8 +151,11 @@ Modal::begin([
 
     <?= $form->field($model, 'rflat')->textInput()->label('Квартира') ?>
 
-    <div class="separator">Адрес проживания</div>
-    <?= $form->field($model, 'dup_address')->widget(SwitchInput::classname(), ['pluginEvents'=>["switchChange.bootstrapSwitch" => 'function(){duplicateAddress(this)}'] ,'pluginOptions' => ['size' => 'mini', 'onText' => 'Да', 'offText' => 'Нет',], 'options' => ['class' => 'pull-right']])->label('Адреса совпадают') ?>
+
+    <div class="form-group">
+        <div class="col-lg-12 col-sm-12 separator">Адрес проживания</div>
+    </div>
+    <?= $form->field($model, 'dup_address' )->widget(SwitchInput::classname(), ['pluginEvents'=>["switchChange.bootstrapSwitch" => 'function(){duplicateAddress(this)}'] ,'pluginOptions' => ['size' => 'mini', 'onText' => 'Да', 'offText' => 'Нет',], 'options' => ['class' => 'pull-right']])->label('Адреса совпадают') ?>
 
     <div class="living-address">
     <?= $form->field($model, 'lpostzip')->textInput()->label('Почтовый индекс') ?>
@@ -165,7 +173,7 @@ Modal::begin([
     <?= $form->field($model, 'lflat')->textInput()->label('Квартира') ?>
     </div>
     <div class="form-group">
-        <div class="col-lg-offset-8 col-lg-10">
+        <div class="col-sm-offset-8 col-sm-12 col-lg-offset-8 col-lg-10 mt-10">
             <span class="label label-info fake-bnt" onclick="nextDriverParams()">Назад</span>
             <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'add-driver-button']) ?>
         </div>
@@ -199,6 +207,10 @@ Modal::begin([
     'header' => '<b>Создание отчета</b>',
     'id' => 'generate-report',
     'size' => 'modal-lg',
+    'options' =>[
+        'data-backdrop' => 'static',
+        'data-keyboard' => 'false'
+    ]
 ]);
 ?>
 
@@ -225,19 +237,6 @@ Modal::begin([
 
 <script language="JavaScript">
     document.addEventListener('DOMContentLoaded', function() {
-        $("[href*='property-driver-modal-tab']").on('shown.bs.tab', function (e) {
-            var t = $(e.target).attr("href")
-            if (t === '#property-driver-modal-tab0') {
-                getDriverReports();
-            }
-            if (t === '#property-driver-modal-tab1') {
-                getDriverInfo();
-            }
-            if (t === '#property-driver-modal-tab2') {
-                getDriverComents();
-            }
-        });
-
         $("[href='#my-drivers']").click(function () {
             $.pjax.reload({container: "#drivers_list", timeout: 2e3});
         });
@@ -263,69 +262,14 @@ Modal::begin([
     function duplicateAddress(o) {
         if ($(o).prop('checked')) {
             $('.living-address').hide();
+            if (window.innerWidth < 1099) {
+                $('div[name="driver-item-tab-2"]').css('height','635');
+            }
         } else {
+            if (window.innerWidth < 1099) {
+                $('div[name="driver-item-tab-2"]').css('height','1050');
+            }
             $('.living-address').show();
-        }
-    }
-
-    function getDriverReports() {
-        $('#property-driver-modal-tab0').html('');
-        $.get(
-            window.location.href+'/getdriverreport',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab0').html(data);
-            }
-        )
-    }
-
-    function getDriverInfo() {
-        $('#property-driver-modal-tab1').html('');
-        $.get(
-            window.location.href+'/getdriverinfo',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab1').html(data);
-            }
-        )
-    }
-
-    function getDriverComents() {
-        $('#property-driver-modal-tab2').html('');
-        $.get(
-            window.location.href+'/getdrivercoments',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab2').html(data);
-            }
-        )
-    }
-
-    function showDialogPropertyDriver(o) {
-        $('#property-driver').data('did', $(o).data('id'));
-        getDriverReports();
-        $('.modal-content').css('height', 600);
-        $('#property-driver').modal('show');
-
-    }
-
-    function showDialogDeleteDriver(i) {
-        $('#delete-driver-label').text($('#drv-item-'+i).data('firstname')+' '+$('#drv-item-'+i).data('secondname')+' '+$('#drv-item-'+i).data('middlename'));
-        $('#delete-driver-label').data('drv', i);
-        $('.modal-content').css('height',180);
-        $('#delete-driver').modal('show');
-
-        return false;
-    }
-
-    function deleteDriver() {
-        if ( parseInt($('#delete-driver-label').data('drv')) > 0 ) {
-            $.post(window.location.href + '/deletedriver', {
-                id: $('#delete-driver-label').data('drv'),
-            }, function (data) {
-                $('#delete-driver').modal('hide');
-                $.pjax.reload({container: "#drivers_list", timeout: 2e3});
-            });
         }
     }
 

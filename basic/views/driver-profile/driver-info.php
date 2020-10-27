@@ -17,13 +17,13 @@
 
 	<?= $form->errorSummary($model) ?>
 
-	<?= $form->field($model, 'email')->textInput(['value' => Yii::$app->user->identity->username, 'placeholder' => 'inbox@example.com'])->label('Адрес электронной почты*:') ?>
+	<?= $form->field($model, 'email')->textInput(['value' => Yii::$app->user->identity->username, 'placeholder' => 'inbox@example.com'])->label('Адрес электронной почты<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'secondName')->textInput(['value' => $profile['secondname'], 'placeholder' => 'Иванов'])->label('Фамилия*:') ?>
+	<?= $form->field($model, 'secondName')->textInput(['value' => $profile['secondname'], 'placeholder' => 'Иванов'])->label('Фамилия<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'firstName')->textInput(['value' => $profile['firstname'], 'placeholder' => 'Иван'])->label('Имя*:') ?>
+	<?= $form->field($model, 'firstName')->textInput(['value' => $profile['firstname'], 'placeholder' => 'Иван'])->label('Имя<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'thirdName')->textInput(['value' => $profile['middlename'], 'placeholder' => 'Иванович'])->label('Отчество*:') ?>
+	<?= $form->field($model, 'thirdName')->textInput(['value' => $profile['middlename'], 'placeholder' => 'Иванович'])->label('Отчество<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'birthDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,
@@ -32,40 +32,53 @@
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Дата рождения*:') ?>
+	])->label('Дата рождения<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'passportSerial')->textInput(['value' => $profile['pserial'], 'placeholder' => '0001'])->label('Серия паспорта*:') ?>
+    <?= $form->field($model, 'passportSerial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['placeholder' => '0001', 'value'=>$profile['pserial']]])->label('Серия паспорта<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'passportNumber')->textInput(['value' => $profile['pnumber'], 'placeholder' => '000001'])->label('Номер паспорта*:') ?>
+    <?= $form->field($model, 'passportNumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999', 'options' => ['placeholder' => '000001', 'value'=>$profile['pnumber']]])->label('Номер паспорта<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'inn')->textInput(['value' => $profile['inn'], 'placeholder' => '25500000000000'])->label('ИНН*:') ?>
+    <?= $form->field($model, 'passportRealeaseDate')->widget(DatePicker::classname(), [
+        'type' => DatePicker::TYPE_INPUT,
+        'options' => ['value' => $profile['pdate'], 'placeholder' => '23.02.1982'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd.mm.yyyy'
+        ]
+    ])->label('Дата выдачи паспорта<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'licenseSerial')->textInput(['value' => $profile['dserial'], 'placeholder' => '0001'])->label('Серия водительского удостоверения*:') ?>
+    <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999', 'options' => ['placeholder' => '000000000001', 'value'=>$profile['inn']]])->label('ИНН<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'licenseNumber')->textInput(['value' => $profile['dnumber'], 'placeholder' => '000001'])->label('Номер водительского удостоверения*:') ?>
+    <?= $form->field($model, 'licenseSerial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['placeholder' => '0001', 'value'=>$profile['dserial']]])->label('Серия водительского удостоверения<span class="field-required">*</span>') ?>
 
-		<?= $form->field($model, 'licenseRealeaseDate')->widget(DatePicker::classname(), [		
+    <?= $form->field($model, 'licenseNumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999', 'options' => ['placeholder' => '000001', 'value'=>$profile['dnumber']]])->label('Номер водительского удостоверения<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'licenseRealeaseDate')->widget(DatePicker::classname(), [
 			'type' => DatePicker::TYPE_INPUT,			
 			'options' => ['value' => $profile['ddate'], 'placeholder' => '23.02.1982'],
 			'pluginOptions' => [
 				'autoclose' => true,
 				'format' => 'dd.mm.yyyy'
 			]
-			])->label('Дата выдачи водительского удостоверения*:') ?>
+			])->label('Дата выдачи водительского удостоверения<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'agreementPersonalData')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'], 
-		['value' => $profile['agreepersdata']])->label('Cогласие на обработку персональных данных.') ?>
+		['value' => $profile['agreepersdata']])->label('Cогласие на обработку персональных данных') ?>
 
 	<?= $form->field($model, 'agreementThirdParty')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'],
-		['value' => $profile['agreecheck']])->label('Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами.') ?>
+		['value' => $profile['agreecheck']])->label('Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами') ?>
 
 	<?= $form->field($model, 'agreementComments')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'],		
-		['value' => $profile['agreecomment']])->label('Cогласие на комментирование со стороны транспортных компаний.') ?>
+		['value' => $profile['agreecomment']])->label('Cогласие на комментирование со стороны транспортных компаний') ?>
 
-	<?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right mr-12 mt-10', 'name' => 'driver-info-save', 'method' => 'post']) ?>
+    <div class="form-group col-lg-11 text-right">
+        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
+        <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'driver-info-save', 'method' => 'post']) ?>
+    </div>
+
 
 	<?php ActiveForm::end(); ?>
 </div>    

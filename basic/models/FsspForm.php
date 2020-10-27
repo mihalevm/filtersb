@@ -41,7 +41,7 @@ class FsspForm extends Model {
 
         $response = $client->createRequest()
             ->setOptions([
-                'timeout' => 5
+                'timeout' => 2
             ])
             ->setMethod('get')
             ->setUrl($url)
@@ -161,7 +161,7 @@ class FsspForm extends Model {
                 $content = str_replace('\"', '"', $content  );
 
                 $this->parseContent($content, $did, $rid);
-                $answer['data']  = 'Данные из базы ФССП получены.';
+                $answer['data']  = 'Данные из базы ФССП получены.<br/>Нажмите "Далее" для продолжения формирования отчета.';
                 $answer['error'] = 200;
             } else {
                 $answer = null;
@@ -169,7 +169,7 @@ class FsspForm extends Model {
                 $answer['error'] = 400;
             }
         } else {
-            $answer['data'] = 'Сервис временно не доступен';
+            $answer['data'] = 'Сервис временно не доступен.<br/>Повторите поытку либо нажмите кнопку "Пропустить".';
             $answer['error'] = 500;
         }
 
@@ -177,6 +177,7 @@ class FsspForm extends Model {
     }
 
     public function GetCaptcha() {
+        $answer = null;
         $captcha = [];
 
         $response = $this->getHttpClient('');

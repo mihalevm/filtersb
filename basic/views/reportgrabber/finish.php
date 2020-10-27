@@ -2,7 +2,7 @@
     <div class="row">
         <div class="col-md-12">
             <h4 class="text-center">
-                Отчет по водителю сформирован, Вы можете получить на почту или скачать.
+                Отчет по сотруднику сформирован.<br/>Вы можете получить на почту или скачать.
             </h4>
         </div>
     </div>
@@ -35,7 +35,7 @@
 
     function ReportDownload () {
         window.open(window.location.origin + '/reportgrabber/getreport?rid=<?=$rid?>', '_blank');
-
+        closeReport();
         return;
     }
 

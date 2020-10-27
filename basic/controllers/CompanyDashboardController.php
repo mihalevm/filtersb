@@ -88,10 +88,23 @@ class CompanyDashboardController extends Controller {
         }
 
         $model = new CompanyDashboardForm();
+        $dinfo = $model->getDriverInfo($id);
+        $workplace = null;
+        $companyset = null;
+
+        if (null != $dinfo) {
+            $workplace = $model->getDriverWorkPlace($dinfo['id']);
+
+            if (null != $dinfo['companyset']){
+                $companyset = $model->getSelectedCompanyName($dinfo['companyset']);
+            }
+        }
 
         return $this->renderPartial('driver-info', [
-            'model'   => $model,
-            'dinfo'   => $model->getDriverInfo($id),
+            'model'      => $model,
+            'dinfo'      => $dinfo,
+            'wplace'     => $workplace,
+            'companyset' => $companyset,
         ]);
     }
 

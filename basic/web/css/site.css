@@ -111,6 +111,27 @@ a.desc:after {
         width: 100%;
         padding: 10px 15px;
     }
+
+}
+
+@media(max-width:1199px) {
+    div[name="driver-item-tab-1"] {
+        height: 840px;
+    }
+
+    div[name="driver-item-tab-2"] {
+        height: 1050px;
+    }
+}
+
+@media(min-width:1200px) {
+    div[name="driver-item-tab-1"] {
+        height:auto;
+    }
+
+    div[name="driver-item-tab-2"] {
+        height: auto;
+    }
 }
 
 .nav > li > form > button.logout:focus,
@@ -121,7 +142,6 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
-
 
 .modal {
     text-align: center;
@@ -204,6 +224,11 @@ a.desc:after {
     color: orange;
 }
 
+.spinner-holder-data {
+    font-size: 45px;
+    color: orange;
+}
+
 .has-error {
     border-color: lightcoral;
 }
@@ -214,8 +239,12 @@ a.desc:after {
     font-family: inherit;
     line-height: 2;
     text-shadow: none;
-    cursor: default;
+    cursor: pointer;
     display: inline-table;
+}
+
+.fake-bnt:hover {
+    background-color: #3cb0de;
 }
 
 .separator {
@@ -224,7 +253,7 @@ a.desc:after {
     text-align: center;
     font-size: 12px;
     color: darkgrey;
-    margin: 12px;
+    padding: 12px;
 }
 .separator::before, .separator::after {
     content: '';
@@ -242,4 +271,22 @@ a.desc:after {
 
 .lh-15 {
     line-height: 1.5;
+}
+
+.ui-autocomplete-input {
+    border: 1px solid #a7a7a7;
+    line-height: 2;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.driver-info-container{
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: 380px;
+}
+
+.bnt-company-select {
+    width: 100%;
+    text-align: right;
 }

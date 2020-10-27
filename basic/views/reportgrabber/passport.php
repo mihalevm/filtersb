@@ -8,7 +8,7 @@ if ($session['error'] == 200) {
     <br/>
     <div class="row">
         <div class="col-md-4 col-md-offset-4">
-            <input class="form-control" id="captcha_str" placeholder="" type="text" data-uid="<?=$session['uid']?>" data-jid="<?=$session['jid']?>" required >
+            <input class="form-control" id="captcha_str" placeholder="" type="text" data-uid="<?=$session['uid']?>" data-jid="<?=$session['jid']?>" autocomplete="off" required >
         </div>
     </div>
     <br/>
@@ -27,7 +27,7 @@ if ($session['error'] == 200) {
 <?php
 } else {
 ?>
-        <div class="col-md-12">Ошибка обращения к серверу</div>
+    <div class="col-md-12 text-center"><h4>Ошибка обращения к серверу</h4></div>
 <?php
 }
 ?>
@@ -35,17 +35,9 @@ if ($session['error'] == 200) {
 
     <div class="row control-tools">
         <div class="col-md-12">
-<?php
-if ($session['error'] == 200) {
-    ?>
-    <button type="button" class="btn btn-primary pull-right" onclick="nexStep()">Далее</button>
-    <?php
-} else {
-    ?>
-    <button type="button" class="btn btn-primary pull-right" onclick="repeatStep()">Повторить</button>
-    <?php
-}
-?>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= $session['error'] == 200?'block':'none' ?>" id="nextStep" onclick="nexStep()">Далее</button>
+            <button type="button" class="btn btn-primary pull-right" style="display:<?= $session['error'] != 200?'block':'none' ?>" id="skipStep" onclick="nexStep()">Пропустить</button>
+            <button type="button" class="btn btn-primary pull-right mr-12" style="display:<?= $session['error'] != 200?'block':'none' ?>" id="repeatStep" onclick="repeatStep()">Повторить</button>
         </div>
     </div>
     <br/>
@@ -75,6 +67,8 @@ if ($session['error'] == 200) {
         $('#rep-passport-result').text('');
 
         if ($('#captcha_str').val()) {
+            $('#rep-passport-result').html('<div class="spinner-holder-data"><i class="fas fa-spinner fa-spin"></i></div>');
+
             $.post(window.location.origin + '/reportgrabber', {
                 s: 'P',
                 rid:<?=$rid?>,
@@ -83,10 +77,16 @@ if ($session['error'] == 200) {
                 jid: $('#captcha_str').data('jid'),
                 code: $('#captcha_str').val()
             }, function (r) {
-                if (parseInt(r.code) == 200){
-                    $('#rep-engine-content').html(r.data);
+                if (parseInt(r.error) == 200){
+                    $('#rep-passport-result').html(r.data);
+                    $('#skipStep').hide();
+                    $('#repeatStep').hide();
+                    $('#nextStep').show();
                 } else {
-                    $('#rep-passport-result').text(r.data);
+                    $('#rep-passport-result').html(r.data);
+                    $('#nextStep').hide();
+                    $('#skipStep').show();
+                    $('#repeatStep').show();
                 }
             });
         } else {

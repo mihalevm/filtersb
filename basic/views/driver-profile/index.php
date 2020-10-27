@@ -11,16 +11,24 @@ $this->title = 'Профиль водителя';
             [
                 'label' => 'Профиль водителя',
                 'content' => $driverInfo,
-                'active' => true
+                'active' => ($step == 0),
             ],
             [
                 'label' => 'Дополнительная информация',
                 'content' => $driverInfoExtended,
+                'active' => ($step == 1),
             ],
             [
                 'label' => 'Предыдущие места работы',
                 'content' => $driverPreviousWork,
+                'active' => ($step == 2),
             ],
         ],
     ]);
 ?>
+
+<script language="JavaScript">
+    function goHome() {
+        document.location.href = "/";
+    };
+</script>

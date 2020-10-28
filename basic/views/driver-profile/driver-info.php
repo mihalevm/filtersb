@@ -6,11 +6,10 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-info',
 		'fieldConfig' => [
-			'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
-			'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
-		],       
-	]);    
-
+			'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
+			'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
+		],
+	]);
 ?>
 <br>
 <div class="driver-info-content">
@@ -70,17 +69,18 @@
 
 	<?= $form->field($model, 'agreementThirdParty')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'],
-		['value' => $profile['agreecheck']])->label('Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами') ?>
+		['value' => $profile['agreecheck']])->label('Cогласие на обработку данных третьими лицами') ?>
 
 	<?= $form->field($model, 'agreementComments')->dropDownList(
 		['N' => 'Нет', 'Y' => 'Да'],		
-		['value' => $profile['agreecomment']])->label('Cогласие на комментирование со стороны транспортных компаний') ?>
+		['value' => $profile['agreecomment']])->label('Cогласие на комментирование транспортными компаниями') ?>
 
-    <div class="form-group col-lg-11 text-right">
-        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
-        <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'driver-info-save', 'method' => 'post']) ?>
+    <div class="form-group">
+        <div class="col-sm-12 col-lg-12 mt-10 pull-right">
+            <?= Html::submitButton('Далее', ['class' => 'btn btn-primary pull-right', 'name' => 'driver-info-save', 'method' => 'post']) ?>
+            <span class="label label-info fake-bnt mr-10 pull-right" onclick="goHome()">На главную</span>
+        </div>
     </div>
-
 
 	<?php ActiveForm::end(); ?>
 </div>    

@@ -8,11 +8,10 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
 		'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
-            'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
+            'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
 		], 
 	]);	
-
 ?>
 <br>
 <div class="driver-info-extended-content">
@@ -62,7 +61,8 @@
         ],
     ])->label('Предпочитаемые места работы') ?>
 
-	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )->label('Марки транспортных средств, которыми управляли на последних местах работы<span class="field-required">*</span>') ?>
+	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )
+        ->label('Опыт управления транспортными средствами (марки)<span class="field-required">*</span>') ?>
 		<br>
 		<br>
 		<br>
@@ -77,7 +77,7 @@
 		'options' => [
 			'value' => $profile['trailertype']	
 		]		
-	])->label('Какими прицепами управляли, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>') ?>
+	])->label('Типы прицепов которыми управляли (можно выбрать несколько)<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		
@@ -101,9 +101,11 @@
 	
 	<?= $form->field($model, 'flyInAccept')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Согласна ли ваша семья/близкие родственники работе вахтовым методом<span class="field-required">*</span>') ?>
 
-    <div class="form-group col-lg-11 text-right">
-        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
-        <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+    <div class="form-group">
+        <div class="col-sm-12 col-lg-12 mt-10 pull-right">
+            <?= Html::submitButton('Далее', ['class' => 'btn btn-primary pull-right', 'name' => 'driver-info-extended-save', 'method' => 'post']) ?>
+            <span class="label label-info fake-bnt mr-10 pull-right" onclick="goHome()">На главную</span>
+        </div>
     </div>
 
 	<?php ActiveForm::end(); ?>

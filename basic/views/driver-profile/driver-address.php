@@ -6,8 +6,8 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-address',
 		'fieldConfig' => [
-			'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
-			'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
+            'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
 		],       
 	]);    
     $raddress = json_decode($profile['raddress']);
@@ -57,12 +57,14 @@
         <?= $form->field($model, 'lflat')->textInput(['value'=>(property_exists($laddress,'flat') ? $laddress->flat : '')])->label('Квартира') ?>
     </div>
 
-    <div class="form-group col-lg-11 text-right">
-        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
-        <?= Html::submitButton('Далее', ['class' => 'btn btn-primary', 'name' => 'driver-address', 'method' => 'post']) ?>
+    <div class="form-group">
+        <div class="col-sm-12 col-lg-12 mt-10 pull-right">
+            <?= Html::submitButton('Далее', ['class' => 'btn btn-primary pull-right', 'name' => 'driver-address', 'method' => 'post']) ?>
+            <span class="label label-info fake-bnt mr-10 pull-right" onclick="goHome()">На главную</span>
+        </div>
     </div>
 
-	<?php ActiveForm::end(); ?>
+    <?php ActiveForm::end(); ?>
 </div>
 
 <script language="JavaScript">

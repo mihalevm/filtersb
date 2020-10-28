@@ -6,8 +6,8 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-previous-work',
 		'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-4\">{input}</div>",
-            'labelOptions' => ['class' => 'col-lg-6 col-lg-offset-1 control-label'],
+            'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
 		],        
 	]);
 
@@ -45,23 +45,16 @@
 
 	<?= $form->field($model, 'company')->textInput(['value' => ($profile != null) ? $profile['company'] : '',])->label('Название организации') ?>
 	<?= $form->field($model, 'post')->textInput(['value' => ($profile != null) ? $profile['post'] : '',])->label('Должность') ?>
+    <?= $form->field($model, 'dismissal')->textInput(['value' => ($profile != null) ? $profile['dismissal'] : '',])->label('Причина увольнения') ?>
 	<?= $form->field($model, 'action')->textarea(['value' => ($profile != null) ? $profile['action'] : '', 'rows' => '5'] )->label('Содержание деятельности') ?>
-	<br>
-	<br>
-	<br>
-	<br>
-	<?= $form->field($model, 'dismissal')->textInput(['value' => ($profile != null) ? $profile['dismissal'] : '',])->label('Причина увольнения') ?>
-	<?= $form->field($model, 'guarantor')->textarea(['value' => ($profile != null) ? $profile['guarantor'] : '', 'rows' => '10'] )->label('Кто может дать рекомендации с даннного места работы (ФИО, контакт для связи)') ?>
-	<br>
-	<br>
-	<br>
-	<br>
-
-    <div class="form-group col-lg-11 text-right mt-10">
-        <span class="label label-info fake-bnt mr-10" onclick="goHome()">На главную</span>
-        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'method' => 'post']) ?>
+	<?= $form->field($model, 'guarantor')->textarea(['value' => ($profile != null) ? $profile['guarantor'] : '', 'rows' => '10'] )
+        ->label('ФИО рекомендателей с предыдущего места работы') ?>
+    <div class="form-group">
+        <div class="col-sm-12 col-lg-12 mt-10 pull-right">
+            <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary pull-right', 'name' => 'driver-previous-work', 'method' => 'post']) ?>
+            <span class="label label-info fake-bnt mr-10 pull-right" onclick="goHome()">На главную</span>
+        </div>
     </div>
-
 
     <?php ActiveForm::end(); ?>
 </div>

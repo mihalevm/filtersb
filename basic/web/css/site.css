@@ -122,6 +122,9 @@ a.desc:after {
     div[name="driver-item-tab-2"] {
         height: 1050px;
     }
+    .form-group {
+        margin-bottom: 10px;
+    }
 }
 
 @media(min-width:1200px) {
@@ -293,4 +296,10 @@ a.desc:after {
 
 .bnt-container > button >span {
     margin-right: 10px;
+}
+
+#driverprofileworkplaceform-guarantor, #driverprofileworkplaceform-action {
+    resize: none;
+    height: 80px;
+    margin-bottom: 10px;
 }

@@ -58,6 +58,7 @@
             'allSelectedText' => 'Выбраны все варианты',
             'nSelectedText'   => 'Выбрано несколько вариантов',
             'buttonWidth'     => '100%',
+            'buttonContainer' => '<div class="btn-group bnt-container"/>',
         ],
     ])->label('Предпочитаемые места работы') ?>
 

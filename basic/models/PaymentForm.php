@@ -55,14 +55,20 @@ class PaymentForm extends Model {
         }
     }
 
-    public function addPayment ($did, $rid) {
+    public function getScoristaPrice(){
+        $price = $this->db_conn->createCommand("select val from config where `key`='scorista_price'",[])->queryAll();
+
+        return count($price) ? $price[0]['val'] : null;
+    }
+
+    public function addPayment ($did, $rid, $sum) {
         $answer = [
             'code' => 500,
             'rid'  => $rid,
             'rurl' => null
         ];
 
-        if (null == $rid) {
+        if (null == $rid && intval($sum) > 0) {
             $this->db_conn->createCommand("insert into reports (oid, did) values (:oid, :did)",
                 [
                     ':oid' => null,
@@ -84,7 +90,7 @@ class PaymentForm extends Model {
                 ->execute();
         }
 
-        if ($rid) {
+        if ($rid && intval($sum) > 0) {
             $yclient = new Client();
             $yclient->setAuth($this->shopID, $this->secretKey);
 
@@ -92,7 +98,7 @@ class PaymentForm extends Model {
                 $payment = $yclient->createPayment(
                     array(
                         'amount' => array(
-                            'value' => 400,
+                            'value'    => $sum,
                             'currency' => 'RUB',
                         ),
                         'confirmation' => array(

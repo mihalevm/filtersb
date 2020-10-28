@@ -7,10 +7,10 @@ use yii\web\Controller;
 use app\models\DriverProfileForm;
 use app\models\DriverProfileExtendedForm;
 use app\models\DriverProfileWorkplaceForm;
+use app\models\DriverProfileAddressForm;
 
 class DriverProfileController extends Controller
 {
-	
 
 	public function actionIndex() 
 	{
@@ -18,13 +18,12 @@ class DriverProfileController extends Controller
 			return $this->redirect('/signin');
 		}
 
-		$model = new DriverProfileForm();
-		$extendedModel = new DriverProfileExtendedForm();
+        $step           = 0;
+		$model          = new DriverProfileForm();
+		$extendedModel  = new DriverProfileExtendedForm();
 		$workplaceModel = new DriverProfileWorkplaceForm();
-		$dic_tachograph = $extendedModel->getDicTachograph();
-		$dic_trailertype = $extendedModel->getDicTrailerType();
-		$step = 0;
-		
+		$addressModel   = new DriverProfileAddressForm();
+
 		if ($model->load(Yii::$app->request->post()) && $model->validate()){
 			$model->saveDriverProfile();
             $step = 1;
@@ -34,7 +33,12 @@ class DriverProfileController extends Controller
 			$extendedModel->saveDriverProfileExtended();
             $step = 2;
 		}
-		
+
+        if ($addressModel->load(Yii::$app->request->post()) && $addressModel->validate()){
+            $addressModel->saveDriverProfile();
+            $step = 3;
+        }
+
 		if ($workplaceModel->load(Yii::$app->request->post()) && $workplaceModel->validate()){
 			$workplaceModel->saveDriverProfileWorkplace();
 			$this->redirect('/');
@@ -49,10 +53,14 @@ class DriverProfileController extends Controller
 		  	'driverInfoExtended' => $this->renderPartial('driver-info-extended', [
 				'model' => $extendedModel,
 				'profile' => $extendedModel->getDriverProfile(),
-				'dic_tachograph' => $dic_tachograph,
-				'dic_trailertype' => $dic_trailertype,
+				'dic_tachograph' => $extendedModel->getDicTachograph(),
+				'dic_trailertype' => $extendedModel->getDicTrailerType(),
                 'companyList' => $extendedModel->getAllCompany(),
 			]),
+            'driverAddress' => $this->renderPartial('driver-address', [
+                'model'   => $addressModel,
+                'profile' => $model->getDriverProfile()
+            ]),
 		  	'driverPreviousWork' => $this->renderPartial('driver-previous-work', [
 				'model' => $workplaceModel,
 				'profile' => $workplaceModel->getDriverProfileWorkplace()				

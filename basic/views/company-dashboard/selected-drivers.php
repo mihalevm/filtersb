@@ -112,6 +112,8 @@ Modal::begin([
 
     <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата рождения<span class="field-required">*</span>'); ?>
 
+    <?= $form->field($model, 'sex')->dropDownList(['0' => 'Женский', '1' => 'Мужской',])->label('Пол<span class="field-required">*</span>')?>
+
     <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН<span class="field-required">*</span>') ?>
 
     <?= $form->field($model, 'pdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи паспорта<span class="field-required">*</span>'); ?>

@@ -13,6 +13,7 @@ class DriverProfileForm extends Model
 	public $firstName;
 	public $thirdName;
 	public $birthDate;
+	public $sex;
 	public $passportSerial;
 	public $passportNumber;
 	public $passportRealeaseDate;
@@ -32,6 +33,7 @@ class DriverProfileForm extends Model
 			['firstName', 'required', 'message' => 'Заполните поле "Имя"'],
 			['thirdName', 'required', 'message' => 'Заполните поле "Отчество"'],
 			['birthDate', 'required', 'message' => 'Выберите значение в поле "Дата рождения"'],
+			['sex', 'required', 'message' => 'Выберите значение в поле "Пол"'],
 			['passportSerial', 'required', 'message' => 'Заполните поле "Серия паспорта"'],
 			['passportNumber', 'required', 'message' => 'Заполните поле "Номер паспорта"'],
 			['passportRealeaseDate', 'required', 'message' => 'Заполните поле "Дата выдачи паспорта"'],
@@ -43,8 +45,7 @@ class DriverProfileForm extends Model
 			['agreementThirdParty', 'required', 'message' => 'Заполните поле "Cогласие на то, что достоверность указанных данных будет проверяться третьими лицами."' ],
 			['agreementComments', 'required', 'message' => 'Заполните поле "Cогласие на комментирование со стороны транспортных компаний."' ],
 			['email', 'email'],
-			// ['email', 'unqEmailCheck'],
-			// ['inn',   'unqInnCheck']
+			['sex', 'integer'],
 		];
 	}	
 
@@ -55,29 +56,7 @@ class DriverProfileForm extends Model
 		$this->db_conn = Yii::$app->db;
 	}
 	
-	// public function unqInnCheck ($attribute) 
-	// {
-    //     $res = ($this->db_conn->createCommand("SELECT u.id from users u, userinfo i WHERE u.id=u.id AND u.active='Y' AND i.inn=:inn")
-    //         ->bindValue(':inn', $this->inn)
-    //         ->queryAll())[0];
-
-    //     if ($res['id'] != Yii::$app->user->identity->id) {
-    //         $this->addError('*', 'Водитель с таким ИНН уже зарегистрирован');
-    //     }
-    // }
-
-	// public function unqEmailCheck($attribute)
-	// {
-    //     $res = ($this->db_conn->createCommand("select id from users where active='Y' and username=:email")
-    //         ->bindValue(':email', $this->email)
-    //         ->queryAll())[0];
-
-    //     if ($res['id'] != Yii::$app->user->identity->id) {
-    //         $this->addError('*', 'Указанный "Email" уже зарегистрирован');
-    //     }
-    // }
-
-	public function getDriverProfile () 
+	public function getDriverProfile ()
 	{
 		$list = ($this->db_conn->createCommand("select * from userinfo where id=:id"))
 			->bindValue(':id', Yii::$app->user->identity->id)
@@ -98,12 +77,13 @@ class DriverProfileForm extends Model
         $this->inn   = preg_replace('/\_/','', $this->inn);
 
         $this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
-		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty, pdate=:passportRealeaseDate where id=:id",
+		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty, pdate=:passportRealeaseDate, sex=:sex where id=:id",
 			[
 				':secondName'   => null,
 				':firstName'    => null,
 				':thirdName'   	=> null,
 				':birthDate'   	=> null,
+				':sex'       	=> null,
 				':passportSerial' => null,
 				':passportNumber' => null,					
 				':passportRealeaseDate' => null,
@@ -120,6 +100,7 @@ class DriverProfileForm extends Model
 		->bindValue(':firstName',   $this->firstName)
 		->bindValue(':thirdName',   $this->thirdName)
 		->bindValue(':birthDate',       date_format(date_create_from_format('d.m.Y', $this->birthDate), 'Y-m-d'))		
+		->bindValue(':sex',       $this->sex)
 		->bindValue(':passportSerial',   $this->passportSerial)
 		->bindValue(':passportNumber',   $this->passportNumber)
 		->bindValue(':passportRealeaseDate',   date_format(date_create_from_format('d.m.Y', $this->passportRealeaseDate), 'Y-m-d'))

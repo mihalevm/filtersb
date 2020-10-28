@@ -13,6 +13,7 @@
     <div class="row driver-info-container">
         <div class="col-md-6 col-sm-6"><b>Адрес эл. почты</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['username']?$dinfo['username']:'Не указан'?></div>
         <div class="col-md-6 col-sm-6"><b>Дата рождения</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['birthday']?$dinfo['birthday']:'Не указана'?></div>
+        <div class="col-md-6 col-sm-6"><b>Пол</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['sex']?'Мужской':'Женский'?></div>
         <div class="col-md-6 col-sm-6"><b>ИНН</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['inn']?></div>
         <div class="col-md-6 col-sm-6"><b>Паспорт</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['pserial']?> <?=$dinfo['pnumber']?></div>
         <div class="col-md-6 col-sm-6"><b>Дата выдачи паспорта</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['pdate']?$dinfo['pdate']:'Не указана'?></div>

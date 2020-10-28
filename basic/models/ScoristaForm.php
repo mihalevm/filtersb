@@ -97,8 +97,7 @@ class ScoristaForm extends Model {
                     null != $userInfo['firstname'] &&
                     null != $userInfo['secondname'] &&
                     null != $userInfo['middlename'] &&
-//Надо добавить пол
-//                    null != $userInfo['sex'] &&
+                    null != $userInfo['sex'] &&
                     null != $userInfo['birthday'] &&
                     null != $userInfo['pserial'] &&
                     null != $userInfo['pnumber'] &&
@@ -128,7 +127,7 @@ class ScoristaForm extends Model {
                                             'lastName' => $userInfo['secondname'],
                                             'firstName' => $userInfo['firstname'],
                                             'patronimic' => $userInfo['middlename'],
-                                            'gender' => 1,
+                                            'gender' => $userInfo['sex'],
                                             'birthDate' => date_format(date_create_from_format('Y-m-d', $userInfo['birthday']), 'd.m.Y'),
                                             'placeOfBirth' => 'НЕТ',
                                             'passportSN' => $userInfo['pserial'] . ' ' . $userInfo['pnumber'],

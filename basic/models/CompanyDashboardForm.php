@@ -40,6 +40,8 @@ class CompanyDashboardForm extends Model {
     public $lflat;
     public $phone;
     public $dup_address;
+    public $sex;
+
 
     protected $db_conn;
 
@@ -64,6 +66,7 @@ class CompanyDashboardForm extends Model {
             ['rcity', 'required', 'message' => 'Укажите город регистрации' ],
             ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
             ['phone', 'required', 'message' => 'Укажите номер телефона' ],
+            ['sex', 'required', 'message' => 'Укажите пол' ],
             ['email', 'email'],
             [['inn', 'pserial', 'pnumber', 'dserial', 'dnumber'], 'integer'],
             [['bdate', 'ddate','pdate'], 'date', 'format' => 'dd.MM.yyyy'],
@@ -71,6 +74,7 @@ class CompanyDashboardForm extends Model {
             [['rstreet', 'lstreet'],   'default', 'value' => 'НЕТ'],
             [['rhouse','rbuild', 'rflat', 'lhouse', 'lbuild', 'lflat'], 'string', 'max' => 4 ],
             ['dup_address', 'boolean'],
+            ['sex', 'integer'],
         ];
     }
 
@@ -119,7 +123,7 @@ class CompanyDashboardForm extends Model {
 
         $id = Yii::$app->db->getLastInsertID();
 
-        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, pdate, dserial, dnumber, ddate, id, raddress, laddress, personalphone) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :pdate,:dserial, :dnumber, :ddate, :id, :raddress, :laddress, :phone)",
+        $this->db_conn->createCommand("insert into userinfo (inn, firstname, secondname, middlename, birthday, pserial, pnumber, pdate, dserial, dnumber, ddate, id, raddress, laddress, personalphone, sex) values (:inn, :firstname, :secondname, :middlename, :bdate, :pserial, :pnumber, :pdate,:dserial, :dnumber, :ddate, :id, :raddress, :laddress, :phone, :sex)",
             [
                 ':inn'        => null,
                 ':firstname'  => null,
@@ -136,6 +140,7 @@ class CompanyDashboardForm extends Model {
                 ':raddress'   => null,
                 ':laddress'   => null,
                 ':phone'      => null,
+                ':sex'        => null,
             ])
             ->bindValue(':inn',        $this->inn        )
             ->bindValue(':firstname',  $this->firstname  )
@@ -152,6 +157,7 @@ class CompanyDashboardForm extends Model {
             ->bindValue(':raddress',   json_encode($raddress) )
             ->bindValue(':laddress',   json_encode($laddress) )
             ->bindValue(':phone',      $this->phone )
+            ->bindValue(':sex',        $this->sex )
             ->execute();
 
         $this->db_conn->createCommand("insert into tcdrivers (did, tid) values (:did, :tid)",

@@ -9,7 +9,7 @@ $this->title = 'Профиль водителя';
     echo Tabs::widget([
         'items' => [
             [
-                'label' => 'Профиль водителя',
+                'label' => 'Общая информация',
                 'content' => $driverInfo,
                 'active' => ($step == 0),
             ],
@@ -19,9 +19,14 @@ $this->title = 'Профиль водителя';
                 'active' => ($step == 1),
             ],
             [
+                'label' => 'Адреса регистрация/проживание',
+                'content' => $driverAddress,
+                'active' => ($step == 2),
+            ],
+            [
                 'label' => 'Предыдущие места работы',
                 'content' => $driverPreviousWork,
-                'active' => ($step == 2),
+                'active' => ($step == 3),
             ],
         ],
     ]);

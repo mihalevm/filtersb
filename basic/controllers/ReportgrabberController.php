@@ -44,6 +44,9 @@ class ReportgrabberController extends Controller {
             if ( $r->post('s') == 'S') {
                 $payedContent = false;
 
+                $payModel = new PaymentForm();
+                $reportPrice = $payModel->getScoristaPrice();
+
                 if (null != $r->post('rid') && intval($r->post('rid'))>0){
                     $model= new RepGeneratorForm();
                     $conetnt = $model->getDocAttrs($r->post('rid'));
@@ -54,6 +57,7 @@ class ReportgrabberController extends Controller {
 
                 $params = [
                     'payedContent'  => $payedContent,
+                    'price' => $reportPrice,
                 ];
             }
             if ( $r->post('s') == 'E') {
@@ -136,8 +140,13 @@ class ReportgrabberController extends Controller {
                 ];
             }
             if ( $r->post('s') == 'pay') {
-                $renderView = 'payment';
-                $params = [];
+                $renderView  = 'payment';
+                $payModel    = new PaymentForm();
+                $reportPrice = $payModel->getScoristaPrice();
+
+                $params = [
+                    'price' => $reportPrice,
+                ];
             }
         }
 
@@ -200,7 +209,7 @@ class ReportgrabberController extends Controller {
 
     public function actionMakepay ($did, $rid) {
         $model = new PaymentForm();
-        $res   = $model->addPayment($did, $rid);
+        $res   = $model->addPayment($did, $rid, $model->getScoristaPrice());
 
         return $this->_sendJSONAnswer($res);
     }

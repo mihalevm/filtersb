@@ -151,7 +151,7 @@ class EgrulForm extends Model {
                         $res = json_decode($content);
                         if (property_exists($res, 'rows')) {
                             if (sizeof($res->rows) > 0) {
-                                $result['code'] = $this->addDriverData($did, $rid, $content);
+                                $result['code'] = $this->addDriverData($did, $result['rid'], $content);
                                 $result['message'] = '<h4>Данные из базы ЕГРЮЛ получены.</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';
                             } else {
                                 $result['message'] = '<h4>Указанный ИНН водителя не найден в базе ЕГРЮЛ</h4><br/>Нажмите кнопку "Далее" для формирования отчета.';

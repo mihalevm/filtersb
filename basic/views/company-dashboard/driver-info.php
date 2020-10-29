@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <h4>Водитель: <?=$dinfo['firstname'].' '.$dinfo['middlename'].' '.$dinfo['secondname']?> </h4>
+            <?=$dinfo['firstname'].' '.$dinfo['middlename'].' '.$dinfo['secondname']?>
         </div>
         <div class="col-md-12">
             <hr>

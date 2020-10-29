@@ -42,19 +42,11 @@ echo \yii\grid\GridView::widget([
     },
     'columns' => [
         [
-            'format' => 'ntext',
-            'attribute'=>'firstname',
-            'label'=>'Имя',
-        ],
-        [
-            'format' => 'ntext',
-            'attribute'=>'secondname',
-            'label'=>'Фамилия',
-        ],
-        [
-            'format' => 'ntext',
-            'attribute'=>'middlename',
-            'label'=>'Отчество',
+            'label' => 'Изыскатель должности',
+            'format' => 'raw',
+            'value' => function($data){
+                return $data['firstname'].' '.$data['middlename'].' '.$data['secondname'];
+            }
         ],
         [
             'format' => 'ntext',

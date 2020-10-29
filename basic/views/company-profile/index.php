@@ -5,15 +5,13 @@ use yii\bootstrap\ActiveForm;
 
 $this->title = 'Редактирование профиля';
 ?>
-<div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
-<br>
+<br/>
     <?php $form = ActiveForm::begin([
         'id' => 'company-edit-profile-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>",
-            'labelOptions' => ['class' => 'col-lg-3 control-label'],
+            'template' => "{label}<div class='col-sm-12 col-lg-4'>{input}</div>",
+            'labelOptions' => ['class' => 'col-sm-1 col-lg-4 control-label text-nowrap text-sm-left'],
         ],
     ]); ?>
         <?= $form->errorSummary($model) ?>
@@ -35,13 +33,9 @@ $this->title = 'Редактирование профиля';
         <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
 
         <div class="form-group">
-            <div class="col-lg-offset-7 col-lg-11">
-                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
+            <div class="col-sm-offset-10 col-sm-12 col-lg-offset-7 mt-10">
+                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary', 'name' => 'register-button']) ?>
             </div>
         </div>
 
     <?php ActiveForm::end(); ?>
-</div>
-
-<script language="JavaScript">
-</script>

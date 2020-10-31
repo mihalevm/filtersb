@@ -33,7 +33,7 @@
 		]
 	])->label('Дата рождения<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'sex')->dropDownList(['0' => 'Женский', '1' => 'Мужской'], ['value' => $profile['sex']])->label('Пол<span class="field-required">*</span>')?>
+    <?= $form->field($model, 'sex')->dropDownList(['0' => 'Женский', '1' => 'Мужской'], ['value' => (null != $profile['sex'] ? intval($profile['sex']) : 1) ])->label('Пол<span class="field-required">*</span>')?>
 
     <?= $form->field($model, 'passportSerial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['placeholder' => '0001', 'value'=>$profile['pserial']]])->label('Серия паспорта<span class="field-required">*</span>') ?>
 

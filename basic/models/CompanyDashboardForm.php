@@ -218,7 +218,7 @@ class CompanyDashboardForm extends Model {
     }
 
     public function getCompanyReports ($id) {
-        $arr = $this->db_conn->createCommand("SELECT r.cdate, r.id, r.payed, (if(r.egrul IS NULL, FALSE, TRUE) and if(r.fssp IS NULL, FALSE, TRUE) AND  if(r.passport IS NULL, FALSE, TRUE) and if(r.passport IS NULL, FALSE, TRUE) and if((r.scorista IS NULL and r.payed='Y') or r.payed='N' , FALSE, TRUE) ) as completed FROM reports r, tcdrivers t WHERE r.oid=:tid and r.did=t.did and t.id=:id order by cdate desc", [
+        $arr = $this->db_conn->createCommand("SELECT cast(r.cdate as date) as cdate, r.id, r.payed, (if(r.egrul IS NULL, FALSE, TRUE) and if(r.fssp IS NULL, FALSE, TRUE) AND if(r.passport IS NULL, FALSE, TRUE) and if(r.gibdd IS NULL, FALSE, TRUE) and if((r.scorista IS NULL and r.payed='Y') or r.payed='N' , FALSE, TRUE) ) as completed FROM reports r, tcdrivers t WHERE r.oid=:tid and r.did=t.did and t.id=:id order by cdate desc", [
             ':tid' => null,
             ':id'  => null,
         ])

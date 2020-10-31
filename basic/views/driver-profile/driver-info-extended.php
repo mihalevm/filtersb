@@ -2,8 +2,8 @@
 	use yii\helpers\Html;
 	use kartik\date\DatePicker;
 	use yii\bootstrap\ActiveForm;
-	use yii\jui\AutoComplete;
 	use dosamigos\multiselect\MultiSelect;
+	use kartik\select2\Select2;
 
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
@@ -35,16 +35,19 @@
 
     <?= $form->field($model, 'categoryE')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '99', 'options' => ['placeholder' => '10', 'value'=>$profile['e_experience']]])->label('Стаж вождения именно по категории “Е” (лет)<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'tachograph')->widget(\yii\jui\AutoComplete::classname(), [
-		'clientOptions' => [						
-			'source' => array_values($dic_tachograph),
-			'minLength'=>'0',
-			'autoFill'=> true,							
-		],
-		'options' => [
-			'value' => $profile['tachograph'],			
-		]		
-	])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'tachograph')->widget(Select2::classname(), [
+        'data'  => array_merge($dic_tachograph, $profile['tachograph']),
+        'maintainOrder' => true,
+        'options' => [
+            'multiple' => true,
+            'value' => $profile['tachograph'],
+        ],
+        'pluginOptions' => [
+            'tags' => true,
+            'tokenSeparators' => [',', ' '],
+            'maximumInputLength' => 10
+        ],
+    ])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>'); ?>
 
     <?= $form->field($model, 'companyset')->widget(MultiSelect::className(),[
         'data'    => $companyList,
@@ -53,7 +56,7 @@
                 'multiple' => 'multiple'
         ],
         'clientOptions' => [
-            'nonSelectedText' => 'Ни чего не выбрано',
+            'nonSelectedText' => 'Ничего не выбрано',
             'allSelectedText' => 'Выбраны все варианты',
             'nSelectedText'   => 'Выбрано несколько вариантов',
             'buttonWidth'     => '100%',
@@ -67,19 +70,22 @@
 		<br>
 		<br>
 		<br>
-		
-	<?= $form->field($model, 'trailertype')->widget(\yii\jui\AutoComplete::classname(), [
-		'clientOptions' => [						
-			'source'     => array_values($dic_trailertype),
-			'minLength'  => '0',
-			'autoFill'   => true,
-		],
-		'options' => [
-			'value' => $profile['trailertype']	
-		]		
-	])->label('Типы прицепов которыми управляли (можно выбрать несколько)<span class="field-required">*</span>') ?>
 
-	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [		
+    <?= $form->field($model, 'trailertype')->widget(Select2::classname(), [
+        'data'  => array_merge($dic_trailertype, $profile['trailertype']),
+        'maintainOrder' => true,
+        'options' => [
+            'multiple' => true,
+            'value'    => $profile['trailertype'],
+        ],
+        'pluginOptions' => [
+            'tags' => true,
+            'tokenSeparators' => [',', ' '],
+            'maximumInputLength' => 10
+        ],
+    ])->label('Типы прицепов которыми управляли (можно выбрать несколько)<span class="field-required">*</span>'); ?>
+
+	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [
 		'type' => DatePicker::TYPE_INPUT,		
 		'options' => ['value' => $profile['fpassdate'], 'placeholder' => '23.02.1982'],
 		'pluginOptions' => [

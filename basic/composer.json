@@ -26,7 +26,8 @@
         "mpdf/mpdf": "^8.0",
         "kartik-v/yii2-widget-switchinput": "dev-master",
         "yandex-money/yandex-checkout-sdk-php": "^1.6",
-        "2amigos/yii2-multi-select-widget": "*"
+        "2amigos/yii2-multi-select-widget": "*",
+        "kartik-v/yii2-widget-select2": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

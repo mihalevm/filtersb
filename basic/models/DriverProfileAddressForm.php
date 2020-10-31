@@ -30,7 +30,12 @@ class DriverProfileAddressForm extends Model {
             ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
             [['rpostzip', 'lpostzip'], 'default', 'value' => '000000'],
             [['rstreet', 'lstreet'],   'default', 'value' => 'НЕТ'],
-            [['rhouse','rbuild', 'rflat', 'lhouse', 'lbuild', 'lflat'], 'string', 'max' => 4 ],
+            ['rhouse',  'string', 'max' => 10, 'message' => 'Номер дома д.б. не более 10 символов'],
+            ['rbuild',  'string', 'max' => 10, 'message' => 'Номер строения д.б. не более 10 символов'],
+            ['rflat',   'string', 'max' => 10, 'message' => 'Номер квартиры д.б. не более 10 символов'],
+            ['lhouse',  'string', 'max' => 10, 'message' => 'Номер дома д.б. не более 10 символов'],
+            ['lbuild',  'string', 'max' => 10, 'message' => 'Номер строения д.б. не более 10 символов'],
+            ['lflat',   'string', 'max' => 10, 'message' => 'Номер квартиры д.б. не более 10 символов'],
             ['dup_address', 'boolean'],
 		];
 	}	

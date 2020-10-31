@@ -104,6 +104,11 @@ use rmrevin\yii\fontawesome\FAS;
     }
 
     function genNewReport() {
+        $('#property-driver').data('rid', null);
+        redirect_to_Report_Modal();
+    }
+
+    function redirect_to_Report_Modal() {
         $('#property-driver').modal('hide');
 
         var did = $('#property-driver').data('did');
@@ -112,6 +117,7 @@ use rmrevin\yii\fontawesome\FAS;
             $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
             $('#generate-report').modal('show');
         }, 800);
+
     }
 
     function downloadReport(id) {
@@ -120,7 +126,7 @@ use rmrevin\yii\fontawesome\FAS;
 
     function completeReport(id) {
         $('#property-driver').data('rid', id);
-        genNewReport();
+        redirect_to_Report_Modal();
     }
 
     function payReport(id) {

@@ -48,7 +48,7 @@ echo \yii\grid\GridView::widget([
             'label'=>'Дата рождения',
         ],
         [
-            'label' => 'Трудоустроен',
+            'label' => 'По совместительству',
             'format' => 'raw',
             'value' => function($data){
                 return '<div>'.($data['cnt'] == 0 ? 'Нет':'Да').'</div>';
@@ -104,15 +104,15 @@ Modal::begin([
 
     <?= $form->field($model, 'bdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата рождения<span class="field-required">*</span>'); ?>
 
-    <?= $form->field($model, 'sex')->dropDownList(['0' => 'Женский', '1' => 'Мужской',])->label('Пол<span class="field-required">*</span>')?>
+    <?= $form->field($model, 'sex')->dropDownList(['0' => 'Женский', '1' => 'Мужской',], ['options'=>['1'=>['selected'=>true]]])->label('Пол<span class="field-required">*</span>')?>
 
     <?= $form->field($model, 'inn')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999999999'])->label('ИНН<span class="field-required">*</span>') ?>
-
-    <?= $form->field($model, 'pdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи паспорта<span class="field-required">*</span>'); ?>
 
     <?= $form->field($model, 'pserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия паспорта<span class="field-required">*</span>') ?>
 
     <?= $form->field($model, 'pnumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Номер паспорта<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'pdate')->widget(DatePicker::classname(), ['type' => DatePicker::TYPE_INPUT, 'pluginOptions' => ['autoclose'=>true]])->label('Дата выдачи паспорта<span class="field-required">*</span>'); ?>
 
     <?= $form->field($model, 'dserial')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Серия водительского<span class="field-required">*</span>') ?>
 

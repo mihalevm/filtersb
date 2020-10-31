@@ -13,10 +13,10 @@ use rmrevin\yii\fontawesome\FAS;
         <div class="col-lg-12">
             <div class="input-group">
                 <div class="input-group-btn">
-                    <button class="btn btn-default" type="button" title="Положительно" onclick="setComentRait(1)"><?=FAS::icon('thumbs-up')?></button>
-                    <button class="btn btn-default" type="button" title="Отрицательно" onclick="setComentRait(-1)"><?=FAS::icon('thumbs-down')?></button>
+                    <button id="rait_up" class="btn btn-default" type="button" title="Положительно" onclick="setComentRait(1)"><?=FAS::icon('thumbs-up')?></button>
+                    <button id="rait_down" class="btn btn-default" type="button" title="Отрицательно" onclick="setComentRait(-1)"><?=FAS::icon('thumbs-down')?></button>
                 </div>
-                <input id="coment_text" type="text" class="form-control text-right" placeholder="Текст отзыва">
+                <input id="coment_text" type="text" class="form-control text-left" placeholder="Текст отзыва">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button" onclick="saveComent()"><?=FAS::icon('sign-in-alt')?></button>
                 </span>
@@ -96,11 +96,19 @@ use rmrevin\yii\fontawesome\FAS;
 
     function setComentRait(v) {
         coment_rait = v;
+
+        if (v == 1) {
+            $('#rait_up').addClass('rait-up');
+            $('#rait_down').removeClass('rait-down');
+        } else {
+            $('#rait_up').removeClass('rait-up');
+            $('#rait_down').addClass('rait-down');
+        }
     };
 
     function saveComent() {
-        console.log('Save coment:'+$('#coment_text').val());
-        console.log('Coment rait:'+coment_rait);
+        // console.log('Save coment:'+$('#coment_text').val());
+        // console.log('Coment rait:'+coment_rait);
         $.post(
             window.location+'/savecoment',
             {did:<?=$dinfo['id']?>, r:coment_rait, t:$('#coment_text').val()},

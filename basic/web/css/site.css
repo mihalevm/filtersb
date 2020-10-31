@@ -311,3 +311,18 @@ a.desc:after {
     height: 80px;
     margin-bottom: 10px;
 }
+
+.help-notification {
+    font-size: 10px;
+    color: gray;
+    font-style: italic;
+    padding-left: 10px;
+}
+
+.rait-up {
+    background-color: lightgreen;
+}
+
+.rait-down {
+    background-color: pink;
+}

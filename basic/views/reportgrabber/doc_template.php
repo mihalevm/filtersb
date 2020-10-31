@@ -131,12 +131,13 @@ $this->title = 'Отчет';
 
     <p><b>Проверка по базе ФССП:</b></p>
     <?php
-    if (null !== $fssp && sizeof($fssp)>0){
+    if (null !== $fssp){
+        $fssp = json_decode($fssp);
         ?>
     <table style="margin-left: auto; margin-right: auto; padding: 0;" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-            <th style="border: solid 1px lightgray">Должник</th>
+<!--            <th style="border: solid 1px lightgray">Должник</th>-->
             <th style="border: solid 1px lightgray">Номер исполнительного док.</th>
             <th style="border: solid 1px lightgray">Реквизиты</th>
             <th style="border: solid 1px lightgray">Дата окончания</th>
@@ -147,22 +148,22 @@ $this->title = 'Отчет';
         <?php
         $total_summ = 0;
         foreach ($fssp as $fssp_item){
-            $total_summ += $fssp_item['psumm'];
+            $total_summ += $fssp_item->psumm;
         ?>
             <tr>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['owner']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['doc_num']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['doc_id']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['doc_edate']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['summ']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['fssp_div']?></td>
-                <td style="border: solid 1px lightgray"><?=$fssp_item['fssp_ex']?></td>
+<!--                <td style="border: solid 1px lightgray">--><?//=$fssp_item->owner?><!--</td>-->
+                <td style="border: solid 1px lightgray"><?=$fssp_item->docnum?></td>
+                <td style="border: solid 1px lightgray"><?=$fssp_item->docid?></td>
+                <td style="border: solid 1px lightgray"><?=$fssp_item->docedate?></td>
+                <td style="border: solid 1px lightgray"><?=$fssp_item->summ?></td>
+                <td style="border: solid 1px lightgray"><?=$fssp_item->fssp_div?></td>
+                <td style="border: solid 1px lightgray"><?=$fssp_item->fssp_ex?></td>
             </tr>
           <?php } ?>
             </tbody>
             <tfoot>
                 <tr>
-                    <td style="border: solid 1px lightgray" colspan="4"></td>
+                    <td style="border: solid 1px lightgray" colspan="3"></td>
                     <td style="border: solid 1px lightgray">Итого: <?=$total_summ?></td>
                     <td style="border: solid 1px lightgray" colspan="2"></td>
                 </tr>

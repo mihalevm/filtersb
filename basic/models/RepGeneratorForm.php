@@ -18,39 +18,6 @@ class RepGeneratorForm extends Model {
         $this->db_conn = Yii::$app->db;
     }
 
-    private function parseContent ($html) {
-        $data = [];
-
-        if (null !=$html && strlen(strstr($html, "empty")) == 0) {
-            $dom = new \DOMDocument();
-            $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOERROR);
-            $all_tr = $dom->getElementsByTagName('tr');
-
-            foreach ($all_tr as $tr) {
-                $node = $tr->childNodes;
-
-                if ($node->length > 1 && $node->item(5)->nodeName == 'td') {
-                    $matches = null;
-                    preg_match('/^(.+):\s(\d+\.\d\d)/U', $node->item(5)->nodeValue, $matches);
-                    if (strcasecmp('Исполнительский сбор', $matches[1]) !== 0) {
-                        $data = [
-                            'owner' => $node->item(0)->nodeValue,
-                            'doc_num' => $node->item(1)->nodeValue,
-                            'doc_id' => $node->item(2)->nodeValue,
-                            'doc_edate' => $node->item(3)->nodeValue,
-                            'summ' => $node->item(2)->nodeValue,
-                            'psumm' => floatval($matches[2]),
-                            'fssp_div' => $node->item(6)->nodeValue,
-                            'fssp_ex' => $node->item(7)->nodeValue
-                        ];
-                    }
-                }
-            }
-        }
-
-        return $data;
-    }
-
     public function getDocAttrs($rid) {
         $attrs = [
             'error' => 500
@@ -71,7 +38,7 @@ class RepGeneratorForm extends Model {
             $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
             $attrs['egrul'] = $reports[0]['egrul'];
             $attrs['gibdd'] = $reports[0]['gibdd'];
-            $attrs['fssp']  = $this->parseContent($reports[0]['fssp']);
+            $attrs['fssp']  = $reports[0]['fssp'];
             $attrs['scorista'] = $reports[0]['scorista'];
             $attrs['error'] = 200;
         }

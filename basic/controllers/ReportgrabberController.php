@@ -207,7 +207,7 @@ class ReportgrabberController extends Controller {
         return $this->_sendJSONAnswer(1);
     }
 
-    public function actionMakepay ($did, $rid) {
+    public function actionMakepay ($did, $rid = null) {
         $model = new PaymentForm();
         $res   = $model->addPayment($did, $rid, $model->getScoristaPrice());
 

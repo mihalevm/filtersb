@@ -47,7 +47,7 @@
             'tokenSeparators' => [',', ' '],
             'maximumInputLength' => 10
         ],
-    ])->label('Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)<span class="field-required">*</span>'); ?>
+    ])->label('Перечислите имеющиеся карты тахографа<span class="field-required">*</span><br/><span class="help-notification">Напишите свой вариант и нажмите Enter</span>'); ?>
 
     <?= $form->field($model, 'companyset')->widget(MultiSelect::className(),[
         'data'    => $companyList,
@@ -65,7 +65,7 @@
     ])->label('Предпочитаемые места работы') ?>
 
 	<?= $form->field($model, 'marks')->textarea(['value' => $profile['transporttype'], 'rows' => '5'] )
-        ->label('Опыт управления транспортными средствами (марки)<span class="field-required">*</span>') ?>
+        ->label('Перечислите марки ТС которыми управляли<span class="field-required">*</span>') ?>
 		<br>
 		<br>
 		<br>
@@ -83,7 +83,7 @@
             'tokenSeparators' => [',', ' '],
             'maximumInputLength' => 10
         ],
-    ])->label('Типы прицепов которыми управляли (можно выбрать несколько)<span class="field-required">*</span>'); ?>
+    ])->label('Перечислите типы прицепов которыми управляли<span class="field-required">*</span><br/><span class="help-notification">Напишите свой вариант и нажмите Enter</span>'); ?>
 
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [
 		'type' => DatePicker::TYPE_INPUT,		

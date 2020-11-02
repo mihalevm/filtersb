@@ -7,6 +7,13 @@
  */
 $this->title = 'Отчет';
 ?>
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
 <p style="width:100%; background-color: black; color: white; padding: 15px;">
     <span style="text-align: left; font-size: 24px; font-weight: 600;">ФильтрСБ</span>
 </p>
@@ -133,6 +140,8 @@ $this->title = 'Отчет';
     <?php
     if (null !== $fssp){
         $fssp = json_decode($fssp);
+
+        if (!property_exists($fssp,'empty') ) {
         ?>
     <table style="margin-left: auto; margin-right: auto; padding: 0;" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
@@ -171,7 +180,8 @@ $this->title = 'Отчет';
         </table>
 
     <?php } else {
-        echo '<p style="text-align: center">Результатов не найдено</p>';
+            echo '<p style="text-align: center">Результатов не найдено</p>';
+        }
     }?>
 
 </div>
@@ -190,3 +200,6 @@ $this->title = 'Отчет';
     ?>
     </ul>
 <?php } ?>
+
+</body>
+</html>

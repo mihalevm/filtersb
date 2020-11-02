@@ -161,16 +161,24 @@ class ReportgrabberController extends Controller {
 
         if( $attrs['error'] == 200 ) {
             $html_template = $this->renderPartial('doc_template', [
-                'rdate' => $attrs['rdate'],
-                'email' => $attrs['demail'],
+                'rdate'     => $attrs['rdate'],
+                'email'     => $attrs['demail'],
                 'pvalidate' => $attrs['pvalidate'],
-                'egrul' => $attrs['egrul'],
-                'gibdd' => $attrs['gibdd'],
-                'fssp' => $attrs['fssp'],
-                'scorista' => $attrs['scorista'],
+                'egrul'     => $attrs['egrul'],
+                'gibdd'     => $attrs['gibdd'],
+                'fssp'      => $attrs['fssp'],
+                'scorista'  => $attrs['scorista'],
             ]);
 
             $mpdf->WriteHTML($html_template);
+
+            if (null != $attrs['scorista']) {
+                $packet = json_decode($attrs['scorista']);
+
+                $mpdf->AddPage();
+                $mpdf->WriteHTML($packet->data->cronos->html);
+            }
+
             $pdf = $mpdf->Output();
         }
 
@@ -195,6 +203,14 @@ class ReportgrabberController extends Controller {
         ]);
 
         $mpdf->WriteHTML($html_template);
+
+        if (null != $attrs['scorista']) {
+            $packet = json_decode($attrs['scorista']);
+
+            $mpdf->AddPage();
+            $mpdf->WriteHTML($packet->data->cronos->html);
+        }
+
         $mpdf->Output($filename, 'F');
 
         Yii::$app->mailer->compose('email_report', $attrs)

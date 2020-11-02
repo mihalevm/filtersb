@@ -39,6 +39,14 @@ class ScoristagrabberController extends Controller {
             ]);
 
             $mpdf->WriteHTML($html_template);
+
+            if (null != $attrs['scorista']) {
+                $packet = json_decode($attrs['scorista']);
+
+                $mpdf->AddPage();
+                $mpdf->WriteHTML($packet->data->cronos->html);
+            }
+
             $mpdf->Output($filename, 'F');
 
             Yii::$app->mailer->compose('email_report', $attrs)

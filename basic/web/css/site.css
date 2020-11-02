@@ -96,7 +96,7 @@ a.desc:after {
     background: #fdf7f7;
     border-left: 3px solid #eed3d7;
     padding: 10px 20px;
-    margin: 0 0 15px 0;
+    margin-bottom: 15px;
 }
 
 /* align the logout "link" (button in form) of the navbar */
@@ -184,6 +184,10 @@ a.desc:after {
 
 .mb-30 {
     margin-bottom: 30px !important;
+}
+
+.mb-10 {
+    margin-bottom: 10px !important;
 }
 
 .mr-10 {
@@ -325,4 +329,27 @@ a.desc:after {
 
 .rait-down {
     background-color: pink;
+}
+
+.control-label-left {
+    padding-top: 7px;
+    margin-bottom: 0;
+    text-align: left;
+    font-weight: bold;
+}
+
+.custom-link {
+    color: grey;
+    font-size: 12px;
+    font-style: italic;
+    font-weight: 100;
+    cursor: pointer;
+}
+
+.custom-link:hover {
+    color: #0a73bb;
+}
+
+#wrapper-restore {
+    display: none;
 }

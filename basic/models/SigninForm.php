@@ -31,12 +31,10 @@ class SigninForm extends Model
     public function rules()
     {
         return [
-            // username and password are both required
-            [['email', 'password'], 'required'],
+            ['email', 'required',    'message' => 'Введите имя пользователя' ],
+            ['password', 'required', 'message' => 'Введите пароль' ],
             ['email', 'email'],
-            // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
-            // password is validated by validatePassword()
             ['password', 'validatePassword'],
         ];
     }

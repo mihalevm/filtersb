@@ -16,7 +16,7 @@ $this->title = 'Авторизация';
                 'labelOptions' => ['class' => 'col-sm-4 col-lg-offset-4 col-lg-1 control-label-left'],
             ],
         ]); ?>
-            <?= $form->errorSummary($model, ["class" => "col-sm-offset-3 col-sm-6 col-lg-offset-5 col-lg-4"]) ?>
+            <?= $form->errorSummary($model, ["class" => "col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4"]) ?>
 
             <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
 

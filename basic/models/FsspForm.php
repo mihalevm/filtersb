@@ -63,6 +63,20 @@ class FsspForm extends Model {
         return $response;
     }
 
+    private function parseSumm($str){
+        $summ = 0;
+        $matches = null;
+        preg_match_all('/.+:\s(\d+\.\d\d)/U', $str, $matches);
+
+        if (count($matches) > 0) {
+            foreach ($matches[1] as $isumm) {
+                $summ += floatval($isumm);
+            }
+        }
+
+        return $summ;
+    }
+
     private function parseContent ($html, $did, $rid) {
         $dom = new \DOMDocument();
         $dom->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'), LIBXML_NOERROR);
@@ -73,15 +87,13 @@ class FsspForm extends Model {
         foreach ($all_tr as $tr) {
             $node = $tr->childNodes;
 
-            if ($node->length > 1 && $node->item(5)->nodeName == 'td'){
-                $matches = null;
-                preg_match('/^(.+):\s(\d+\.\d\d)/U', $node->item(5)->nodeValue, $matches);
+            if ($node->length > 1){
                 array_push($result, [
                     'docnum'   => $node->item(1)->nodeValue,
                     'docid'    => $node->item(2)->nodeValue,
                     'docedate' => $node->item(3)->nodeValue,
                     'summ'     => $node->item(5)->nodeValue,
-                    'psumm'    => (count($matches) && strcasecmp('Исполнительский сбор', $matches[1]) !== 0 ? floatval($matches[2]) : 0 ),
+                    'psumm'    => $this->parseSumm($node->item(5)->nodeValue),
                     'fssp_div' => $node->item(6)->nodeValue,
                     'fssp_ex'  => $node->item(7)->nodeValue
                 ]);

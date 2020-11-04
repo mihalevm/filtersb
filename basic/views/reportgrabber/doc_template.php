@@ -1,17 +1,8 @@
-<?php
-/**
- * Created by PhpStorm.
- * User: max
- * Date: 06.08.20
- * Time: 13:09
- */
-$this->title = 'Отчет';
-?>
 <!DOCTYPE html>
 
 <html>
 <head>
-    <title></title>
+    <title>Отчет</title>
 </head>
 <body>
 <p style="width:100%; background-color: black; color: white; padding: 15px;">
@@ -146,7 +137,6 @@ $this->title = 'Отчет';
     <table style="margin-left: auto; margin-right: auto; padding: 0;" width="100%" cellspacing="0" cellpadding="0">
         <tbody>
         <tr>
-<!--            <th style="border: solid 1px lightgray">Должник</th>-->
             <th style="border: solid 1px lightgray">Номер исполнительного док.</th>
             <th style="border: solid 1px lightgray">Реквизиты</th>
             <th style="border: solid 1px lightgray">Дата окончания</th>
@@ -160,7 +150,6 @@ $this->title = 'Отчет';
             $total_summ += $fssp_item->psumm;
         ?>
             <tr>
-<!--                <td style="border: solid 1px lightgray">--><?//=$fssp_item->owner?><!--</td>-->
                 <td style="border: solid 1px lightgray"><?=$fssp_item->docnum?></td>
                 <td style="border: solid 1px lightgray"><?=$fssp_item->docid?></td>
                 <td style="border: solid 1px lightgray"><?=$fssp_item->docedate?></td>
@@ -182,6 +171,8 @@ $this->title = 'Отчет';
     <?php } else {
             echo '<p style="text-align: center">Результатов не найдено</p>';
         }
+    } else {
+        echo '<p style="text-align: center">Проверка не проводилась.</p>';
     }?>
 
 </div>

@@ -65,12 +65,10 @@ class ScoristaForm extends Model {
     }
 
     public function getDriverInfoReq($rid) {
-        $arr = $this->db_conn->createCommand("SELECT i.*, r.payed FROM reports r, userinfo i WHERE r.id = :rid and r.oid = :oid AND r.did = i.id",[
+        $arr = $this->db_conn->createCommand("SELECT i.*, r.payed FROM reports r, userinfo i WHERE r.id = :rid AND r.did = i.id",[
             ':rid' => null,
-            ':oid' => null,
         ])
             ->bindValue(':rid', $rid)
-            ->bindValue(':oid', Yii::$app->user->identity->id)
             ->queryAll();
 
         return sizeof($arr) ? $arr[0]:null;
@@ -86,7 +84,7 @@ class ScoristaForm extends Model {
         return sizeof($arr) ? $arr[0]:null;
     }
 
-    public function Check($rid, $did, $type) {
+    public function Check($rid, $did, $type, $scrid = null) {
         $answer = [];
 
         $userInfo = ($type == 'validate' ? $this->getDriverInfoVal($did) : $this->getDriverInfoReq($rid));
@@ -164,10 +162,9 @@ class ScoristaForm extends Model {
 
                             if ($response->getIsOk()) {
                                 $jres = json_decode($response->content);
-//                            $jres = json_decode('{"status":"OK","requestid":"agrid5f8fb2224a75a"}');
 
                                 if (property_exists($jres, 'status') && $jres->status == 'OK') {
-                                    if ($this->addScoristaRequest($rid, $jres->requestid) > 0) {
+                                    if ($this->updateScoristaRID($scrid, $jres->requestid) > 0) {
                                         $answer = [
                                             'code' => 200,
                                             'message' => 'Ваш запрос поставлен в очередь.'
@@ -253,13 +250,25 @@ class ScoristaForm extends Model {
             ->execute();
     }
 
+    private function updateScoristaRID ($id, $scrid) {
+        $this->db_conn->createCommand("update scorista set scrid=:scrid where id=:rid",
+            [
+                ':scrid' => null,
+                ':rid'     => null
+            ])
+            ->bindValue(':rid',   intval($id) )
+            ->bindValue(':scrid', $scrid )
+            ->execute();
+
+        return 1;
+    }
 
     public function addOrder () {
-        $tasks = $this->db_conn->createCommand("select rid from scorista where scrid is null and status is null", [])->queryAll();
+        $tasks = $this->db_conn->createCommand("select rid, id from scorista where scrid is null and status is null", [])->queryAll();
 
         if (count($tasks) > 0 ) {
             foreach ($tasks as $taskItem){
-                $this->Check($taskItem['rid'], null, 'request');
+                $this->Check($taskItem['rid'], null, 'request', $taskItem['id']);
             }
         }
 

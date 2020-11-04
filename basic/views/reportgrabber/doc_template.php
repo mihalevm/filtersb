@@ -141,7 +141,7 @@ $this->title = 'Отчет';
     if (null !== $fssp){
         $fssp = json_decode($fssp);
 
-        if (!property_exists($fssp,'empty') ) {
+        if (is_array($fssp) || !property_exists($fssp,'empty') ) {
         ?>
     <table style="margin-left: auto; margin-right: auto; padding: 0;" width="100%" cellspacing="0" cellpadding="0">
         <tbody>

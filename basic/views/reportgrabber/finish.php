@@ -4,14 +4,15 @@
             <h4 class="text-center">
                 Отчет по сотруднику сформирован.<br/>Вы можете получить на почту или скачать.
             </h4>
+            <p class="text-center"><?=(null != $pay ? 'Результаты платного отчета будут направлены на Вашу эл.почту после формирования всех данных.<br/>Это может занять от 3мин до 24ч.':'')?></p>
         </div>
     </div>
     <br/>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-sm-6 col-md-6">
             <button type="button" class="btn btn-primary pull-right" onclick="sendReport()">На почту</button>
         </div>
-        <div class="col-md-6">
+        <div class="col-sm-6 col-md-6">
             <button type="button" class="btn btn-primary pull-left" onclick="ReportDownload()">Скачать</button>
         </div>
     </div>

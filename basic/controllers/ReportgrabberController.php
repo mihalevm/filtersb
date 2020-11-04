@@ -122,9 +122,12 @@ class ReportgrabberController extends Controller {
                 ];
             }
             if ( $r->post('s') == 'finish') {
+                $model = new PaymentForm();
+
                 $renderView = 'finish';
 
                 $params = [
+                    'pay' => $model->reportWithPayment($r->post('rid')),
                     'rid' => $r->post('rid')
                 ];
             }

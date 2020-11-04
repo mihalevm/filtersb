@@ -24,6 +24,18 @@ class PaymentForm extends Model {
         $this->shopID    = Yii::$app->params['yandexk_shopID'];
     }
 
+    public function reportWithPayment($rid) {
+        $report = $this->db_conn->createCommand("select payid from reports where id=:rid and oid=:oid",[
+            ':rid' => null,
+            ':oid' => null,
+        ])
+            ->bindValue(':rid', $rid)
+            ->bindValue(':oid', Yii::$app->user->identity->id)
+            ->queryAll();
+
+        return count($report) ? $report[0]['payid'] : null;
+    }
+
     public function checkPaymentsStatus () {
         $payments = $this->db_conn->createCommand("select id, payid from reports where payed='N' and payid is not null",[])->queryAll();
 

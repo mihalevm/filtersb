@@ -187,6 +187,8 @@
             foreach ($packet->data->cronos->cronos as $cronosItems){
                 echo '<li>'.$cronosItems.'</li>';
             };
+        } else {
+            echo '<p>'.$packet->data->cronos->textResult.'</p>';
         }
     ?>
     </ul>

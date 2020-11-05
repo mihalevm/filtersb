@@ -43,8 +43,10 @@ class ScoristagrabberController extends Controller {
             if (null != $attrs['scorista']) {
                 $packet = json_decode($attrs['scorista']);
 
-                $mpdf->AddPage();
-                $mpdf->WriteHTML($packet->data->cronos->html);
+                if ( intval($packet->data->cronos->result) > 0 ) {
+                    $mpdf->AddPage();
+                    $mpdf->WriteHTML($packet->data->cronos->html);
+                }
             }
 
             $mpdf->Output($filename, 'F');

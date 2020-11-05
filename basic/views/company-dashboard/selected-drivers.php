@@ -131,20 +131,19 @@ Modal::begin([
     <div class="form-group">
         <div class="separator">Адрес регистрации</div>
     </div>
-    <?= $form->field($model, 'rpostzip')->textInput()->label('Почтовый индекс') ?>
+    <?= $form->field($model, 'rpostzip')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'] )->label('Почтовый индекс') ?>
 
-    <?= $form->field($model, 'rregion')->textInput()->label('Область/край<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rregion')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rcity')->textInput()->label('Город<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rstreet')->textInput()->label('Улица<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rhouse')->textInput()->label('Дом') ?>
+    <?= $form->field($model, 'rhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 
-    <?= $form->field($model, 'rbuild')->textInput()->label('Строение') ?>
+    <?= $form->field($model, 'rbuild')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Строение') ?>
 
-    <?= $form->field($model, 'rflat')->textInput()->label('Квартира') ?>
-
+    <?= $form->field($model, 'rflat')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Квартира') ?>
 
     <div class="form-group">
         <div class="col-lg-12 col-sm-12 separator">Адрес проживания</div>
@@ -152,19 +151,19 @@ Modal::begin([
     <?= $form->field($model, 'dup_address' )->widget(SwitchInput::classname(), ['pluginEvents'=>["switchChange.bootstrapSwitch" => 'function(){duplicateAddress(this)}'] ,'pluginOptions' => ['size' => 'mini', 'onText' => 'Да', 'offText' => 'Нет',], 'options' => ['class' => 'pull-right']])->label('Адреса совпадают') ?>
 
     <div class="living-address">
-    <?= $form->field($model, 'lpostzip')->textInput()->label('Почтовый индекс') ?>
+    <?= $form->field($model, 'lpostzip')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999'])->label('Почтовый индекс') ?>
 
-    <?= $form->field($model, 'lregion')->textInput()->label('Область/край<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'lregion')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'lcity')->textInput()->label('Город<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'lcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'lstreet')->textInput()->label('Улица<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'lstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'lhouse')->textInput()->label('Дом') ?>
+    <?= $form->field($model, 'lhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 
-    <?= $form->field($model, 'lbuild')->textInput()->label('Строение') ?>
+    <?= $form->field($model, 'lbuild')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Строение') ?>
 
-    <?= $form->field($model, 'lflat')->textInput()->label('Квартира') ?>
+    <?= $form->field($model, 'lflat')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999'])->label('Квартира') ?>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-8 col-sm-12 col-lg-offset-8 col-lg-10 mt-10">
@@ -250,6 +249,10 @@ Modal::begin([
             }, function (data) {
                 $('#rep-engine-content').html(data);
             });
+        });
+
+        $(function () {
+            $("[data-toggle='popover']").popover();
         });
     });
 

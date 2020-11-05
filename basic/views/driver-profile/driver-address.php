@@ -24,13 +24,13 @@
     </div>
     <?= $form->field($model, 'rpostzip')->widget(MaskedInput::className(), ['mask' => '999999', 'options' => ['placeholder' => '604456', 'value'=>($raddress && property_exists($raddress,'postzip') ? $raddress->postzip : '')]])->label('Почтовый интекс') ?>
 
-    <?= $form->field($model, 'rregion')->textInput(['value'=>($raddress && property_exists($raddress,'region') ? $raddress->region : '')])->label('Область/край<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rregion')->textInput(['value'=>($raddress && property_exists($raddress,'region') ? $raddress->region : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rcity')->textInput(['value'=>($raddress && property_exists($raddress,'city') ? $raddress->city : '')])->label('Город<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rcity')->textInput(['value'=>($raddress && property_exists($raddress,'city') ? $raddress->city : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rstreet')->textInput(['value'=>($raddress && property_exists($raddress,'street') ? $raddress->street : '')])->label('Улица<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rstreet')->textInput(['value'=>($raddress && property_exists($raddress,'street') ? $raddress->street : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rhouse')->textInput(['value'=>($raddress && property_exists($raddress,'house') ? $raddress->house : '')])->label('Дом') ?>
+    <?= $form->field($model, 'rhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['value'=>($raddress && property_exists($raddress,'house') ? $raddress->house : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 
     <?= $form->field($model, 'rbuild')->textInput(['value'=>($raddress && property_exists($raddress,'build') ? $raddress->build : '')])->label('Строение') ?>
 
@@ -45,13 +45,13 @@
     <div class="living-address">
         <?= $form->field($model, 'lpostzip')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '999999', 'options' => ['placeholder' => '604456', 'value'=>($laddress && property_exists($laddress,'postzip') ? $laddress->postzip : '')]])->label('Почтовый интекс') ?>
 
-        <?= $form->field($model, 'lregion')->textInput(['value'=>($laddress && property_exists($laddress,'region') ? $laddress->region : '')])->label('Область/край<span class="field-required">*</span>') ?>
+        <?= $form->field($model, 'lregion')->textInput(['value'=>($laddress && property_exists($laddress,'region') ? $laddress->region : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-        <?= $form->field($model, 'lcity')->textInput(['value'=>($laddress && property_exists($laddress,'city') ? $laddress->city : '')])->label('Город<span class="field-required">*</span>') ?>
+        <?= $form->field($model, 'lcity')->textInput(['value'=>($laddress && property_exists($laddress,'city') ? $laddress->city : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
 
-        <?= $form->field($model, 'lstreet')->textInput(['value'=>($laddress && property_exists($laddress,'street') ? $laddress->street : '')])->label('Улица<span class="field-required">*</span>') ?>
+        <?= $form->field($model, 'lstreet')->textInput(['value'=>($laddress && property_exists($laddress,'street') ? $laddress->street : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
 
-        <?= $form->field($model, 'lhouse')->textInput(['value'=>($laddress && property_exists($laddress,'house') ? $laddress->house : '')])->label('Дом') ?>
+        <?= $form->field($model, 'lhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['value'=>($laddress && property_exists($laddress,'house') ? $laddress->house : ''), 'data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 
         <?= $form->field($model, 'lbuild')->textInput(['value'=>($laddress && property_exists($laddress,'build') ? $laddress->build : '')])->label('Строение') ?>
 
@@ -76,4 +76,10 @@
             $('.living-address').show();
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        $(function () {
+            $("[data-toggle='popover']").popover();
+        });
+    });
 </script>

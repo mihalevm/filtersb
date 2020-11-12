@@ -28,6 +28,7 @@ $config = [
                 [
                     'class' => 'yii\log\FileTarget',
                     'levels' => ['error', 'warning'],
+                    'categories' => ['yii\swiftmailer\Logger::add'],
                 ],
             ],
         ],

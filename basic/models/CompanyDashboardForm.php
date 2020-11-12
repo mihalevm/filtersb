@@ -89,6 +89,12 @@ class CompanyDashboardForm extends Model {
         $this->dserial = preg_replace('/\_/','', $this->dserial);
         $this->dnumber = preg_replace('/\_/','', $this->dnumber);
         $this->phone   = preg_replace('/\-/','', $this->phone);
+        $this->rhouse  = preg_replace('/\_/','', $this->rhouse);
+        $this->rbuild  = preg_replace('/\_/','', $this->rbuild);
+        $this->rflat   = preg_replace('/\_/','', $this->rflat);
+        $this->lhouse  = preg_replace('/\_/','', $this->lhouse);
+        $this->lbuild  = preg_replace('/\_/','', $this->lbuild);
+        $this->lflat   = preg_replace('/\_/','', $this->lflat);
 
         $raddress = [
             'postzip' => $this->rpostzip,

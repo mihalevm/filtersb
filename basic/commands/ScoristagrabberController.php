@@ -57,6 +57,8 @@ class ScoristagrabberController extends Controller {
                 ->setSubject('Отчет с сайта Фильтр СБ')
                 ->attach($filename)
                 ->send();
+
+            unlink($filename);
         }
 
         return ExitCode::OK;

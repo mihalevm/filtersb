@@ -47,6 +47,13 @@ class DriverProfileAddressForm extends Model {
 	}
 
     public function saveDriverProfile() {
+        $this->rhouse = preg_replace('/\_/','', $this->rhouse);
+        $this->rbuild = preg_replace('/\_/','', $this->rbuild);
+        $this->rflat  = preg_replace('/\_/','', $this->rflat);
+        $this->lhouse = preg_replace('/\_/','', $this->lhouse);
+        $this->lbuild = preg_replace('/\_/','', $this->lbuild);
+        $this->lflat  = preg_replace('/\_/','', $this->lflat);
+
         $raddress = [
             'postzip' => $this->rpostzip,
             'region'  => $this->rregion,

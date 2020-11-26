@@ -27,6 +27,7 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 <div class="wrap">
+    <div class="company-pre-nav"></div>
     <?php
     $brandUrl = Yii::$app->homeUrl;
 
@@ -35,17 +36,19 @@ AppAsset::register($this);
     }
 
     NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => $brandUrl,
+        'brandLabel' => '<div class="company-logo"></div><div class="company-label">'.Yii::$app->name.'</div>',
+        'brandUrl'   => $brandUrl,
         'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
+            'class' => 'navbar-inverse navbar-fixed-top company-nav-position',
         ],
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             Yii::$app->user->isGuest ? (
-            ['label' => 'Регистрация', 'url' => ['/register']]):(''),
+            ['label' => 'Водителям', 'url' => ['/register?t=D']]):(''),
+            Yii::$app->user->isGuest ? (
+            ['label' => 'Бизнесу', 'url' => ['/register?t=C']]):(''),
             Yii::$app->user->isGuest ? (
                     ['label' => 'Вход', 'url' => ['/signin']]
             ) : (
@@ -64,7 +67,7 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
-    <div class="container">
+    <div class="container <?=(Yii::$app->user->isGuest ? 'company-landing-container-fullscreen':'')?>">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
         ]) ?>
@@ -73,9 +76,9 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="footer">
+<footer class="footer company-footer">
     <div class="container">
-        <p class="pull-left">&copy; <?=Yii::$app->name ?> <?= date('Y') ?></p>
+        <p class="pull-right">&copy; <?=Yii::$app->name ?> <?= date('Y') ?></p>
     </div>
 </footer>
 

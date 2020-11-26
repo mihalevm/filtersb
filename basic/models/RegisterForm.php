@@ -17,6 +17,7 @@ class RegisterForm extends Model
     public $password;
     public $utype;
     public $inn;
+    public $confirmagree;
 
     protected $db_conn;
 
@@ -31,12 +32,19 @@ class RegisterForm extends Model
         return [
             [['email', 'password','utype'],        'required', 'on' => 'driver' ],
             [['email', 'password','utype', 'inn'], 'required', 'on' => 'company'],
+            ['confirmagree', 'validationAgree' ],
             ['email', 'email'],
             ['email', 'unqEmailCheck'],
             ['password', 'validationPassword'],
             ['utype', 'string', 'length' => 1],
             ['inn',   'unqInnCheck']
         ];
+    }
+
+    public function validationAgree($a) {
+        if (intval($this->confirmagree) == 0 ){
+            $this->addError('*', 'Подтвердите согласие на обработку персональных данных');
+        };
     }
 
     public function validationPassword($a) {
@@ -122,4 +130,11 @@ class RegisterForm extends Model
 
         return true;
     }
+
+    public function getPromoEmail(){
+        $price = $this->db_conn->createCommand("select val from config where `key`='promo_email'",[])->queryAll();
+
+        return count($price) ? $price[0]['val'] : null;
+    }
+
 }

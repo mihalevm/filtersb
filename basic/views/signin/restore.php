@@ -7,30 +7,30 @@ $this->title = 'Восстановление пароля';
 <?php
 if (null != $hash) {
 ?>
-<div class="row">
-        <div class="text-center"><h1>Восстановление пароля</h1></div>
-        <div class="text-center"><h5><i>Введите новый пароль<br/>и подтвердите его повторным вводом.</i></h5></div>
+<div class="company-landing-block3">
+<div class="row form-wrap">
+        <div class="text-center company-font-color"><h4>Восстановление пароля</h4></div>
+        <div class="text-center company-font-color"><h5><i>Введите новый пароль<br/>и подтвердите его повторным вводом.</i></h5></div>
         <br>
-        <div class="col-sm-4 col-lg-offset-3 col-lg-2 control-label-left">Пароль</div>
-        <div class="col-sm-5 col-lg-3 mb-10">
-            <input type="password" id="restore-password-1" class="form-control" aria-required="true" aria-invalid="true"/>
+        <div class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10">
+            <input type="password" id="restore-password-1" class="form-control fa" aria-required="true" aria-invalid="true" placeholder = " Введите пароль"/>
         </div>
-    <div class="col-sm-4 col-lg-offset-3 col-lg-2 control-label-left">Подтвердите пароль</div>
-    <div class="col-sm-5 col-lg-3 mb-10">
-        <input type="password" id="restore-password-2" class="form-control" aria-required="true" aria-invalid="true"/>
+    <div class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10">
+        <input type="password" id="restore-password-2" class="form-control fa " aria-required="true" aria-invalid="true" placeholder = " Подтвердите пароль"/>
     </div>
 
         <div class="form-group">
-            <div class="col-sm-9 col-lg-8 text-right">
-                <span class="label label-info fake-bnt mr-10" onclick="backToSignin()">Отмена</span>
-                <span class="label label-info fake-bnt" onclick="sendRestoreRequestAccept()">Сменить</span>
+            <div class="col-sm-11 col-lg-11 text-right mb-10">
+                <span class="label label-info fake-bnt bnt-regular mr-10" onclick="backToSignin()">Отмена</span>
+                <span class="label label-info fake-bnt bnt-regular" onclick="sendRestoreRequestAccept()">Сменить</span>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-12 col-lg-12 text-center mt-10">
+            <div class="col-sm-12 col-lg-12 text-center mt-10 mb-10 company-font-color">
                 <h5 id="restore-result"></h5>
             </div>
         </div>
+</div>
 </div>
 
 <script language="JavaScript">

@@ -6,12 +6,14 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Редактирование профиля';
 ?>
 <br/>
+<br/>
+<br/>
     <?php $form = ActiveForm::begin([
         'id' => 'company-edit-profile-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}<div class='col-sm-12 col-lg-4'>{input}</div>",
-            'labelOptions' => ['class' => 'col-sm-1 col-lg-4 control-label text-nowrap text-sm-left'],
+            'labelOptions' => ['class' => 'col-sm-1 col-lg-4 control-label text-nowrap text-sm-left company-font-color'],
         ],
     ]); ?>
         <?= $form->errorSummary($model) ?>

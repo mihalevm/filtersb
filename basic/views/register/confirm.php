@@ -6,5 +6,9 @@ $this->title = 'Подтверждение';
 ?>
 <div class="site-index">
     <br/>
-    <p><h2 style="text-align: center">На указанный адрес электронной почты <u><b><?=$model->email?></b></u> выслана ссылка для подтверждения Вашего аккаунта.</h2></p>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <h2 class="company-font-color text-center message">На указанный адрес электронной почты <u><b><?=$model->email?></b></u> выслана ссылка для подтверждения Вашего аккаунта.</h2>
 </div>

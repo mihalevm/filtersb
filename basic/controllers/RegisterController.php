@@ -11,12 +11,20 @@ use Yii;
 use yii\web\Controller;
 use app\models\RegisterForm;
 
-class RegisterController extends Controller
-{
+class RegisterController extends Controller {
+    private function _sendJSONAnswer($res){
+        $response = Yii::$app->response;
+        $response->format = \yii\web\Response::FORMAT_JSON;
+        $response->data = $res;
+
+        return $response;
+    }
+
     public function actionIndex() {
         $model = new RegisterForm();
 
-        $formParams = Yii::$app->request->post('RegisterForm');
+        $formParams   = Yii::$app->request->post('RegisterForm');
+        $registerType = Yii::$app->request->get('t');
 
         $model->scenario = $formParams['utype'] == 'D' ? 'driver' : 'company';
 
@@ -30,6 +38,7 @@ class RegisterController extends Controller
         } else {
             return $this->render('index', [
                 'model' => $model,
+                'rtype' => (null != $registerType ? $registerType : 'D'),
             ]);
         }
 
@@ -51,4 +60,22 @@ class RegisterController extends Controller
         }
     }
 
+    public function actionPromo(){
+        $model = new RegisterForm();
+        $r = Yii::$app->request;
+        $promo_email = $model->getPromoEmail();
+
+        if (null != $r->post('pemail') && null != $r->post('pname') && null != $promo_email) {
+            Yii::$app->mailer->compose('email_promo', [
+                    'email' => $r->post('pemail'),
+                    'name'  => $r->post('pname'),
+            ])
+                ->setTo($promo_email)
+                ->setFrom([Yii::$app->params['senderEmail'] => Yii::$app->params['senderName']])
+                ->setSubject('Запрос на получение бесплатного отчета')
+                ->send();
+        }
+
+        return $this->_sendJSONAnswer('1');
+    }
 }

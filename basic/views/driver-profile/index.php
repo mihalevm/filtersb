@@ -5,6 +5,8 @@ use yii\bootstrap\Tabs;
 $this->title = 'Профиль водителя';
 ?>
 <br/>
+<br/>
+<br/>
 <?php
     echo Tabs::widget([
         'items' => [

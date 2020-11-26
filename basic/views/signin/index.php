@@ -5,31 +5,32 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Авторизация';
 ?>
 
-<div id="wrapper-signin">
-    <div class="row">
-        <div class="text-center"><h1><?= Html::encode($this->title) ?></h1></div>
-    <br>
+<div id="wrapper-signin" class="company-landing-block3">
+    <div class="row form-wrap">
+        <br>
+        <div class="text-center company-font-color"><h4>Вход в личный кабинет</h4></div>
+        <br>
         <?php $form = ActiveForm::begin([
             'layout' => 'horizontal',
             'fieldConfig' => [
-                'template' => "{label}<div class=\"col-sm-5 col-lg-3 mb-10\">{input}</div>",
-                'labelOptions' => ['class' => 'col-sm-4 col-lg-offset-4 col-lg-1 control-label-left'],
+                'template' => "<div class=\"col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10\">{input}</div>",
+//                'labelOptions' => ['class' => 'col-sm-4 col-lg-offset-4 col-lg-1 control-label-left'],
             ],
         ]); ?>
-            <?= $form->errorSummary($model, ["class" => "col-sm-offset-3 col-sm-6 col-lg-offset-4 col-lg-4"]) ?>
+            <?= $form->errorSummary($model, ["class" => "col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10"]) ?>
 
-            <?= $form->field($model, 'email')->textInput(['autofocus' => true]) ?>
+            <?= $form->field($model, 'email')->textInput(['autofocus' => true, 'placeholder' => ' Адрес эл. почты']) ?>
 
-            <?= $form->field($model, 'password')->passwordInput()->label('Пароль') ?>
+            <?= $form->field($model, 'password')->passwordInput(['placeholder' => ' Пароль'])->label('Пароль') ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"col-sm-9 col-lg-8 text-right\">{input} {label}</div>",
+                'template' => "<div class=\"col-sm-offset-1 col-sm-8 col-lg-offset-1 col-lg-8 mb-10 pull-right company-font-color\">{input} {label}</div>",
             ])->label('Запомнить') ?>
 
             <div class="form-group">
-                <label class="col-sm-offset-0 col-sm-3 col-lg-offset-4 col-lg-2 text-left custom-link" onclick="restorePageShow()">Забыли пароль?</label>
-                <div class="col-sm-offset-1 col-sm-5 col-lg-offset-0 col-lg-2 text-right">
-                    <?= Html::submitButton('Вход', ['class' => 'btn btn-primary']) ?>
+                <label class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10 custom-link company-font-color text-right" onclick="restorePageShow()">Забыли пароль?</label>
+                <div class="col-sm-12 col-lg-12 mb-10 text-center">
+                    <?= Html::submitButton('Вход', ['class' => 'btn bnt-regular']) ?>
                 </div>
             </div>
 
@@ -37,23 +38,23 @@ $this->title = 'Авторизация';
     </div>
 </div>
 
-<div id="wrapper-restore">
-    <div class="row">
-        <div class="text-center"><h1>Восстановление пароля</h1></div>
-        <div class="text-center"><h5><i>На указанный Вами адрес будет выслана<br/>ссылка для восстановления пароля.</i></h5></div>
+<div id="wrapper-restore" class="company-landing-block3">
+    <div class="row form-wrap">
         <br>
-        <div class="col-sm-4 col-lg-offset-4 col-lg-1 control-label-left">Email</div>
-        <div class="col-sm-5 col-lg-3 mb-10">
-            <input type="text" id="restore-email" class="form-control" aria-required="true" aria-invalid="true"/>
+        <div class="text-center company-font-color"><h4>Восстановление пароля</h4></div>
+        <div class="text-center company-font-color"><h5><i>На указанный Вами адрес будет выслана<br/>ссылка для восстановления пароля.</i></h5></div>
+        <br>
+        <div class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10">
+            <input type="text" id="restore-email" class="form-control fa" aria-required="true" aria-invalid="true" placeholder=" Адрес эл. почты"/>
         </div>
         <div class="form-group">
-            <div class="col-sm-9 col-lg-8 text-right">
-                <span class="label label-info fake-bnt mr-10" onclick="backToSignin()">Отмена</span>
-                <span class="label label-info fake-bnt" onclick="sendRestoreRequest()">Отправить</span>
+            <div class="col-sm-11 col-lg-11 text-right mb-10">
+                <span class="label label-info fake-bnt mr-10 bnt-regular" onclick="backToSignin()">Отмена</span>
+                <span class="label label-info fake-bnt bnt-regular" onclick="sendRestoreRequest()">Отправить</span>
             </div>
         </div>
         <div class="form-group">
-            <div class="col-sm-12 col-lg-12 text-center mt-10">
+            <div class="col-sm-12 col-lg-12 text-center mt-10 mb-10 company-font-color">
                 <h5 id="restore-result"></h5>
             </div>
         </div>

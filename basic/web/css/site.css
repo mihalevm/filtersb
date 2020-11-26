@@ -9,6 +9,7 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+    background-color: #383435;
 }
 
 .wrap > .container {
@@ -351,5 +352,229 @@ a.desc:after {
 }
 
 #wrapper-restore {
+    display: none;
+}
+
+.message {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.agree-text {
+    font-size: 12px;
+    font-style: normal;
+}
+
+.agree-text a {
+    color: #7ac016;
+}
+
+/* Branding */
+
+.company-logo {
+    background-color: white;
+    height: 35px;
+    width: 35px;
+    display: inline-block;
+    border-radius: 20px;
+    margin-top: -8px;
+    border: 15px solid #1d5392;
+}
+
+.company-footer {
+    background-color: #222;
+    color: white;
+    border-color: #222;
+}
+
+.company-label {
+    display: inline-table;
+    vertical-align: middle;
+    line-height: 3;
+    margin-top: -24px;
+    margin-left: 12px;
+}
+
+.company-nav-position {
+    margin-top: 45px;
+}
+
+.company-pre-nav {
+    background-color: #383435;
+    height: 45px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}
+
+.form-wrap {
+    background-color: #767171;
+    border-radius: 5px;
+    margin-bottom: 50px;
+    margin-right: 40px;
+    max-width: 400px;
+    width: 400px;
+    float: right;
+    display: inline-block;
+}
+
+.form-wrap-1 {
+    background-color: #767171;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 400px;
+    float: right;
+}
+
+
+.navbar-inverse .navbar-nav > li > a, .navbar-inverse .navbar-brand {
+    color: white;
+    font-weight: 600;
+}
+
+.navbar-inverse {
+    border-color: initial;
+}
+
+.bnt-regular, .bnt-lg-regular {
+    color: white;
+    font-weight: 600;
+    background-color: #7ac016;
+}
+
+.bnt-lg-regular {
+    width: 180px;
+    line-height: 3;
+}
+
+.company-font-color {
+    color: white;
+}
+
+.company-font-color2 {
+    color: #6c9f5e;
+    font-weight: 200;
+}
+
+.form-group input, .form-group select, .form-control {
+    font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 600;
+}
+
+#drivers_list tr, #req-drivers tr, #reports_list tr, #my-request tr {
+    background-color: #eeeeee;
+}
+
+.company-landing-name {
+    padding-top: 20%;
+    font-size: 5em;
+    font-weight: 600;
+}
+
+.company-landing-header1 {
+    max-width: 600px;
+    margin-top: 50px;
+}
+
+.company-landing-block1 {
+    width: 100%;
+    background-color: white;
+    display: inline-block;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 6%;
+}
+
+.company-landing-block3 {
+    margin-top: 65px;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 6%;
+}
+
+.company-landing-promo-bnt {
+    width: 100%;
+    line-height: 30px;
+}
+
+.company-landing-container-fullscreen {
+    width: 100%;
+    padding: 0 !important;
+}
+
+.company-landing-block2 {
+    background-color: white;
+    -webkit-box-shadow: 0px 0px 18px 5px rgba(0,0,0,0.5);
+    box-shadow: 0px 0px 18px 5px rgba(0,0,0,0.5);
+    border-radius: 10px;
+    padding-top: 50px;
+    padding-left: 60px;
+    margin-bottom: 50px;
+}
+
+.icon {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: cover;
+    filter: invert(63%) sepia(4%) saturate(3585%) hue-rotate(62deg) brightness(90%) contrast(84%);
+    float: left;
+    margin-top: -12px;
+    margin-right: 10px;
+}
+
+.icon32 {
+    width: 32px;
+    height: 32px;
+    margin-top: -5px;
+}
+
+.icon-handshake {
+    background-image: url("/assets/icons/handshake.svg");
+}
+
+.icon-balance {
+    background-image: url("/assets/icons/balance.svg");
+}
+
+.icon-bu3 {
+    background-image: url("/assets/icons/bu_3.svg");
+}
+
+.icon-contract {
+    background-image: url("/assets/icons/contract.svg");
+}
+
+.icon-growth {
+    background-image: url("/assets/icons/growth.svg");
+}
+
+.icon-mobilemoney {
+    background-image: url("/assets/icons/mobile_money.svg");
+}
+
+.icon-transfer {
+    background-image: url("/assets/icons/transfer.svg");
+}
+
+.icon-bigdata {
+    background-image: url("/assets/icons/big_data.svg");
+}
+
+.icon-bu2 {
+    background-image: url("/assets/icons/bu_2.svg");
+}
+
+.icon-fn_transfer {
+    background-image: url("/assets/icons/fn_transfer.svg");
+}
+
+.icon-search {
+    background-image: url("/assets/icons/search.svg");
+}
+
+.field-registerform-utype {
     display: none;
 }

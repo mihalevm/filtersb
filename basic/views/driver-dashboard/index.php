@@ -4,6 +4,9 @@ use yii\bootstrap\Modal;
 
 $this->title = 'Личный кабинет Водителя';
 ?>
+<br>
+<br>
+<br>
 <div class="">
     <?php
     echo Tabs::widget([

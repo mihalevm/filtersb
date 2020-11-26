@@ -8,7 +8,7 @@
 		'id' => 'driver-address',
 		'fieldConfig' => [
             'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
-            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap'],
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color'],
 		],       
 	]);    
     $raddress = json_decode($profile['raddress']);

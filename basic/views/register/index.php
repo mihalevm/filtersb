@@ -64,33 +64,33 @@ $this->title = 'Регистрация';
         <br>
 <?php if($rtype == 'D') {?>
         <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-handshake"></span> Быстрый поиск работы</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-growth"></span> Уникальная система проф.оценки</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-handshake"></span> Быстрый поиск работы</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-growth"></span> Уникальная система проф.оценки</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-bigdata"></span> Решение вопросов онлайн</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-contract"></span> Актуальная история о водителе</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-bigdata"></span> Решение вопросов онлайн</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-contract"></span> Актуальная история о водителе</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-mobilemoney"></span>Выгодные предложения работодателей</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-balance"></span> Детализация нарушений</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-mobilemoney"></span>Выгодные предложения работодателей</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-balance"></span> Детализация нарушений</div>
             </div>
         </div>
     </div>
 <?php  } else {?>
         <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-handshake"></span> Довольные клиенты после качественного отбора водителей</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-growth"></span> Уникальная система проф.оценки</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-handshake"></span> Довольные клиенты после качественного отбора водителей</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-growth"></span> Уникальная система проф.оценки</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-bigdata"></span> Проверка по различным базам по СБ</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-contract"></span> Актуальная история о водителе</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-bigdata"></span> Проверка по различным базам по СБ</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-contract"></span> Актуальная история о водителе</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-mobilemoney"></span>Инструмент для управления персоналом</div>
-                <div class="col-lg-6 col-sm-6 text-left"><span class="icon icon-balance"></span> Детализация нарушений</div>
+            <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-mobilemoney"></span>Инструмент для управления персоналом</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-balance"></span> Детализация нарушений</div>
             </div>
         </div>
     </div>
@@ -106,35 +106,35 @@ $this->title = 'Регистрация';
 
 <?php if($rtype == 'D') {?>
     <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Информацию о себе, в том виде, в котором видят вас СБ</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Информацию о себе, в том виде, в котором видят вас СБ</div>
         </div>
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Базу заинтересованных в водителях работодателей</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Базу заинтересованных в водителях работодателей</div>
         </div>
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Способ улучшения своей электронной характеристики</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Способ улучшения своей электронной характеристики</div>
         </div>
     </div>
 <?php  } else {?>
         <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Действительность паспорта гражданина</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Действительность паспорта гражданина</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Информация о ранее выданных паспортах</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Информация о ранее выданных паспортах</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Наличие административных и уголовных дел с указанием «тяжелых» статей</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Наличие административных и уголовных дел с указанием «тяжелых» статей</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Действительность водительского удостоверения</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Действительность водительского удостоверения</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Наличие задолженности с указанием общей суммы</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Наличие задолженности с указанием общей суммы</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu3"></span> Электронная характеристика с указанием комментариев</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu3"></span> Электронная характеристика с указанием комментариев</div>
             </div>
         </div>
 <?php  }?>
@@ -149,26 +149,26 @@ $this->title = 'Регистрация';
         <br>
 <?php if($rtype == 'D') {?>
     <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> Заполняете анкету на сервисе</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> Заполняете анкету на сервисе</div>
         </div>
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> Проверяете свою анкету и получаете отчет</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> Проверяете свою анкету и получаете отчет</div>
         </div>
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> Выбираете транспортные компании, в которой хотели бы работать</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> Выбираете транспортные компании, в которой хотели бы работать</div>
         </div>
-        <div class="row mb-30">
-            <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> Сервис автоматически направляет ваш отчет работодателю, сэкономив время на проверку вашей анкеты по СБ</div>
+        <div class="row">
+            <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> Сервис автоматически направляет ваш отчет работодателю, сэкономив время на проверку вашей анкеты по СБ</div>
         </div>
     </div>
 <?php  } else {?>
         <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> 1.Получаете запрос от водителя на трудоустройство с готовым отчетом по СБ</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> 1.Получаете запрос от водителя на трудоустройство с готовым отчетом по СБ</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-bu2"></span> 2. Заполняете анкету водителя, далее получаете отчет</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-bu2"></span> 2. Заполняете анкету водителя, далее получаете отчет</div>
             </div>
         </div>
 <?php  }?>
@@ -183,14 +183,14 @@ $this->title = 'Регистрация';
         <br>
 
         <div class="col-lg-offset-1 col-lg-10 col-md-12 col-sm-12 company-landing-block2">
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-search"></span> Проверили более 1000 кандидатов</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-search"></span> Проверили более 1000 кандидатов</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-fn_transfer"></span> Отчет составляется от 3мин до 24ч, вам не придется ждать неделями</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-fn_transfer"></span> Отчет составляется от 3мин до 24ч, вам не придется ждать неделями</div>
             </div>
-            <div class="row mb-30">
-                <div class="col-lg-12 col-sm-12 text-left"><span class="icon icon32 icon-transfer"></span> Возврат средств в течении 48 часов, в случае отсутствия или недостоверности данных</div>
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 mb-30 text-left"><span class="icon icon32 icon-transfer"></span> Возврат средств в течении 48 часов, в случае отсутствия или недостоверности данных</div>
             </div>
         </div>
     </div>
@@ -222,7 +222,7 @@ $this->title = 'Регистрация';
     <div class="col-lg-12 col-sm-12 text-center">
         <h3 class="company-font-color"><b>Наши контакты</b></h3>
         <br>
-        <h1 class="company-font-color mb-30">+7 (962) 555-89-98</h1>
+        <h2 class="company-font-color mb-30">+7 (962) 555-89-98</h2>
         <br>
         <h5 class="company-font-color">Ответим на все интересующие вопросы</h5>
     </div>

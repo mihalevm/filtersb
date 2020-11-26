@@ -370,6 +370,10 @@ a.desc:after {
     color: #7ac016;
 }
 
+.forget-label-pos {
+    margin-top: -40px;
+}
+
 /* Branding */
 
 .company-logo {
@@ -413,18 +417,19 @@ a.desc:after {
     background-color: #767171;
     border-radius: 5px;
     margin-bottom: 50px;
-    margin-right: 40px;
+    margin-top: 40px;
     max-width: 400px;
-    width: 400px;
+    min-width: 360px;
+    padding-left: 20px;
+    padding-right: 20px;
     float: right;
-    display: inline-block;
 }
 
 .form-wrap-1 {
     background-color: #767171;
     border-radius: 5px;
     max-width: 400px;
-    width: 400px;
+    min-width: 330px;
     float: right;
 }
 
@@ -514,6 +519,13 @@ a.desc:after {
     margin-bottom: 50px;
 }
 
+@media (max-width: 768px){
+    .company-landing-block2 {
+        padding-left: 10px;
+        padding-top: 25px;
+    }
+}
+
 .icon {
     display: inline-block;
     width: 50px;
@@ -529,6 +541,13 @@ a.desc:after {
     width: 32px;
     height: 32px;
     margin-top: -5px;
+}
+
+@media (max-width: 768px){
+    .icon32 {
+        margin-top: 4px;
+        margin-left: 4px;
+    }
 }
 
 .icon-handshake {

@@ -14,7 +14,6 @@ $this->title = 'Авторизация';
             'layout' => 'horizontal',
             'fieldConfig' => [
                 'template' => "<div class=\"col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10\">{input}</div>",
-//                'labelOptions' => ['class' => 'col-sm-4 col-lg-offset-4 col-lg-1 control-label-left'],
             ],
         ]); ?>
             <?= $form->errorSummary($model, ["class" => "col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10"]) ?>
@@ -24,16 +23,20 @@ $this->title = 'Авторизация';
             <?= $form->field($model, 'password')->passwordInput(['placeholder' => ' Пароль'])->label('Пароль') ?>
 
             <?= $form->field($model, 'rememberMe')->checkbox([
-                'template' => "<div class=\"col-sm-offset-1 col-sm-8 col-lg-offset-1 col-lg-8 mb-10 pull-right company-font-color\">{input} {label}</div>",
+                'template' => "<div class=\"col-lg-11 text-right company-font-color\">{input} {label}</div>",
             ])->label('Запомнить') ?>
 
             <div class="form-group">
-                <label class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10 mb-10 custom-link company-font-color text-right" onclick="restorePageShow()">Забыли пароль?</label>
-                <div class="col-sm-12 col-lg-12 mb-10 text-center">
-                    <?= Html::submitButton('Вход', ['class' => 'btn bnt-regular']) ?>
+                <div class="col-sm-offset-1 col-sm-10 col-lg-offset-1 col-lg-10">
+                    <label class="custom-link company-font-color text-right" onclick="restorePageShow()">Забыли пароль?</label>
                 </div>
             </div>
 
+            <div class="form-group">
+                <div class="col-sm-12 col-lg-12 text-center">
+                    <?=Html::submitButton('Вход', ['class' => 'btn bnt-regular']) ?>
+                </div>
+            </div>
         <?php ActiveForm::end(); ?>
     </div>
 </div>

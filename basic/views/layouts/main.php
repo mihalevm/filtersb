@@ -26,7 +26,7 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<div class="wrap <?=(Yii::$app->user->isGuest ? 'wrap-black':'')?>">
     <div class="company-pre-nav"></div>
     <?php
     $brandUrl = Yii::$app->homeUrl;

@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use yii\bootstrap\Modal;
 
 $this->title = 'Регистрация';
 ?>
@@ -44,7 +45,7 @@ $this->title = 'Регистрация';
 
         <?= $form->field($model, 'confirmagree')->checkbox([
             'template' => "<div class=\"col-sm-12 col-lg-offset-1 col-lg-10 mb-10 company-font-color agree-text text-center\">{input} {label}</div>",
-        ])->label('Разрешить обработку <a href="">персональных данных</a>') ?>
+        ])->label('Разрешить обработку <span data-toggle="modal" data-target="#license-text">персональных данных</span>') ?>
     <br/>
         <div class="form-group">
             <div class="col-sm-12 col-lg-12 mb-10 text-center">
@@ -222,11 +223,27 @@ $this->title = 'Регистрация';
     <div class="col-lg-12 col-sm-12 text-center">
         <h3 class="company-font-color"><b>Наши контакты</b></h3>
         <br>
-        <h2 class="company-font-color mb-30">+7 (962) 555-89-98</h2>
+        <h2 class="company-font-color mb-30"><a href="tel:+79625558998">+7 (962) 555-89-98</a></h2>
         <br>
         <h5 class="company-font-color">Ответим на все интересующие вопросы</h5>
     </div>
 </div>
+
+<?php
+Modal::begin([
+    'header' => '<b>Согласие на обработку персональных данных</b>',
+    'id'     => 'license-text',
+    'size'   => 'modal-lg'
+]);
+?>
+
+<div class='modalContent'>
+    <textarea class="licence-text-container">
+    </textarea>
+</div>
+
+<?php Modal::end();?>
+
 
 <script language="JavaScript">
 

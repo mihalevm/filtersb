@@ -9,6 +9,9 @@ body {
     height: auto;
     margin: 0 auto -60px;
     padding: 0 0 60px;
+}
+
+.wrap-black {
     background-color: #383435;
 }
 
@@ -366,8 +369,10 @@ a.desc:after {
     font-style: normal;
 }
 
-.agree-text a {
+.agree-text span {
     color: #7ac016;
+    text-decoration: dotted;
+    cursor: pointer;
 }
 
 .forget-label-pos {
@@ -404,6 +409,12 @@ a.desc:after {
     margin-top: 45px;
 }
 
+@media (max-width: 768px){
+    .company-nav-position {
+        margin-top: 0;
+    }
+}
+
 .company-pre-nav {
     background-color: #383435;
     height: 45px;
@@ -423,6 +434,13 @@ a.desc:after {
     padding-left: 20px;
     padding-right: 20px;
     float: right;
+}
+
+@media (max-width: 768px){
+    .form-wrap {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
 
 .form-wrap-1 {
@@ -466,10 +484,6 @@ a.desc:after {
 .form-group input, .form-group select, .form-control {
     font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;
-}
-
-#drivers_list tr, #req-drivers tr, #reports_list tr, #my-request tr {
-    background-color: #eeeeee;
 }
 
 .company-landing-name {
@@ -524,6 +538,16 @@ a.desc:after {
         padding-left: 10px;
         padding-top: 25px;
     }
+}
+
+.licence-text-container {
+    margin: 0px;
+    width: 100%;
+    height: 500px;
+    padding: 0;
+    border: none;
+    resize: none;
+    outline: none !important;
 }
 
 .icon {

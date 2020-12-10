@@ -117,7 +117,7 @@ Modal::begin([
 
         setTimeout(function () {
 //            $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
-            $('.modal-content').css('height','700');
+            $('.modal-content').css('height','600');
             $('#generate-report').modal('show');
         }, 800);
     }

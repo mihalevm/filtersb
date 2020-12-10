@@ -22,7 +22,7 @@ use yii\helpers\Html;
             ]) ?>
             <br/>
             <div class="collapse" id="rep-pay-info">
-                <div class="well text-left">
+                <div class="well text-left report-start-information">
                     <?php
                         if ($payedContent) {
                             echo '<p><b>Внимание! Отчет уже содержит оплаченную часть данных. Вы хотите обновить эти данные?</b></p>';

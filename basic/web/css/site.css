@@ -379,13 +379,17 @@ a.desc:after {
     margin-top: -40px;
 }
 
-.report-start-notification {
+.report-start-notification {}
 
-}
+.report-start-information {}
 
 @media (max-width: 768px){
     .report-start-notification {
         font-size: 13px;
+    }
+
+    .report-start-information {
+        font-size: 0.8em;
     }
 }
 

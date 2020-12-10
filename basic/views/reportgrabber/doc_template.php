@@ -17,6 +17,10 @@
             <td><?=$rdate?></td>
         </tr>
         <tr>
+            <td style="width: 50%"><i>ФИО:</i></td>
+            <td><?=$fio?></td>
+        </tr>
+        <tr>
             <td style="width: 50%"><i>Адрес эл. почты пользователя:</i></td>
             <td><?=$email?></td>
         </tr>

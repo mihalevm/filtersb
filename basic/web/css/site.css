@@ -379,6 +379,16 @@ a.desc:after {
     margin-top: -40px;
 }
 
+.report-start-notification {
+
+}
+
+@media (max-width: 768px){
+    .report-start-notification {
+        font-size: 13px;
+    }
+}
+
 /* Branding */
 
 .company-logo {

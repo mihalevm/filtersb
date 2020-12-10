@@ -170,6 +170,7 @@ class ReportgrabberController extends Controller {
                 'egrul'     => $attrs['egrul'],
                 'gibdd'     => $attrs['gibdd'],
                 'fssp'      => $attrs['fssp'],
+                'fio'       => $attrs['fio'],
                 'scorista'  => $attrs['scorista'],
             ]);
 
@@ -204,6 +205,7 @@ class ReportgrabberController extends Controller {
             'egrul'     => $attrs['egrul'],
             'gibdd'     => $attrs['gibdd'],
             'fssp'      => $attrs['fssp'],
+            'fio'       => $attrs['fio'],
             'scorista'  => $attrs['scorista'],
         ]);
 

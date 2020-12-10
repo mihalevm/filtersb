@@ -5,7 +5,7 @@ use yii\helpers\Html;
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
-            <h4 class="text-center lh-15">
+            <h4 class="text-center lh-15 report-start-notification">
                 Сейчас будет выполнен поиск информации.<br/>От Вас потребуется введение подтверждающих кодов на отдельных этапах создания отчета.
             </h4>
         </div>

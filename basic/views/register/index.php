@@ -86,7 +86,7 @@ $this->title = 'Регистрация';
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-growth"></span> Уникальная система проф.оценки</div>
             </div>
             <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-bigdata"></span> Проверка по различным базам по СБ</div>
+                <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-bigdata"></span> Проверка по различным базам СБ</div>
                 <div class="col-lg-6 col-md-6 col-sm-12 mb-30 text-left"><span class="icon icon-contract"></span> Актуальная история о водителе</div>
             </div>
             <div class="row">

@@ -61,6 +61,13 @@ use rmrevin\yii\fontawesome\FAS;
                         'label'=>'Дата формирования',
                     ],
                     [
+                        'label'=>'Платный отчет',
+                        'format' => 'raw',
+                        'value' => function($data){
+                            return ($data['payed'] == 'Y' ? 'Да': 'Нет');
+                        }
+                    ],
+                    [
                         'label' => 'Действие',
                         'format' => 'raw',
                         'value' => function($data){

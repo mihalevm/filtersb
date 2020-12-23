@@ -316,7 +316,7 @@ class ScoristaForm extends Model {
             'error' => 500
         ];
 
-        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista, (select username from users where id=did) as demail, (select username from users where id=oid) as oemail from reports where id=:rid",[
+        $reports = $this->db_conn->createCommand("select oid, cdate, egrul, fssp, passport, gibdd, scorista, (select username from users where id=did) as demail, (select concat(secondname, ' ', firstname, ' ', middlename) from userinfo where id=did) as fio, (select username from users where id=oid) as oemail from reports where id=:rid",[
             ':rid' => null,
         ])
             ->bindValue(':rid', $rid)
@@ -330,6 +330,7 @@ class ScoristaForm extends Model {
             $attrs['egrul'] = $reports[0]['egrul'];
             $attrs['gibdd'] = $reports[0]['gibdd'];
             $attrs['fssp']  = $reports[0]['fssp'];
+            $attrs['fio']   = $reports[0]['fio'];
             $attrs['scorista'] = $reports[0]['scorista'];
             $attrs['error'] = 200;
         }

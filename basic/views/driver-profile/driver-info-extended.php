@@ -9,7 +9,7 @@
 		'id' => 'driver-info-extended',
 		'fieldConfig' => [
             'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
-            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color'],
+            'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color3'],
 		], 
 	]);	
 ?>
@@ -18,9 +18,9 @@
 
 	<?= $form->errorSummary($model) ?>
 
-    <?= $form->field($model, 'mainNumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999', 'options' => ['placeholder' => '+79998884411', 'value'=>$profile['personalphone']]])->label('Контактный телефон<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'mainNumber')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+9-999-999-9999', 'options' => ['placeholder' => '+79998884411', 'value'=>$profile['personalphone']]])->label('Контактный телефон<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'relativesNumbers')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9-999-999-9999, 9-999-999-9999', 'options' => ['placeholder' => '+79998884411, +79998884411', 'value'=>$profile['relphones']]])->label('Телефоны родственников (2 человека)<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'relativesNumbers')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+9-999-999-9999, +9-999-999-9999', 'options' => ['placeholder' => '+79998884411, +79998884411', 'value'=>$profile['relphones']]])->label('Телефоны родственников (2 человека)<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'familyStatus')->dropDownList(
 		['N' => 'Холост', 'Y' => 'В браке'], 

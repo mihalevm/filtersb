@@ -13,7 +13,7 @@ $this->title = 'Редактирование профиля';
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}<div class='col-sm-12 col-lg-4'>{input}</div>",
-            'labelOptions' => ['class' => 'col-sm-1 col-lg-4 control-label text-nowrap text-sm-left company-font-color'],
+            'labelOptions' => ['class' => 'col-sm-1 col-lg-4 control-label text-nowrap text-sm-left company-font-color3'],
         ],
     ]); ?>
         <?= $form->errorSummary($model) ?>

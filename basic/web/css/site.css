@@ -495,6 +495,10 @@ a.desc:after {
     font-weight: 200;
 }
 
+.company-font-color3 {
+    color: #555555;
+}
+
 .form-group input, .form-group select, .form-control {
     font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 600;

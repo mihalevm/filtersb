@@ -24,7 +24,7 @@ $this->title = 'Регистрация';
 
 <div class="col-lg-6 col-md-12 col-sm-12 form-wrap-1">
     <br>
-    <div class="text-center company-font-color"><h4>Зарегестрироваться</h4></div>
+    <div class="text-center company-font-color"><h4>Зарегистрироваться</h4></div>
     <br>
     <?php $form = ActiveForm::begin([
         'id' => 'register-form',

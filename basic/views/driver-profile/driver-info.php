@@ -7,7 +7,7 @@
 		'id' => 'driver-info',
 		'fieldConfig' => [
 			'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
-			'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color'],
+			'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color3'],
 		],
 	]);
 ?>

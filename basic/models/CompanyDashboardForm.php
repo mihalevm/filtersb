@@ -236,7 +236,7 @@ class CompanyDashboardForm extends Model {
     }
 
     public function getDriverComents($id) {
-        $arr = $this->db_conn->createCommand("SELECT cast(c.cdate as date) as cdate, cdate as coment_date, c.rait, c.coment, i.agreecomment FROM tcdrivers t, userinfo i, dcoments c WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND c.did=t.did order by coment_date desc", [
+        $arr = $this->db_conn->createCommand("SELECT c.id, c.cid, cast(c.cdate as date) as cdate, cdate as coment_date, c.rait, c.coment, i.agreecomment FROM tcdrivers t, userinfo i, dcoments c WHERE t.tid=:tid AND t.id=:id and i.id=t.did AND c.did=t.did order by coment_date desc", [
             ':id' => null,
             ':tid'   => null,
         ])
@@ -248,18 +248,33 @@ class CompanyDashboardForm extends Model {
     }
 
     public function saveComment($did, $rait, $coment){
-        $this->db_conn->createCommand("insert into dcoments (did, rait, coment) values (:did, :rait, :coment)",
+        $this->db_conn->createCommand("insert into dcoments (cid, did, rait, coment) values (:cid, :did, :rait, :coment)",
             [
+                ':cid'    => null,
                 ':did'    => null,
                 ':rait'   => null,
                 ':coment' => null,
             ])
+            ->bindValue(':cid',    Yii::$app->user->identity->id )
             ->bindValue(':did',    $did    )
             ->bindValue(':rait',   $rait   )
             ->bindValue(':coment', $coment )
             ->execute();
 
         return Yii::$app->db->getLastInsertID();
+    }
+
+    public function saveRait ($id, $v) {
+        $this->db_conn->createCommand("update dcoments set rait=:rait where id=:id",
+            [
+                ':id'  => null,
+                ':rait'   => null,
+            ])
+            ->bindValue(':id', $id  )
+            ->bindValue(':rait', $v )
+            ->execute();
+
+        return 1;
     }
 
     public function driver_employment ($id) {

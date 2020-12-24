@@ -171,6 +171,20 @@ class CompanyDashboardController extends Controller {
         return $this->_sendJSONAnswer(1);
     }
 
+    public function actionSaverait(){
+        if (Yii::$app->user->isGuest) {
+            return $this->redirect('/signin');
+        }
+        $r = Yii::$app->request;
+        $model = new CompanyDashboardForm();
+
+        if (null != $r->post('id') && null != $r->post('v')) {
+            $model->saveRait($r->post('id'), $r->post('v'));
+        }
+
+        return $this->_sendJSONAnswer(1);
+    }
+
     public function actionDemployment($id){
         if (Yii::$app->user->isGuest) {
             return $this->redirect('/signin');

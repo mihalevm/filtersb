@@ -215,6 +215,20 @@ a.desc:after {
     background-color: #ecf9ff !important;
 }
 
+.driver-item select {
+    font-family: "Font Awesome 5 Free", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-weight: 900;
+    width: 50px;
+    height: 32px;
+    border: none;
+    background-color: transparent;
+    font-size: 18px;
+}
+
+.driver-item select:focus {
+    border: none;
+}
+
 .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
 .table-borderless > tfoot > tr > td,

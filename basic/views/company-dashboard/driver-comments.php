@@ -1,5 +1,6 @@
 <?php
 use yii\widgets\Pjax;
+use yii\helpers\Html;
 use rmrevin\yii\fontawesome\FAS;
 
 ?>
@@ -43,17 +44,24 @@ use rmrevin\yii\fontawesome\FAS;
                         'format' => 'ntext',
                         'attribute'=>'cdate',
                         'label'=>'Дата',
+                        'headerOptions' => ['style' => 'width:150px'],
                     ],
                     [
                         'format' => 'raw',
                         'label'=>'Оценка',
+                        'headerOptions' => ['style' => 'width:80px'],
                         'value' => function($data){
-                            $icon_rait = '';
+                            $content = '';
 
-                            if ( $data['rait'] ==  1 ) {$icon_rait = FAS::icon('thumbs-up');};
-                            if ( $data['rait'] == -1 ) {$icon_rait = FAS::icon('thumbs-down');};
+                            if ($data['cid'] == Yii::$app->user->identity->id){
+                                $content = Html::dropDownList('rait_status', $data['rait'], [-1 => '', 1 => '', 0 => ''], ['onchange' => 'change_rait(this, '.$data['id'].')']);
+                            } else {
+                                if ( $data['rait'] ==  0 ) {$content = FAS::icon('question-circle');};
+                                if ( $data['rait'] ==  1 ) {$content = FAS::icon('thumbs-up');};
+                                if ( $data['rait'] == -1 ) {$content = FAS::icon('thumbs-down');};
+                            }
 
-                            return $icon_rait;
+                            return $content;
                         }
                     ],
                     [
@@ -124,5 +132,12 @@ use rmrevin\yii\fontawesome\FAS;
         ).always(function () {
             coment_rait = 0;
         });
+    }
+
+    function change_rait(o, id) {
+        $.post(
+            window.location+'/saverait',
+            {id: id, v:$(o).val()}
+        );
     }
 </script>

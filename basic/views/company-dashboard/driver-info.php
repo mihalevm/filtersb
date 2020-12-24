@@ -12,6 +12,7 @@
 
     <div class="row driver-info-container">
         <div class="col-md-6 col-sm-6"><b>Адрес эл. почты</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['username']?$dinfo['username']:'Не указан'?></div>
+        <div class="col-md-6 col-sm-6"><b>Телефон водителя</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['personalphone']?$dinfo['personalphone']:'Нет'?></div>
         <div class="col-md-6 col-sm-6"><b>Дата рождения</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['birthday']?$dinfo['birthday']:'Не указана'?></div>
         <div class="col-md-6 col-sm-6"><b>Пол</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['sex']?'Мужской':'Женский'?></div>
         <div class="col-md-6 col-sm-6"><b>ИНН</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['inn']?></div>
@@ -54,7 +55,6 @@
             ?>
         </div>
     <?php if( $dinfo['active'] == 'Y') { ?>
-        <div class="col-md-6 col-sm-6"><b>Телефон водителя</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['personalphone']?$dinfo['personalphone']:'Нет'?></div>
         <div class="col-md-6 col-sm-6"><b>Телефоны родственников</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['relphones']?$dinfo['relphones']:'Нет'?></div>
         <div class="col-md-6 col-sm-6"><b>Наличие семьи</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['familystatus']=='N'?'Нет':'Есть'?></div>
         <div class="col-md-6 col-sm-6"><b>Стаж вождения по категории Е</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['e_experience']?$dinfo['e_experience']:'Не указан'?></div>

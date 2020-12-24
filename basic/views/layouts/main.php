@@ -78,6 +78,7 @@ AppAsset::register($this);
 
 <footer class="footer company-footer">
     <div class="container">
+        <p class="pull-left"><a href="mailto:Техподдержка сайта Фильтр СБ<hotline@filtersb.ru>?subject=Вопрос с сайта Фильтр СБ">Задать вопрос</a></p>
         <p class="pull-right">&copy; <?=Yii::$app->name ?> <?= date('Y') ?></p>
     </div>
 </footer>

@@ -95,6 +95,24 @@ a.desc:after {
     height: 30px;
 }
 
+.warn {
+    margin: 1px;
+    -webkit-box-shadow: 1px 2px 7px -1px #000000;
+    box-shadow: 1px 2px 7px -1px #000000;
+}
+
+.warn > div:first-child {
+    color: white;
+    background-color: gold;
+    font-size: 21px;
+    padding: 15px;
+}
+
+.warn > div:last-child {
+    background-color: white;
+    padding: 10px;
+}
+
 .error-summary {
     color: #a94442;
     background: #fdf7f7;

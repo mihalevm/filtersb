@@ -39,7 +39,7 @@ echo \yii\grid\GridView::widget([
             'label' => 'Сотрудник',
             'format' => 'raw',
             'value' => function($data){
-                return $data['firstname'].' '.$data['middlename'].' '.$data['secondname'];
+                return $data['secondname'].' '.$data['firstname'].' '.$data['middlename'];
             }
         ],
         [
@@ -135,9 +135,9 @@ Modal::begin([
 
     <?= $form->field($model, 'rregion')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город/Село', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город/Село<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'rstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'rstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица') ?>
 
     <?= $form->field($model, 'rhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 
@@ -155,9 +155,9 @@ Modal::begin([
 
     <?= $form->field($model, 'lregion')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Область/край', 'data-content' => 'Укажите только название без слов "Область" или "Край". Например: Московская'])->label('Область/край<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'lcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'lcity')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Город/Село', 'data-content' => 'Укажите только название без слов и сокращений "Город" или "г.". Например: Москва'])->label('Город/Село<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'lstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица<span class="field-required">*</span>') ?>
+    <?= $form->field($model, 'lstreet')->textInput(['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Улица', 'data-content' => 'Укажите только название без слов и сокращений "улица" или "ул.". Например: Садовая'])->label('Улица') ?>
 
     <?= $form->field($model, 'lhouse')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '9999', 'options' => ['data-toggle' => 'popover', 'data-placement' => 'top', 'data-trigger' => 'focus', 'title' => 'Дом', 'data-content' => 'Укажите номер дома без букв и сокращений. Только цифра.'] ])->label('Дом') ?>
 

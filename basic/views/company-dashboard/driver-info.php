@@ -3,7 +3,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <?=$dinfo['firstname'].' '.$dinfo['middlename'].' '.$dinfo['secondname']?>
+            <?=$dinfo['secondname'].' '.$dinfo['firstname'].' '.$dinfo['middlename']?>
         </div>
         <div class="col-md-12">
             <hr>

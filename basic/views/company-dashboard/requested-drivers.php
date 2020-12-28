@@ -45,7 +45,7 @@ echo \yii\grid\GridView::widget([
             'label' => 'Изыскатель должности',
             'format' => 'raw',
             'value' => function($data){
-                return $data['firstname'].' '.$data['middlename'].' '.$data['secondname'];
+                return $data['secondname'].' '.$data['firstname'].' '.$data['middlename'];
             }
         ],
         [

@@ -27,7 +27,7 @@ class DriverProfileAddressForm extends Model {
 		return [
             ['rregion', 'required', 'message' => 'Укажите регион регистрации' ],
             ['rcity', 'required', 'message' => 'Укажите город регистрации' ],
-            ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
+//            ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
             [['rpostzip', 'lpostzip'], 'default', 'value' => '000000'],
             [['rstreet', 'lstreet'],   'default', 'value' => 'НЕТ'],
             ['rhouse',  'string', 'max' => 10, 'message' => 'Номер дома д.б. не более 10 символов'],

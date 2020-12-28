@@ -64,7 +64,7 @@ class CompanyDashboardForm extends Model {
             ['ddate', 'required', 'message' => 'Укажите дату выдачи водительского удостоверения' ],
             ['rregion', 'required', 'message' => 'Укажите регион регистрации' ],
             ['rcity', 'required', 'message' => 'Укажите город регистрации' ],
-            ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
+//            ['rstreet', 'required', 'message' => 'Укажите улицу регистрации' ],
             ['phone', 'required', 'message' => 'Укажите номер телефона' ],
             ['sex', 'required', 'message' => 'Укажите пол' ],
             ['email', 'email'],

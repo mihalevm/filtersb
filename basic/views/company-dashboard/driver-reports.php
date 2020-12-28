@@ -9,7 +9,7 @@ use rmrevin\yii\fontawesome\FAS;
         <div class="col-md-4">
             <div class="row">
                 <div class="col-md-12">
-                    <?=$dinfo['firstname'].' '.$dinfo['middlename'].' '.$dinfo['secondname']?>
+                    <?=$dinfo['secondname'].' '.$dinfo['firstname'].' '.$dinfo['middlename']?>
                 </div>
             </div>
         </div>

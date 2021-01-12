@@ -49,7 +49,7 @@ class ScoristaForm extends Model {
 
         $response = $client->createRequest()
             ->setOptions([
-                'timeout' => 10
+                'timeout' => 30
             ])
             ->setMethod('post')
             ->setUrl($this->rest_url)
@@ -285,7 +285,12 @@ class ScoristaForm extends Model {
                     'requestID' => $taskItem['scrid']
                 ];
 
-                $response = $this->getHttpClient($request_packet);
+                try {
+                    $response = $this->getHttpClient($request_packet);
+                } catch (Exception $e) {
+                    \Yii::warning('[Scorista] '.$e->getMessage());
+                }
+
 
                 if ($response->getIsOk()) {
 

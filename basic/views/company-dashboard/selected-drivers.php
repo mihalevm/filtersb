@@ -96,9 +96,9 @@ Modal::begin([
 
     <?= $form->field($model, 'phone')->widget(\yii\widgets\MaskedInput::className(), ['mask' => '+9-999-999-9999'])->label('Номер телефона<span class="field-required">*</span>') ?>
 
-    <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
-
     <?= $form->field($model, 'secondname')->textInput()->label('Фамилия<span class="field-required">*</span>') ?>
+
+    <?= $form->field($model, 'firstname')->textInput()->label('Имя<span class="field-required">*</span>') ?>
 
     <?= $form->field($model, 'middlename')->textInput()->label('Отчество<span class="field-required">*</span>') ?>
 

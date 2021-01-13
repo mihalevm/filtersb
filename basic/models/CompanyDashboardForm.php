@@ -73,6 +73,7 @@ class CompanyDashboardForm extends Model {
             [['rpostzip', 'lpostzip'], 'default', 'value' => '000000'],
             [['rstreet', 'lstreet'],   'default', 'value' => 'НЕТ'],
             [['rhouse','rbuild', 'rflat', 'lhouse', 'lbuild', 'lflat'], 'string', 'max' => 4 ],
+            [['lregion', 'lcity'], 'string'],
             ['dup_address', 'boolean'],
             ['sex', 'integer'],
         ];

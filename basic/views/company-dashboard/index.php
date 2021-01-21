@@ -121,7 +121,7 @@ Modal::begin([
     }
 
     function showDialogDeleteDriver(i) {
-        $('#delete-driver-label').text($('#drv-item-'+i).data('firstname')+' '+$('#drv-item-'+i).data('secondname')+' '+$('#drv-item-'+i).data('middlename'));
+        $('#delete-driver-label').text($('#drv-item-'+i).data('secondname')+' '+$('#drv-item-'+i).data('firstname')+' '+$('#drv-item-'+i).data('middlename'));
         $('#delete-driver-label').data('drv', i);
         $('.modal-content').css('height',180);
         $('#delete-driver').modal('show');
@@ -139,46 +139,4 @@ Modal::begin([
             });
         }
     }
-/*
-    function getDriverReports() {
-        $('#property-driver-modal-tab0').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
-        $.get(
-            window.location.href+'/getdriverreport',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab0').html(data);
-            }
-        )
-    }
-
-    function getDriverInfo() {
-        $('#property-driver-modal-tab1').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
-        $.get(
-            window.location.href+'/getdriverinfo',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab1').html(data);
-            }
-        )
-    }
-
-    function getDriverComents() {
-        $('#property-driver-modal-tab2').html('<div class="spinner-holder"><i class="fas fa-spinner fa-spin"></i></div>');
-        $.get(
-            window.location.href+'/getdrivercoments',
-            { id : $('#property-driver').data('did') },
-            function (data) {
-                $('#property-driver-modal-tab2').html(data);
-            }
-        )
-    }
-
-    function showDialogPropertyDriver(o) {
-        $('#property-driver').data('did', $(o).data('id'));
-        getDriverReports();
-        $('.modal-content').css('height',600);
-        $('#property-driver').modal('show');
-
-    }
-*/
 </script>

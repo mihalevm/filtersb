@@ -121,7 +121,7 @@ use rmrevin\yii\fontawesome\FAS;
         var did = $('#property-driver').data('did');
 
         setTimeout(function () {
-            $('#rep-drv-name').text($('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('middlename'));
+            $('#rep-drv-name').text($('#drv-item-'+did).data('secondname')+' '+$('#drv-item-'+did).data('firstname')+' '+$('#drv-item-'+did).data('middlename'));
             $('#generate-report').modal('show');
         }, 800);
 

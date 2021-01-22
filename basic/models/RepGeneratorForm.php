@@ -32,10 +32,16 @@ class RepGeneratorForm extends Model {
                 ->queryAll();
 
         if ( sizeof($reports) ) {
+            $p = null;
+
+            if (null !== $reports[0]['passport']){
+                $p = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
+            }
+
             $attrs['rdate']  = $reports[0]['cdate'];
             $attrs['demail'] = $reports[0]['demail'];
             $attrs['oemail'] = $reports[0]['oemail'];
-            $attrs['pvalidate'] = strlen(strstr($reports[0]['passport'], "Среди недействительных не значится")) > 0 ? 1 : 0;
+            $attrs['pvalidate'] = $p;
             $attrs['egrul'] = $reports[0]['egrul'];
             $attrs['gibdd'] = $reports[0]['gibdd'];
             $attrs['fssp']  = $reports[0]['fssp'];

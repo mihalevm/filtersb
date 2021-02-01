@@ -19,6 +19,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Трудоустройство транспортная компания. Проверка сотрудников. Отказ в приёме на работу. Найти работу. Подбор водителей. Проверка водителей. Фильтр водителей. Фильтрсб. Фильтр сб. Фильтр эс бэ. Фильтр сб водитель. Фильтр служба безопасности. Работа категория е. Работа грузоперевозки.">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>

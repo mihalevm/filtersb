@@ -8,7 +8,7 @@
 	$form = ActiveForm::begin([
 		'id' => 'driver-info-extended',
 		'fieldConfig' => [
-            'template'     => '{label}<div class="col-lg-6 col-sm-12">{input}</div>',
+            'template'     => '{label}<div class="col-lg-6 col-sm-12 component-correction">{input}</div>',
             'labelOptions' => ['class' => 'col-lg-6 col-sm-1 control-label text-nowrap company-font-color3'],
 		], 
 	]);	
@@ -86,15 +86,18 @@
     ])->label('Перечислите типы прицепов которыми управляли<span class="field-required">*</span><br/><span class="help-notification">Напишите свой вариант и нажмите Enter</span>'); ?>
 
 	<?= $form->field($model, 'interPassportExpireDate')->widget(DatePicker::classname(), [
-		'type' => DatePicker::TYPE_INPUT,		
-		'options' => ['value' => $profile['fpassdate'], 'placeholder' => '23.02.1982'],
+        'type' => DatePicker::TYPE_COMPONENT_APPEND,
+		'options' => [
+		    'value' => $profile['fpassdate'],
+            'placeholder' => 'Нет',
+        ],
 		'pluginOptions' => [
 			'autoclose' => true,
 			'format' => 'dd.mm.yyyy'
 		]
-	])->label('Дата окончания загран.паспорта<span class="field-required">*</span>') ?>
+	])->label('Дата окончания загран.паспорта') ?>
 
-	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие медицинской книжки<span class="field-required">*</span>') ?>
+	<?= $form->field($model, 'medCard')->dropDownList(['0' => 'Нет', '1' => 'Да'])->label('Наличие действующей медицинской книжки<span class="field-required">*</span>') ?>
 
 	<?= $form->field($model, 'startDate')->widget(DatePicker::classname(), [		
 		'type' => DatePicker::TYPE_INPUT,		

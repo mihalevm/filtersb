@@ -77,7 +77,7 @@ class DriverProfileForm extends Model
         $this->inn   = preg_replace('/\_/','', $this->inn);
 
         $this->db_conn->createCommand("update userinfo set secondname=:secondName, firstname=:firstName, middlename=:thirdName, birthday=:birthDate,   
-		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dnumber=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty, pdate=:passportRealeaseDate, sex=:sex where id=:id",
+		pserial=:passportSerial, pnumber=:passportNumber, inn=:inn, dserial=:licenseSerial, dnumber=:licenseNumber, ddate=:licenseRealeaseDate, agreepersdata=:agreementPersonalData ,agreecomment=:agreementComments ,agreecheck=:agreementThirdParty, pdate=:passportRealeaseDate, sex=:sex where id=:id",
 			[
 				':secondName'   => null,
 				':firstName'    => null,

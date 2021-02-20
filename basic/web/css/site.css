@@ -267,10 +267,23 @@ a.desc:after {
     right: 15px;
 }
 
+.refresh-button-holder {
+    text-align: center;
+    margin-top: 20%;
+}
+
+.refresh-button-holder > span {
+    font-size: 27px;
+    color: white;
+    background-color: orange;
+    border-radius: 34px;
+    padding: 15px;
+    cursor: pointer;
+}
+
 .spinner-holder {
-    position: fixed;
-    left: 49%;
-    top: 49%;
+    text-align: center;
+    margin-top: 20%;
     font-size: 45px;
     color: orange;
 }
@@ -669,5 +682,13 @@ a.desc:after {
 }
 
 .field-registerform-utype {
+    display: none;
+}
+
+.component-correction .kv-date-remove {
+    border-radius: 0 5px 5px 0 !important;
+}
+
+.component-correction .kv-date-picker {
     display: none;
 }

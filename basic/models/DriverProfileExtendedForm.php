@@ -35,7 +35,7 @@ class DriverProfileExtendedForm extends Model
 			['tachograph', 'required', 'message' => 'Заполните поле "Имеется ли карта тахографа, выбрать из списка (можно выбрать несколько)"' ],
 			['trailertype', 'required', 'message' => 'Заполните поле "Какими прицепами управляли, выбрать из списка (можно выбрать несколько)"' ],
 			['marks', 'required', 'message' => 'Заполните поле "Марки транспортных средств, которыми управляли на последних местах работы' ],
-			['interPassportExpireDate', 'required', 'message' => 'Заполните поле "Дата окончания загран.паспорта"' ],
+			['interPassportExpireDate', 'default', 'value' => null],
 			['medCard', 'required', 'message' => 'Заполните поле "Наличие медицинской книжки"' ],
 			['startDate', 'required', 'message' => 'Заполните поле "Когда вы готовы приступить к работе"' ],
 			['flyInAccept', 'required', 'message' => 'Заполните поле "Согласна ли ваша семья/близкие родственники работе вахтовым методом"' ],
@@ -78,7 +78,7 @@ class DriverProfileExtendedForm extends Model
 			->queryAll();
 
 		if (sizeof($list)) {
-            $list[0]['fpassdate']  = date('d.m.Y', strtotime($list[0]['fpassdate']));
+            $list[0]['fpassdate']  = null != $list[0]['fpassdate'] ? date('d.m.Y', strtotime($list[0]['fpassdate'])) : '';
             $list[0]['startdate']  = date('d.m.Y', strtotime($list[0]['startdate']));
             $list[0]['tachograph'] = explode(',', $list[0]['tachograph']);
             $list[0]['tachograph'] = array_combine($list[0]['tachograph'], $list[0]['tachograph']);
@@ -135,7 +135,7 @@ class DriverProfileExtendedForm extends Model
 		->bindValue(':marks',   $this->marks)
 		->bindValue(':categoryC',   $this->categoryC)
 		->bindValue(':categoryE',   $this->categoryE)
-		->bindValue(':interPassportExpireDate', date_format(date_create_from_format('d.m.Y', $this->interPassportExpireDate), 'Y-m-d'))		
+		->bindValue(':interPassportExpireDate', null != $this->interPassportExpireDate ? date_format(date_create_from_format('d.m.Y', $this->interPassportExpireDate), 'Y-m-d') : null )
 		->bindValue(':medCard',   $this->medCard)
 		->bindValue(':startDate',  date_format(date_create_from_format('d.m.Y', $this->startDate), 'Y-m-d'))
 		->bindValue(':flyInAccept',   $this->flyInAccept)

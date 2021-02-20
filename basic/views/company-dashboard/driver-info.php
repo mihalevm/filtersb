@@ -63,7 +63,7 @@
         <div class="col-md-6 col-sm-6"><b>Опыт вождения транспортных средств</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['transporttype']?$dinfo['transporttype']:'Нет'?></div>
         <div class="col-md-6 col-sm-6"><b>Опыт вождения прицепов</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['trailertype']?$dinfo['trailertype']:'Нет'?></div>
         <div class="col-md-6 col-sm-6"><b>Дата окончания загранпаспорта</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['fpassdate']?$dinfo['fpassdate']:'Не указана'?></div>
-        <div class="col-md-6 col-sm-6"><b>Наличие медкнижки</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['medbook']=='N'?'Нет':'Есть'?></div>
+        <div class="col-md-6 col-sm-6"><b>Наличие действующей медкнижки</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['medbook']=='N'?'Нет':'Есть'?></div>
         <div class="col-md-6 col-sm-6"><b>Дата начала работы</b></div><div class="col-md-6 col-sm-6"><?=$dinfo['startdate']?$dinfo['startdate']:'Не указана'?></div>
         <?php
             if (null != $companyset){

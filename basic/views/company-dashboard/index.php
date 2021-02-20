@@ -77,6 +77,12 @@ Modal::begin([
         });
     });
 
+    function refreshButton (refBy) {
+        let tmpl = '<div class="refresh-button-holder"><span><i class="fas fa-redo" onclick="'+refBy+'"></i></span></div>';
+
+        return tmpl;
+    }
+
     function getDriverReports() {
         $('#property-driver-modal a:first').tab('show');
         $('#property-driver-modal-tab0').tab('show');
@@ -87,7 +93,9 @@ Modal::begin([
             function (data) {
                 $('#property-driver-modal-tab0').html(data);
             }
-        )
+        ).fail(function () {
+            $('#property-driver-modal-tab0').html(refreshButton('getDriverReports()'));
+        })
     }
 
     function getDriverInfo() {
@@ -98,7 +106,9 @@ Modal::begin([
             function (data) {
                 $('#property-driver-modal-tab1').html(data);
             }
-        )
+        ).fail(function () {
+            $('#property-driver-modal-tab0').html(refreshButton('getDriverInfo()'));
+        })
     }
 
     function getDriverComents() {
@@ -109,7 +119,9 @@ Modal::begin([
             function (data) {
                 $('#property-driver-modal-tab2').html(data);
             }
-        )
+        ).fail(function () {
+            $('#property-driver-modal-tab0').html(refreshButton('getDriverComents()'));
+        })
     }
 
     function showDialogPropertyDriver(o) {

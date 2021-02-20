@@ -229,6 +229,19 @@ Modal::begin([
 
 
 <script language="JavaScript">
+    function genReport() {
+        $('#rep-engine-content').html('');
+        $.post(window.location.origin + '/reportgrabber', {
+            s: 'S',
+            did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
+            rid: $('#property-driver').data('rid'),
+        }, function (data) {
+            $('#rep-engine-content').html(data);
+        }).fail(function () {
+            $('#rep-engine-content').html(refreshButton('genReport()'));
+        });
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         $("[href='#my-drivers']").click(function () {
             $.pjax.reload({container: "#drivers_list", timeout: 2e3});
@@ -240,15 +253,9 @@ Modal::begin([
             nextDriverParams(true);
         });
 
+
         $('#generate-report').on('shown.bs.modal', function() {
-            $('#rep-engine-content').html('');
-            $.post(window.location.origin + '/reportgrabber', {
-                s: 'S',
-                did: $('#drv-item-'+$('#property-driver').data('did')).data('did'),
-                rid: $('#property-driver').data('rid'),
-            }, function (data) {
-                $('#rep-engine-content').html(data);
-            });
+            genReport();
         });
 
         $(function () {

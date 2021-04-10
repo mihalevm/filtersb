@@ -611,6 +611,8 @@ a.desc:after {
     border: none;
     resize: none;
     outline: none !important;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .icon {
